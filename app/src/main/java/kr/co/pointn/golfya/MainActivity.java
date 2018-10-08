@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     final AppCompatActivity activity = this;
 
     private static  int networkYn = 0;
-    private String myUrl = "http://www.sacoop.kr/?token="; // 접속 URL (내장HTML의 경우 왼쪽과 같이 쓰고 아니면 걍 URL)
+    private String myUrl = "http://golfya.pointn.co.kr/?token="; // 접속 URL (내장HTML의 경우 왼쪽과 같이 쓰고 아니면 걍 URL)
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
