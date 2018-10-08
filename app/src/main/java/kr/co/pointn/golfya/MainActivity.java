@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
 
-        builder.setIcon(R.drawable.sacoop_icon);
+        builder.setIcon(R.drawable.golfya_icon);
         builder.setTitle(R.string.app_name);
         builder.setMessage(R.string.exitmsg);
         builder.setPositiveButton(R.string.exitmsgY, new DialogInterface.OnClickListener()
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         new AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                .setIcon(R.drawable.sacoop_icon)
+                .setIcon(R.drawable.golfya_icon)
                 .setTitle(R.string.app_name)
                 .setMessage(""+networkmsg+"")
                 .setNegativeButton(R.string.exitmsgN, null)

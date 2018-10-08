@@ -80,8 +80,8 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
 
-        notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.sacoop_icon));
-        notificationBuilder.setSmallIcon(R.drawable.sacoop_icon);
+        notificationBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.golfya_icon));
+        notificationBuilder.setSmallIcon(R.drawable.golfya_icon);
         notificationBuilder.setAutoCancel(true);
         notificationBuilder.setSound(defaultSoundUri);
         notificationBuilder.setFullScreenIntent(pendingIntent, true);
