@@ -9,4 +9,13 @@
     <string name="exitmsgY">종료</string>
     <string name="exitmsgN">취소</string>
     <string name="title_activity_splash">SplashActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="news_fragment">골프뉴스</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="driver_fragment">드라이버영상</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="Iron_fragment">아이언영상</string>
 </resources>

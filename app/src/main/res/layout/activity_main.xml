@@ -1,13 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:orientation="vertical"
     tools:context=".MainActivity">
-    <WebView
-        android:id="@+id/webview"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/back"/>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="0dp">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/newsButton"
+        android:text="골프뉴스"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:textSize="18dp"
+        android:background="@color/colorPrimary"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/driverButton"
+            android:text="드라이버영상"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:textSize="18dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/ironButton"
+            android:text="아이언영상"
+            android:textStyle="bold"
+            android:textColor="#ffffff"  
+            android:textSize="18dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            />
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/main_news">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="vertical"
+                android:background="#c6c6c6"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:drawableLeft="@drawable/ic_chat_black_24dp"
+                    android:text="뉴스"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="4dp"
+                    />
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mainNewsListView"
+                    android:layout_marginTop="2dp"
+                    android:dividerHeight="2dp"
+
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:divider="#ffffff"></ListView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="vertical"
+                android:background="#c6c6c6"
+                android:layout_marginTop="0dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_chat_black_24dp"
+                    android:layout_gravity="left"
+                    android:text="드라이버"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    />
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mainDriverListView"
+                    android:layout_marginTop="2dp"
+                    android:dividerHeight="2dp"
+
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:divider="#ffffff"></ListView>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="vertical"
+                android:background="#c6c6c6"
+                android:layout_marginTop="0dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_chat_black_24dp"
+                    android:layout_gravity="left"
+                    android:text="아이언"
+                    android:textColor="#000000"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -8,16 +8,24 @@ import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Adapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**dc dddd
@@ -26,45 +34,103 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private WebView mWebView;
     final AppCompatActivity activity = this;
 
+    private ListView newsListView;
+    private NewsListAdapter adapter;
+    private List<News> newsList;
+
     private static  int networkYn = 0;
-    private String myUrl = "http://golfya.pointn.co.kr/?token="; // 접속 URL (내장HTML의 경우 왼쪽과 같이 쓰고 아니면 걍 URL)
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
 
+        newsListView = findViewById(R.id.mainNewsListView);
+        newsList = new ArrayList<News>();
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+
+        adapter = new NewsListAdapter(getApplicationContext(), newsList);
+        newsListView.setAdapter(adapter);
+
+
+        final Button newsButton = (Button) findViewById(R.id.newsButton);
+        final Button driverButton = (Button) findViewById(R.id.driverButton);
+        final Button ironButton = (Button) findViewById(R.id.ironButton);
+        final LinearLayout main_news = (LinearLayout) findViewById(R.id.main_news) ;
+
+
+        newsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                main_news.setVisibility(View.GONE);
+                newsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                driverButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ironButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new NewsFragment());
+                fragmentTransaction.commit();
+                
+            }
+        });
+
+
+        driverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                main_news.setVisibility(View.GONE);
+                newsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                driverButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+                ironButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new DriverFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+
+
+        ironButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                main_news.setVisibility(View.GONE);
+                newsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                driverButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                ironButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new IronFragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+
+
         String token = FirebaseInstanceId.getInstance().getToken();
-
-        if (token != null) {
-            Log.d(TAG, "token = " + token);
-
-
-
-
-        }
         updateIconBadge(activity,  0);
-// 웹뷰 셋팅팅
-        mWebView = (WebView) findViewById(R.id.webview);
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        Online();
-        if(networkYn==2){
 
-            NotOnline();
-        }else {
 
-            mWebView.loadUrl(myUrl + token); // 접속 URL
-            mWebView.setWebChromeClient(new WebChromeClient());
-            mWebView.setWebViewClient(new WebViewClientClass());
-
-        }
-
-        // 키보드 내리기
-        //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        // imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     @Override
@@ -73,10 +139,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "페이지이동 ");
 
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebView.canGoBack()) {
-            mWebView.goBack();
-            return true;
-        }
         return super.onKeyDown(keyCode, event);
     }
     @Override
