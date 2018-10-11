@@ -38,15 +38,15 @@ public class NewsListAdapter  extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(context, R.layout.news, null);
 
-        TextView newsText = (TextView) v.findViewById(R.id.newsText);
+        TextView subjectText = (TextView) v.findViewById(R.id.subjectText);
         TextView nameText = (TextView) v.findViewById(R.id.nameText);
         TextView dateText = (TextView) v.findViewById(R.id.dateText);
 
-        newsText.setText(newsList.get(i).getNews());
+        subjectText.setText(newsList.get(i).getSubject());
         nameText.setText(newsList.get(i).getName());
         dateText.setText(newsList.get(i).getDate());
 
-        v.setTag(newsList.get(i).getNews());
+        v.setTag(newsList.get(i).getSubject());
 
         return v;
 

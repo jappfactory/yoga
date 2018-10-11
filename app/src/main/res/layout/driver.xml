@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:id="@+id/thum_pic"
+        android:id="@+id/thumimg"
         android:contentDescription="desc"
         />
     <TextView
@@ -19,7 +19,7 @@
         android:textColor="#000000"
         android:id="@+id/subjectText"
         android:layout_marginLeft="4dp"
-        android:layout_toRightOf="@id/subjectText"
+        android:layout_toRightOf="@id/thumimg"
         android:textStyle="bold"/>
 
     <TextView
@@ -29,8 +29,8 @@
         android:padding="10dp"
         android:textColor="#000000"
         android:id="@+id/viewText"
-        android:layout_toRightOf="@id/thum_pic"
-        android:layout_below="@id/viewText"
+        android:layout_toRightOf="@id/thumimg"
+        android:layout_below="@id/subjectText"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="20dp"
         android:textStyle="bold"/>

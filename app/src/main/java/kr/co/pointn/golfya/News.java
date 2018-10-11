@@ -2,22 +2,22 @@ package kr.co.pointn.golfya;
 
 public class News {
 
-    String news;
+    String subject;
     String name;
     String date;
 
-    public News(String news, String name, String date) {
-        this.news = news;
+    public News(String subject, String name, String date) {
+        this.subject = subject;
         this.name = name;
         this.date = date;
     }
 
-    public String getNews() {
-        return news;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setNews(String news) {
-        this.news = news;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getName() {

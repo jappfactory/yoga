@@ -18,4 +18,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="Iron_fragment">아이언영상</string>
+
+
+    <string name="banner_ad_unit_id">ca-app-pub-3808489523903055/9381981170</string>
+
 </resources>

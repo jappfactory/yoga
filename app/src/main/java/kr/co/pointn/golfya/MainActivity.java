@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -25,6 +27,10 @@ import android.widget.ListView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private ListView newsListView;
     private NewsListAdapter adapter;
     private List<News> newsList;
+
+    private ListView driverMovieListView;
+    private DriverMovieListAdapter driveradapter;
+    private List<DriverMovie> driverMovieList;
 
     private static  int networkYn = 0;
 
@@ -69,6 +79,15 @@ public class MainActivity extends AppCompatActivity {
         adapter = new NewsListAdapter(getApplicationContext(), newsList);
         newsListView.setAdapter(adapter);
 
+
+
+        driverMovieListView  = findViewById(R.id.mainDriverListView);
+        driverMovieList = new ArrayList<DriverMovie>();
+        driverMovieList.add(new DriverMovie("http://dev.sacoop.kr/upload/profile_img/myoungingoo.png","쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("http://dev.sacoop.kr/upload/profile_img/myoungingoo.png","쥬피터 드라이버 영상","100"));
+
+        driveradapter = new DriverMovieListAdapter(getApplicationContext(), driverMovieList);
+        driverMovieListView.setAdapter(driveradapter);
 
         final Button newsButton = (Button) findViewById(R.id.newsButton);
         final Button driverButton = (Button) findViewById(R.id.driverButton);
