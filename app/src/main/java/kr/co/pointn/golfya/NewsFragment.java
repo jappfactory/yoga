@@ -3,10 +3,15 @@ package kr.co.pointn.golfya;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -58,6 +63,48 @@ public class NewsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    private ListView newsListView;
+    private NewsListAdapter adapter;
+    private List<News> newsList;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle b) {
+        super.onActivityCreated(b);
+
+
+        newsListView  = (ListView) getView().findViewById(R.id.subNewsListView);
+        newsList = new ArrayList<News>();
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
+
+        adapter = new NewsListAdapter(getContext().getApplicationContext(), newsList);
+        newsListView.setAdapter(adapter);
+
     }
 
     @Override

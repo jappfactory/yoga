@@ -25,12 +25,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private DriverMovieListAdapter driveradapter;
     private List<DriverMovie> driverMovieList;
 
+    private ListView mainIronListView;
+
     private static  int networkYn = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +64,6 @@ public class MainActivity extends AppCompatActivity {
         newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
         newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
         newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
 
         adapter = new NewsListAdapter(getApplicationContext(), newsList);
         newsListView.setAdapter(adapter);
@@ -83,11 +72,27 @@ public class MainActivity extends AppCompatActivity {
 
         driverMovieListView  = findViewById(R.id.mainDriverListView);
         driverMovieList = new ArrayList<DriverMovie>();
-        driverMovieList.add(new DriverMovie("http://dev.sacoop.kr/upload/profile_img/myoungingoo.png","쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("http://dev.sacoop.kr/upload/profile_img/myoungingoo.png","쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
 
         driveradapter = new DriverMovieListAdapter(getApplicationContext(), driverMovieList);
         driverMovieListView.setAdapter(driveradapter);
+
+
+        mainIronListView  = findViewById(R.id.mainIronListView);
+        driverMovieList = new ArrayList<DriverMovie>();
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
+
+        driveradapter = new DriverMovieListAdapter(getApplicationContext(), driverMovieList);
+        mainIronListView.setAdapter(driveradapter);
+
 
         final Button newsButton = (Button) findViewById(R.id.newsButton);
         final Button driverButton = (Button) findViewById(R.id.driverButton);
@@ -151,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

@@ -73,7 +73,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="300dp"
                 android:orientation="vertical"
                 android:background="#c6c6c6"
                 android:layout_marginTop="0dp">
@@ -105,12 +105,12 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="350dp"
                 android:orientation="vertical"
                 android:background="#c6c6c6"
                 android:layout_marginTop="0dp">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_chat_black_24dp"
                     android:layout_gravity="left"
@@ -120,30 +120,25 @@
                     android:textStyle="bold"
                     android:layout_marginTop="4dp"
                     />
-
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/mainDriverListView"
                     android:layout_marginTop="2dp"
                     android:dividerHeight="2dp"
-
                     android:overScrollMode="never"
                     android:scrollbars="none"
                     android:divider="#ffffff"></ListView>
 
             </LinearLayout>
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="300dp"
                 android:orientation="vertical"
                 android:background="#c6c6c6"
                 android:layout_marginTop="0dp">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_chat_black_24dp"
                     android:layout_gravity="left"
@@ -153,6 +148,16 @@
                     android:textStyle="bold"
                     android:layout_marginTop="4dp"
                     />
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/mainIronListView"
+                    android:layout_marginTop="2dp"
+                    android:dividerHeight="2dp"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:divider="#ffffff"></ListView>
             </LinearLayout>
         </LinearLayout>
 
@@ -167,5 +172,13 @@
 
 
     </FrameLayout>
-
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3808489523903055/9381981170">
+    </com.google.android.gms.ads.AdView>
 </LinearLayout>
