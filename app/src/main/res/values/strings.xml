@@ -20,6 +20,8 @@
     <string name="Iron_fragment">아이언영상</string>
 
 
-    <string name="banner_ad_unit_id">ca-app-pub-3808489523903055/9381981170</string>
 
-</resources>
+   <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string><!-- //test-->
+    <!-- <string name="banner_ad_unit_id">ca-app-pub-3808489523903055/9381981170</string>-->
+
+  </resources>

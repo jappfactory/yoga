@@ -65,101 +65,137 @@
             android:layout_height="match_parent"
             android:overScrollMode="never"
             android:scrollbars="none">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/main_news">
 
             <LinearLayout
+                android:id="@+id/main_news"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical"
-                android:background="#c6c6c6"
-                android:layout_marginTop="0dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="0dp"
+                    android:background="#c6c6c6"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="4dp"
+                        android:drawableLeft="@drawable/ic_chat_black_24dp"
+                        android:text="뉴스"
+                        android:textColor="#000000"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ListView
+                        android:id="@+id/mainNewsListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:divider="#ffffff"
+
+                        android:dividerHeight="2dp"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"></ListView>
+                </LinearLayout>
+
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:drawableLeft="@drawable/ic_chat_black_24dp"
-                    android:text="뉴스"
-                    android:textColor="#000000"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="4dp"
-                    />
-                <ListView
+                    android:layout_gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/banner_ad_unit_id">
+
+                </com.google.android.gms.ads.AdView>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/mainNewsListView"
-                    android:layout_marginTop="2dp"
-                    android:dividerHeight="2dp"
+                    android:layout_height="350dp"
+                    android:layout_marginTop="0dp"
+                    android:background="#c6c6c6"
+                    android:orientation="vertical">
 
-                    android:overScrollMode="never"
-                    android:scrollbars="none"
-                    android:divider="#ffffff"></ListView>
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="4dp"
+                        android:drawableLeft="@drawable/ic_chat_black_24dp"
+                        android:text="드라이버"
+                        android:textColor="#000000"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
+                    <ListView
+                        android:id="@+id/mainDriverListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:divider="#ffffff"
+                        android:dividerHeight="2dp"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"></ListView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:orientation="vertical"
-                android:background="#c6c6c6"
-                android:layout_marginTop="0dp">
-                <TextView
-                    android:layout_width="match_parent"
+                </LinearLayout>
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_chat_black_24dp"
-                    android:layout_gravity="left"
-                    android:text="드라이버"
-                    android:textColor="#000000"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"
-                    />
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/mainDriverListView"
-                    android:layout_marginTop="2dp"
-                    android:dividerHeight="2dp"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"
-                    android:divider="#ffffff"></ListView>
+                    android:layout_gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/banner_ad_unit_id">
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical"
-                android:background="#c6c6c6"
-                android:layout_marginTop="0dp">
-                <TextView
+                </com.google.android.gms.ads.AdView>
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="0dp"
+                    android:background="#c6c6c6"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="4dp"
+                        android:drawableLeft="@drawable/ic_chat_black_24dp"
+                        android:text="아이언"
+                        android:textColor="#000000"
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                    <ListView
+                        android:id="@+id/mainIronListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:divider="#ffffff"
+                        android:dividerHeight="2dp"
+                        android:overScrollMode="never"
+                        android:scrollbars="none"></ListView>
+                </LinearLayout>
+
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView3"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_chat_black_24dp"
-                    android:layout_gravity="left"
-                    android:text="아이언"
-                    android:textColor="#000000"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"
-                    />
+                    android:layout_gravity="center"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    ads:adSize="BANNER"
+                    ads:adUnitId="@string/banner_ad_unit_id">
 
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/mainIronListView"
-                    android:layout_marginTop="2dp"
-                    android:dividerHeight="2dp"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"
-                    android:divider="#ffffff"></ListView>
+                </com.google.android.gms.ads.AdView>
             </LinearLayout>
-        </LinearLayout>
 
         </ScrollView>
 
@@ -172,13 +208,5 @@
 
 
     </FrameLayout>
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-3808489523903055/9381981170">
-    </com.google.android.gms.ads.AdView>
+
 </LinearLayout>
