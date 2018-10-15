@@ -21,9 +21,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
@@ -47,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mainIronListView;
 
+    private static Context context;
     private static  int networkYn = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.fragment, new DriverFragment());
                 fragmentTransaction.commit();
 
+                AdsFull.getInstance(getApplicationContext()).setAds2();
             }
         });
 
@@ -157,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WoodFragment());
                 fragmentTransaction.commit();
+                AdsFull.getInstance(getApplicationContext()).setAds2();
 
             }
         });
@@ -178,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new IronFragment());
                 fragmentTransaction.commit();
+                AdsFull.getInstance(getApplicationContext()).setAds2();
 
             }
         });
@@ -198,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
                 fragmentTransaction.commit();
+                AdsFull.getInstance(getApplicationContext()).setAds2();
 
             }
         });
@@ -217,6 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new PutterFragment());
                 fragmentTransaction.commit();
+                AdsFull.getInstance(getApplicationContext()).setAds2();
 
             }
         });
@@ -225,7 +228,11 @@ public class MainActivity extends AppCompatActivity {
         String token = FirebaseInstanceId.getInstance().getToken();
         updateIconBadge(activity,  0);
 
-        setAds();
+        AdsFull.getInstance(getApplicationContext()).setAds(this);
+
+
+
+
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -327,33 +334,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void setAds() {//
-
-        //MobileAds.initialize(getApplicationContext(), "ca-app-pub-3808489523903055~9077770988");
-
-       MobileAds.initialize(getApplicationContext(), "ca-app-pub-3940256099942544~3347511713");//test
-
-//
-        AdView adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("B3EEABB8EE11C2BE770B684D95219ECB")
-                .addTestDevice("F04045E9794CCECCCE886A59B2FF79DA")
-                .build();
-        adView.loadAd(adRequest);
-
-
-
-        AdView adView2 = (AdView) findViewById(R.id.adView2);
-        adView2.loadAd(adRequest);
-
-
-        AdView adView3 = (AdView) findViewById(R.id.adView3);
-        adView3.loadAd(adRequest);
-
-
-
-    }
 
     public void Online() {
         ConnectivityManager manager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -378,3 +358,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+

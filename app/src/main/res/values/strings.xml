@@ -20,10 +20,11 @@
     <string name="Iron_fragment">아이언영상</string>
 
 
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string><!-- //test-->
-    <!-- <string name="banner_ad_unit_id">ca-app-pub-3808489523903055/9381981170</string>-->
+    <!--  <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>--><!-- //test-->
+    <string name="banner_ad_unit_id">ca-app-pub-3808489523903055/9381981170</string>
+    <string name="banner_ad_unit_id2">ca-app-pub-3808489523903055/4998386170</string>
 
 </resources>
