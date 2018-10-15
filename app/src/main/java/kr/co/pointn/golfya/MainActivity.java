@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.fragment, new DriverFragment());
                 fragmentTransaction.commit();
 
-                AdsFull.getInstance(getApplicationContext()).setAds2();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
             }
         });
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WoodFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAds2();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new IronFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAds2();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAds2();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new PutterFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAds2();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -228,7 +228,9 @@ public class MainActivity extends AppCompatActivity {
         String token = FirebaseInstanceId.getInstance().getToken();
         updateIconBadge(activity,  0);
 
-        AdsFull.getInstance(getApplicationContext()).setAds(this);
+        AdsFull.getInstance(getApplicationContext()).setAds1(this);
+        AdsFull.getInstance(getApplicationContext()).setAds2(this);
+        AdsFull.getInstance(getApplicationContext()).setAds3(this);
 
 
 

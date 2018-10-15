@@ -36,7 +36,7 @@ public class AdsFull {
     }
 
 
-    public void  setAds2() {//
+    public void  setAdsFull() {//
 
         MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
         mInterstitialAd = new InterstitialAd(context);
@@ -53,7 +53,7 @@ public class AdsFull {
         });
     }
 
-    public void  setAds(Context context) {//
+    public void  setAds1(Context context) {//
 
         MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
 
@@ -66,20 +66,35 @@ public class AdsFull {
                 .build();
         adView.loadAd(adRequest);
 
+    }
 
 
-        AdView adView2 = (AdView) ((Activity) context).findViewById(R.id.adView2);
-        AdRequest adRequest2 = new AdRequest.Builder()
+    public void  setAds2(Context context) {//
+
+        MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
+
+
+        AdView adView = (AdView) ((Activity) context).findViewById(R.id.adView2);
+        AdRequest adRequest = new AdRequest.Builder()
                 //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
-        adView2.loadAd(adRequest2);
+        adView.loadAd(adRequest);
 
 
-        AdView adView3 = (AdView) ((Activity) context).findViewById(R.id.adView3);
-        AdRequest adRequest3 = new AdRequest.Builder()
+    }
+
+
+    public void  setAds3(Context context) {//
+
+        MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
+
+
+
+        AdView adView = (AdView) ((Activity) context).findViewById(R.id.adView3);
+        AdRequest adRequest = new AdRequest.Builder()
                 //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
-        adView3.loadAd(adRequest3);
+        adView.loadAd(adRequest);
 
 
     }
