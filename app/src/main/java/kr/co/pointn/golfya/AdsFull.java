@@ -38,7 +38,7 @@ public class AdsFull {
 
     public void  setAds2() {//
 
-        MobileAds.initialize(context, "ca-app-pub-3808489523903055~9077770988");
+        MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
         mInterstitialAd = new InterstitialAd(context);
         mInterstitialAd.setAdUnitId(context.getResources().getString(R.string.banner_ad_unit_id2));
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -55,7 +55,7 @@ public class AdsFull {
 
     public void  setAds(Context context) {//
 
-        MobileAds.initialize(context, "ca-app-pub-3808489523903055~9077770988");
+        MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
 
         //MobileAds.initialize(getApplicationContext(), "ca-app-pub-3940256099942544~3347511713");//test
 
