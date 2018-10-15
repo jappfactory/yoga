@@ -6,18 +6,21 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="110dp"
         android:id="@+id/thumimg"
+        android:src="@drawable/golfya_bg"
         android:contentDescription="desc"
         />
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:text="제목"
-        android:padding="10dp"
+        android:padding="0dp"
         android:textColor="#000000"
         android:id="@+id/subjectText"
+        android:textSize="14dp"
+        android:elegantTextHeight="true"
         android:layout_marginLeft="4dp"
         android:layout_toRightOf="@id/thumimg"
         android:textStyle="bold"/>
@@ -26,12 +29,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="조회수"
-        android:padding="10dp"
-        android:textColor="#000000"
-        android:id="@+id/viewText"
+        android:padding="0dp"
+        android:textColor="#FF666666"
+        android:id="@+id/viewCounttitle"
         android:layout_toRightOf="@id/thumimg"
         android:layout_below="@id/subjectText"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:padding="0dp"
+        android:textColor="#FF666666"
+        android:id="@+id/viewCount"
+        android:layout_toRightOf="@id/thumimg"
+        android:layout_below="@id/subjectText"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="0dp"
+        android:textStyle="bold"/>
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="날짜"
+    android:padding="0dp"
+    android:textColor="#666666"
+    android:id="@+id/viewDate"
+    android:layout_toRightOf="@id/thumimg"
+    android:layout_below="@id/subjectText"
+    android:layout_marginLeft="4dp"
+    android:layout_marginTop="20dp"
+    android:textStyle="bold"/>
 </RelativeLayout>

@@ -4,12 +4,12 @@ public class DriverMovie {
 
     String thum_img;
     String movie_title;
-    String movie_view;
+    String movie_count;
 
-    public DriverMovie(String thum_img, String movie_title, String movie_view) {
+    public DriverMovie(String thum_img, String movie_title, String movie_count) {
         this.thum_img = thum_img;
         this.movie_title = movie_title;
-        this.movie_view = movie_view;
+        this.movie_count = movie_count;
     }
 
     public String getThum_img() {
@@ -28,11 +28,11 @@ public class DriverMovie {
         this.movie_title = movie_title;
     }
 
-    public String getMovie_view() {
-        return movie_view;
+    public String getMovie_count() {
+        return movie_count;
     }
 
-    public void setMovie_view(String movie_view) {
-        this.movie_view = movie_view;
+    public void setMovie_count(String movie_count) {
+        this.movie_count = movie_count;
     }
 }

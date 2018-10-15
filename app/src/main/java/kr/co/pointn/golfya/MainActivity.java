@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         driverMovieListView  = findViewById(R.id.mainDriverListView);
         driverMovieList = new ArrayList<DriverMovie>();
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("","쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상","100"));
         driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
         driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
 

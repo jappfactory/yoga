@@ -1,6 +1,7 @@
 package kr.co.pointn.golfya;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,20 +45,21 @@ public class DriverMovieListAdapter extends BaseAdapter {
 
         ImageView thum_pic = (ImageView) v.findViewById(R.id.thumimg);
         TextView subjectText = (TextView) v.findViewById(R.id.subjectText);
-        TextView viewText = (TextView) v.findViewById(R.id.viewText);
+        TextView viewCount = (TextView) v.findViewById(R.id.viewCount);
+        String img = driverMovieList.get(i).getThum_img();
+        if(!TextUtils.isEmpty(img)) {
 
+            Log.e("getThum_img", img);
 
-        Log.e("getThum_img",driverMovieList.get(i).getThum_img());
-
-        Picasso.with(context)
-                .load(driverMovieList.get(i).getThum_img())
-                .into(thum_pic);
-
+            Picasso.with(context)
+                    .load(driverMovieList.get(i).getThum_img())
+                    .into(thum_pic);
+        }
         //thum_pic.setImageBitmap(back.class.etBitmapFromURL(driverMovieList.get(i).getThum_img()));
 
         //thum_pic.setImageURI(Uri.parse(driverMovieList.get(i).getThum_img()));
         subjectText.setText(driverMovieList.get(i).getMovie_title());
-        viewText.setText(driverMovieList.get(i).getMovie_view());
+        viewCount.setText(driverMovieList.get(i).getMovie_count());
 
         v.setTag(driverMovieList.get(i).getMovie_title());
 
