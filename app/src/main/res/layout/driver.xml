@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:background="#FFFFFF"
     android:layout_height="match_parent">
@@ -12,6 +12,11 @@
         android:src="@drawable/golfya_bg"
         android:contentDescription="desc"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="64dp"
@@ -26,15 +31,22 @@
         android:layout_toRightOf="@id/thumimg"
         android:textStyle="bold"/>
 
-    <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="조회수"
         android:padding="0dp"
         android:textColor="#FF666666"
         android:id="@+id/viewCounttitle"
-        android:layout_toRightOf="@id/thumimg"
-        android:layout_below="@id/subjectText"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="0dp"
         android:textStyle="bold"/>
@@ -46,22 +58,48 @@
         android:padding="0dp"
         android:textColor="#FF666666"
         android:id="@+id/viewCount"
-        android:layout_toRightOf="@id/thumimg"
-        android:layout_below="@id/subjectText"
-        android:layout_marginLeft="45dp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="0dp"
         android:textStyle="bold"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+                    <Button
+                        android:id="@+id/viewButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_toRightOf="@id/viewCount"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="right"
+                        android:background="@color/colorGreen"
+                        android:text="바로보기"
+                        android:textColor="#ffffff"
+                        android:textSize="11dp" />
 
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="날짜"
-    android:padding="0dp"
-    android:textColor="#666666"
-    android:id="@+id/viewDate"
-    android:layout_toRightOf="@id/thumimg"
-    android:layout_below="@id/subjectText"
-    android:layout_marginLeft="4dp"
-    android:layout_marginTop="20dp"
-    android:textStyle="bold"/>
-</RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="날짜"
+                android:padding="0dp"
+                android:textColor="#666666"
+                android:id="@+id/viewDate"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="0dp"
+                android:textStyle="bold"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
