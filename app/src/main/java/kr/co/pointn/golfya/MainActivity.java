@@ -38,12 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private NewsListAdapter adapter;
     private List<News> newsList;
 
-    private ListView driverMovieListView;
-    private DriverMovieListAdapter driveradapter;
-    private List<DriverMovie> driverMovieList;
-
-    private ListView mainIronListView;
-
     private static Context context;
     private static  int networkYn = 0;
 
@@ -63,30 +57,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new NewsListAdapter(getApplicationContext(), newsList);
         newsListView.setAdapter(adapter);
 
-
-
-        driverMovieListView  = findViewById(R.id.mainDriverListView);
-        driverMovieList = new ArrayList<DriverMovie>();
-        driverMovieList.add(new DriverMovie("","쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
-
-        driveradapter = new DriverMovieListAdapter(getApplicationContext(), driverMovieList);
-        driverMovieListView.setAdapter(driveradapter);
-
-
-        mainIronListView  = findViewById(R.id.mainIronListView);
-        driverMovieList = new ArrayList<DriverMovie>();
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","100"));
-
-        driveradapter = new DriverMovieListAdapter(getApplicationContext(), driverMovieList);
-        mainIronListView.setAdapter(driveradapter);
 
 
        // final Button newsButton = (Button) findViewById(R.id.newsButton);
@@ -136,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new DriverFragment());
                 fragmentTransaction.commit();
-
                 AdsFull.getInstance(getApplicationContext()).setAdsFull();
+
             }
         });
 
@@ -357,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
 }
+
+
 

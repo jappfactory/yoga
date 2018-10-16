@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class WoodFragment extends Fragment {
         super.onActivityCreated(b);
 
 
+        Log.e("우드", "우드");
         driverMovieListView  = (ListView) getView().findViewById(R.id.subWoodListView);
         driverMovieList = new ArrayList<DriverMovie>();
 
