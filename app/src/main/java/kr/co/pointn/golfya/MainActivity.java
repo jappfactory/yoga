@@ -92,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
         driverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 main_news.setVisibility(View.GONE);
                 //newsButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 driverButton.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));

@@ -77,11 +77,13 @@ public class WedgeFragment extends Fragment {
         driverMovieListView  = (ListView) getView().findViewById(R.id.subWedgeListView);
         driverMovieList = new ArrayList<DriverMovie>();
 
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","100"));
+        driverMovieList.add(new DriverMovie("https://i.ytimg.com/vi/a3MJNyWsPko/mqdefault.jpg","비기너골퍼를 위한 드라이버 스윙 타법! 초보자을 위한 드라이버 레슨 시리즈 [ how to hit driver ]","2018-10-10", "0"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","2018-10-10", "0"));
+        driverMovieList.add(new DriverMovie("https://i.ytimg.com/vi/a3MJNyWsPko/mqdefault.jpg","비기너골퍼를 위한 드라이버 스윙 타법! 초보자을 위한 드라이버 레슨 시리즈 [ how to hit driver ]","2018-10-10", "0"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","2018-10-10", "0"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","2018-10-10", "0"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","2018-10-10", "0"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","2018-10-10", "0"));
 
         driveradapter = new DriverMovieListAdapter(getContext().getApplicationContext(), driverMovieList);
         driverMovieListView.setAdapter(driveradapter);

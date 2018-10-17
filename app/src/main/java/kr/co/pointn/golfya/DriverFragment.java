@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +101,18 @@ public class DriverFragment extends Fragment {
       //  driverMovieListView.setAdapter(driveradapter);
 
 */
-        doInBackground();
+        driverMovieListView  =  getView().findViewById(R.id.subDriverListView);
+        driverMovieList = new ArrayList<>();
+        try {
+
+            Log.e("LoadMovie", "LoadMovie");
+             new LoadMovie().execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        driveradapter = new DriverMovieListAdapter(getContext().getApplicationContext(), driverMovieList);
+        driverMovieListView.setAdapter(driveradapter);
     }
 
     @Override
@@ -130,70 +142,109 @@ public class DriverFragment extends Fragment {
 
 
 
-    String target;
-
-    protected void onPostExecute(String result) {
-
-        target = "http://golfya.pointn.co.kr/index.php/MovieSearch/driver";
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("");
-            int count = 0;
-            Log.e("드라이버 s", ""+jsonArray.length());
-
-            while (count < jsonArray.length()) {
-                JSONObject object = jsonArray.getJSONObject(count);
-
-
-                Log.e("드라이버", ""+object);
-
-
-
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-
-        driverMovieListView = (ListView) getView().findViewById(R.id.subDriverListView);
-        driverMovieList = new ArrayList<DriverMovie>();
-
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png", "쥬피터 드라이버 영상", "100"));
-
-        Log.e("드라이버2", "ㅁㅁㅁㅁ");
-
-        driveradapter = new DriverMovieListAdapter(getContext().getApplicationContext(), driverMovieList);
-        driverMovieListView.setAdapter(driveradapter);
-    }
-
-    protected String doInBackground(Void... voids) {
-
-        try {
-            URL url = new URL(target);
-            HttpsURLConnection httpsURLConnection = (HttpsURLConnection) url.openConnection();
-            InputStream inputStream = httpsURLConnection.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String temp;
-            StringBuilder stringBuilder = new StringBuilder();
-
-            while ((temp = bufferedReader.readLine()) != null) {
-                stringBuilder.append(temp + "\n");
-            }
-            bufferedReader.close();
-            inputStream.close();
-            httpsURLConnection.disconnect();
-            return stringBuilder.toString().trim();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+}
+
+
+
+
+class LoadMovie extends AsyncTask <Void, Void, String>{
+
+
+    private List<DriverMovie>  driverMovieList = new ArrayList<DriverMovie>() ;
+
+    String target;
+    @Override
+    protected void onPreExecute() {
+
+        try{
+             target = "http://golfya.pointn.co.kr/index.php/MovieSearch/driver";
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected String doInBackground(Void... voids) {
+
+        try {
+
+            URL url = new URL(target);
+            Log.e("주소 url", ""+url);
+
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            InputStream inputStream = httpURLConnection.getInputStream();
+
+            //Log.e("inputStream", ""+inputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+            // Log.e("bufferedReader", ""+bufferedReader);
+            String temp;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((temp = bufferedReader.readLine()) != null) {
+                Log.e("temp", ""+temp);
+                stringBuilder.append(temp + "\n");
+            }
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+            return stringBuilder.toString().trim();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+    }
+    @Override
+    protected void onPostExecute(String result) {
+
+        Log.e("드라이버2", ""+result);
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = jsonObject.getJSONArray("list");
+            int count = 0;
+            Log.e("드라이버3", ""+jsonArray.length());
+
+            String thum_pic, subjectText, viewCount, viewDate, viewCnt;
+            while (count < jsonArray.length()) {
+                JSONObject object = jsonArray.getJSONObject(count);
+
+
+                thum_pic = object.getString("thumbnails");
+                subjectText = object.getString("title");
+                viewDate = object.getString("viewDate");
+                viewCnt = object.getString("cnt");
+                Log.e("thum_pic", ""+thum_pic);
+                Log.e("subjectText", ""+subjectText);
+                Log.e("viewDate", ""+viewDate);
+                Log.e("viewCnt", ""+viewCnt);
+
+                DriverMovie drivermovie = new DriverMovie(thum_pic,subjectText, viewDate , viewCnt);
+                driverMovieList.add(drivermovie);
+                //driverMovieList.add(new DriverMovie("","비기너골퍼를","2018", "0"));
+                count++;
+                Log.e("드라이버4", ""+object);
+
+            }
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Log.e("Buffer Error", "Error converting result " + e.toString());
+
+        }
+
+    }
+
+
 }

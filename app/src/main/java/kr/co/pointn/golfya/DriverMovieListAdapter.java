@@ -45,11 +45,14 @@ public class DriverMovieListAdapter extends BaseAdapter {
 
         ImageView thum_pic = (ImageView) v.findViewById(R.id.thumimg);
         TextView subjectText = (TextView) v.findViewById(R.id.subjectText);
+        TextView viewDate = (TextView) v.findViewById(R.id.viewDate);
         TextView viewCount = (TextView) v.findViewById(R.id.viewCount);
-        String img = driverMovieList.get(i).getThum_img();
-        if(!TextUtils.isEmpty(img)) {
 
-            Log.e("getThum_img", img);
+
+
+        if(!TextUtils.isEmpty(driverMovieList.get(i).getThum_img())) {
+
+            Log.e("getThum_img", driverMovieList.get(i).getThum_img());
 
             Picasso.with(context)
                     .load(driverMovieList.get(i).getThum_img())
@@ -60,6 +63,7 @@ public class DriverMovieListAdapter extends BaseAdapter {
         //thum_pic.setImageURI(Uri.parse(driverMovieList.get(i).getThum_img()));
         subjectText.setText(driverMovieList.get(i).getMovie_title());
         viewCount.setText(driverMovieList.get(i).getMovie_count());
+        viewDate.setText(driverMovieList.get(i).getMovie_date());
 
         v.setTag(driverMovieList.get(i).getMovie_title());
 

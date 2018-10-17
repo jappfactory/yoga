@@ -77,11 +77,7 @@ public class PutterFragment extends Fragment {
         driverMovieListView  = (ListView) getView().findViewById(R.id.subPutterListView);
         driverMovieList = new ArrayList<DriverMovie>();
 
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 퍼터 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 퍼터 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 퍼터 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 퍼터 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 퍼터 영상","100"));
+        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","2018-10-10", "0"));
 
         driveradapter = new DriverMovieListAdapter(getContext().getApplicationContext(), driverMovieList);
         driverMovieListView.setAdapter(driveradapter);
