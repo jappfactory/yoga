@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.google.android.gms.ads.AdView;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -25,8 +23,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 
 /**
@@ -47,7 +43,12 @@ public class DriverFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    public static  ListView driverMovieListView;
+    public static DriverMovieListAdapter driveradapter;
+    public static List<DriverMovie> driverMovieList;
+
     private OnFragmentInteractionListener mListener;
+
     public DriverFragment() {
         // Required empty public constructor
     }
@@ -79,41 +80,41 @@ public class DriverFragment extends Fragment {
         }
     }
 
-    private ListView driverMovieListView;
-    private DriverMovieListAdapter driveradapter;
-    private List<DriverMovie> driverMovieList;
 
     @Override
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        Log.e("드라이버", "드라이버");
 
-        /*
-        driverMovieListView  = (ListView) getView().findViewById(R.id.subDriverListView);
+
+        driverMovieListView  = getView().findViewById(R.id.subDriverListView);
         driverMovieList = new ArrayList<DriverMovie>();
-
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/29.png","쥬피터 드라이버 영상","100"));
-
-        driveradapter = new DriverMovieListAdapter(getContext().getApplicationContext(), driverMovieList);
-      //  driverMovieListView.setAdapter(driveradapter);
-
-*/
-        driverMovieListView  =  getView().findViewById(R.id.subDriverListView);
-        driverMovieList = new ArrayList<>();
-        try {
-
-            Log.e("LoadMovie", "LoadMovie");
-             new LoadMovie().execute();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         driveradapter = new DriverMovieListAdapter(getContext().getApplicationContext(), driverMovieList);
         driverMovieListView.setAdapter(driveradapter);
+       // driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","2018-10-10", "0"));
+
+
     }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        new LoadMovie().execute();
+        View FragmentView = inflater.inflate(R.layout.fragment_driver, container, false);
+
+
+        return FragmentView;
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
 
     @Override
     public void onDetach() {
@@ -135,35 +136,22 @@ public class DriverFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-    private static Context context;
-
-
-
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 }
 
 
+class LoadMovie extends AsyncTask<Void, Void, String> {
 
-
-class LoadMovie extends AsyncTask <Void, Void, String>{
-
-
-    private List<DriverMovie>  driverMovieList = new ArrayList<DriverMovie>() ;
+    public static List<DriverMovie> driverMovieList;
 
     String target;
+
     @Override
     protected void onPreExecute() {
 
         try{
-             target = "http://golfya.pointn.co.kr/index.php/MovieSearch/driver";
+
+
+            target = "http://golfya.pointn.co.kr/index.php/MovieSearch/driver";
 
         }catch (Exception e){
             e.printStackTrace();
@@ -206,7 +194,6 @@ class LoadMovie extends AsyncTask <Void, Void, String>{
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
-    @Override
     protected void onPostExecute(String result) {
 
         Log.e("드라이버2", ""+result);
@@ -217,6 +204,8 @@ class LoadMovie extends AsyncTask <Void, Void, String>{
             Log.e("드라이버3", ""+jsonArray.length());
 
             String thum_pic, subjectText, viewCount, viewDate, viewCnt;
+
+
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
 
@@ -230,12 +219,15 @@ class LoadMovie extends AsyncTask <Void, Void, String>{
                 Log.e("viewDate", ""+viewDate);
                 Log.e("viewCnt", ""+viewCnt);
 
-                DriverMovie drivermovie = new DriverMovie(thum_pic,subjectText, viewDate , viewCnt);
-                driverMovieList.add(drivermovie);
-                //driverMovieList.add(new DriverMovie("","비기너골퍼를","2018", "0"));
-                count++;
-                Log.e("드라이버4", ""+object);
+                    DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt);
 
+
+                    driverMovieList.add(drivermovie);
+                    driverMovieList.add(new DriverMovie("", "비기너골퍼를", "2018", "0"));
+                    Log.e("드라이버4", "" + object);
+
+
+                count++;
             }
 
         } catch (Exception e) {

@@ -71,6 +71,7 @@ public class MyFirebaseMessagingService extends com.google.firebase.messaging.Fi
 */
 //테스트
         intent = new Intent(this, MainActivity.class);
+        intent.putExtra("str", "value");
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //CompatBuilder를 이용한 알림방식
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)(System.currentTimeMillis()/1000) /* Request code */, intent,

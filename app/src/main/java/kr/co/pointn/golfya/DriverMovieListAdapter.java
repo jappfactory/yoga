@@ -1,8 +1,10 @@
 package kr.co.pointn.golfya;
 
 import android.content.Context;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -39,14 +41,15 @@ public class DriverMovieListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int i, View v, ViewGroup viewGroup) {
 
-        View v = View.inflate(context, R.layout.driver, null);
-
-        ImageView thum_pic = (ImageView) v.findViewById(R.id.thumimg);
-        TextView subjectText = (TextView) v.findViewById(R.id.subjectText);
-        TextView viewDate = (TextView) v.findViewById(R.id.viewDate);
-        TextView viewCount = (TextView) v.findViewById(R.id.viewCount);
+        if(v == null) {
+             v = View.inflate(context, R.layout.driver, null);
+        }
+        ImageView thum_pic =  v.findViewById(R.id.thumimg);
+        TextView subjectText =  v.findViewById(R.id.subjectText);
+        TextView viewDate =  v.findViewById(R.id.viewDate);
+        TextView viewCount =  v.findViewById(R.id.viewCount);
 
 
 
