@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +24,14 @@ import android.widget.ListView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
                 AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
+               //setContentView(R.layout.driver);
             }
         });
 
@@ -334,3 +344,117 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+class LoadMovieTask extends AsyncTask<Void, Void, String> {
+
+
+    private  Context mContext;
+    private DriverMovieListAdapter driveradapter;
+    private List<DriverMovie> driverMovieList;
+    private ListView driverMovieListView;
+    String target;
+
+
+    public LoadMovieTask(Context context, List<DriverMovie> driverMovieList, ListView view, String target) {
+        this.mContext = context;
+        this.driverMovieList = driverMovieList;
+        this.driverMovieListView = view;
+        this.target = target;
+    }
+
+
+    @Override
+    protected String doInBackground(Void... voids) {
+
+        try {
+
+            URL url = new URL(target);
+            Log.e("주소 url", ""+url);
+
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            InputStream inputStream = httpURLConnection.getInputStream();
+
+            //Log.e("inputStream", ""+inputStream);
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+
+            // Log.e("bufferedReader", ""+bufferedReader);
+            String temp;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((temp = bufferedReader.readLine()) != null) {
+                Log.e("temp", ""+temp);
+                stringBuilder.append(temp + "\n");
+            }
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+            return stringBuilder.toString().trim();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+    }
+    protected void onPostExecute(String result) {
+
+
+        Log.e("드라이버2", ""+result);
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = jsonObject.getJSONArray("list");
+            int count = 0;
+            Log.e("드라이버3", ""+jsonArray.length());
+
+            String thum_pic, subjectText, viewCount, viewDate, viewCnt;
+
+
+            while (count < jsonArray.length()) {
+                JSONObject object = jsonArray.getJSONObject(count);
+
+
+                thum_pic = object.getString("thumbnails");
+                subjectText = object.getString("title");
+                viewDate = object.getString("viewDate");
+                viewCnt = object.getString("cnt");
+
+                DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt);
+
+
+                Log.e("thum_pic", ""+thum_pic);
+                Log.e("subjectText", ""+subjectText);
+                Log.e("viewDate", ""+viewDate);
+                Log.e("viewCnt", ""+viewCnt);
+                Log.e("드라이버4", "" + object);
+
+                // Log.e("드라이버5", "" + driverMovieList);
+
+                // driverMovieList.add(new DriverMovie("11", "비기너골퍼를", "2018", "0"));
+
+                driverMovieList.add(drivermovie);
+
+
+                count++;
+            }
+
+            Log.d("driverMovieListView2 ", ""+driverMovieListView);
+            driveradapter = new DriverMovieListAdapter(mContext.getApplicationContext(), driverMovieList);
+            driverMovieListView.setAdapter(driveradapter);
+
+
+            Log.d("driverMovieList7", ""+driverMovieList);
+
+
+        } catch (Exception e) {
+            //e.printStackTrace();
+            Log.e("Buffer Error", "Error converting result " + e.toString());
+
+        }
+
+    }
+
+
+}

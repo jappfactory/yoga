@@ -1,7 +1,9 @@
 package kr.co.pointn.golfya;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,48 +13,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WoodFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WoodFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class WoodFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public  ListView driverMovieListView;
+    public List<DriverMovie> driverMovieList;
+    public DriverMovieListAdapter driveradapter;
 
+    String target;
     private OnFragmentInteractionListener mListener;
 
-    public WoodFragment() {
-        // Required empty public constructor
-    }
+    public WoodFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WoodFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static WoodFragment newInstance(String param1, String param2) {
+    public static WoodFragment newInstance() {
         WoodFragment fragment = new WoodFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,37 +48,39 @@ public class WoodFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
-    private ListView driverMovieListView;
-    private DriverMovieListAdapter driveradapter;
-    private List<DriverMovie> driverMovieList;
 
     @Override
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
+        target = "http://golfya.pointn.co.kr/index.php/MovieSearch/wood";
 
+        driverMovieListView  = getView().findViewById(R.id.subWoodListView);
 
-        Log.e("우드", "우드");
-        driverMovieListView  = (ListView) getView().findViewById(R.id.subWoodListView);
+        Log.d("driverMovieListView", ""+driverMovieListView);
+
         driverMovieList = new ArrayList<DriverMovie>();
 
-        driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 우드 영상","2018-10-10", "0"));
-
-        driveradapter = new DriverMovieListAdapter(getContext().getApplicationContext(), driverMovieList);
-        driverMovieListView.setAdapter(driveradapter);
+        Log.d("driverMovieList", ""+driverMovieList);
+        //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, target).execute();
+        Log.d("driverMovieList6", ""+driverMovieList);
 
 
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        super.onCreate(savedInstanceState);
+        //new LoadMovieTask(getContext(), driverMovieList).execute();
+
         return inflater.inflate(R.layout.fragment_wood, container, false);
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -100,24 +89,18 @@ public class WoodFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        new LoadMovieTask(getContext(),driverMovieList, driverMovieListView, target).cancel(true);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
+
+

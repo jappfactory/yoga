@@ -23,50 +23,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DriverFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DriverFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DriverFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public  ListView driverMovieListView;
+    public List<DriverMovie> driverMovieList;
+    public DriverMovieListAdapter driveradapter;
 
-    public static  ListView driverMovieListView;
-    public static DriverMovieListAdapter driveradapter;
-    public static List<DriverMovie> driverMovieList;
-
+    String target;
     private OnFragmentInteractionListener mListener;
 
-    public DriverFragment() {
-        // Required empty public constructor
-    }
+    public DriverFragment() {}
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DriverFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DriverFragment newInstance(String param1, String param2) {
+    public static DriverFragment newInstance() {
         DriverFragment fragment = new DriverFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,8 +48,7 @@ public class DriverFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -84,29 +56,31 @@ public class DriverFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
-
-
+        target = "http://golfya.pointn.co.kr/index.php/MovieSearch/driver";
 
         driverMovieListView  = getView().findViewById(R.id.subDriverListView);
+
+        Log.d("driverMovieListView", ""+driverMovieListView);
+
         driverMovieList = new ArrayList<DriverMovie>();
 
-        driveradapter = new DriverMovieListAdapter(getContext().getApplicationContext(), driverMovieList);
-        driverMovieListView.setAdapter(driveradapter);
-       // driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 웨지 영상","2018-10-10", "0"));
+        Log.d("driverMovieList", ""+driverMovieList);
+        //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, target).execute();
+        Log.d("driverMovieList6", ""+driverMovieList);
 
 
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        super.onCreate(savedInstanceState);
+        //new LoadMovieTask(getContext(), driverMovieList).execute();
 
-        new LoadMovie().execute();
-        View FragmentView = inflater.inflate(R.layout.fragment_driver, container, false);
-
-
-        return FragmentView;
+        return inflater.inflate(R.layout.fragment_driver, container, false);
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -120,18 +94,9 @@ public class DriverFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        new LoadMovieTask(getContext(),driverMovieList, driverMovieListView, target).cancel(true);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -139,104 +104,3 @@ public class DriverFragment extends Fragment {
 }
 
 
-class LoadMovie extends AsyncTask<Void, Void, String> {
-
-    public static List<DriverMovie> driverMovieList;
-
-    String target;
-
-    @Override
-    protected void onPreExecute() {
-
-        try{
-
-
-            target = "http://golfya.pointn.co.kr/index.php/MovieSearch/driver";
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected String doInBackground(Void... voids) {
-
-        try {
-
-            URL url = new URL(target);
-            Log.e("주소 url", ""+url);
-
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = httpURLConnection.getInputStream();
-
-            //Log.e("inputStream", ""+inputStream);
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-
-            // Log.e("bufferedReader", ""+bufferedReader);
-            String temp;
-            StringBuilder stringBuilder = new StringBuilder();
-
-            while ((temp = bufferedReader.readLine()) != null) {
-                Log.e("temp", ""+temp);
-                stringBuilder.append(temp + "\n");
-            }
-            bufferedReader.close();
-            inputStream.close();
-            httpURLConnection.disconnect();
-            return stringBuilder.toString().trim();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
-    protected void onPostExecute(String result) {
-
-        Log.e("드라이버2", ""+result);
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("list");
-            int count = 0;
-            Log.e("드라이버3", ""+jsonArray.length());
-
-            String thum_pic, subjectText, viewCount, viewDate, viewCnt;
-
-
-            while (count < jsonArray.length()) {
-                JSONObject object = jsonArray.getJSONObject(count);
-
-
-                thum_pic = object.getString("thumbnails");
-                subjectText = object.getString("title");
-                viewDate = object.getString("viewDate");
-                viewCnt = object.getString("cnt");
-                Log.e("thum_pic", ""+thum_pic);
-                Log.e("subjectText", ""+subjectText);
-                Log.e("viewDate", ""+viewDate);
-                Log.e("viewCnt", ""+viewCnt);
-
-                    DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt);
-
-
-                    driverMovieList.add(drivermovie);
-                    driverMovieList.add(new DriverMovie("", "비기너골퍼를", "2018", "0"));
-                    Log.e("드라이버4", "" + object);
-
-
-                count++;
-            }
-
-        } catch (Exception e) {
-            //e.printStackTrace();
-            Log.e("Buffer Error", "Error converting result " + e.toString());
-
-        }
-
-    }
-
-
-}
