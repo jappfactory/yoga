@@ -7,14 +7,15 @@
 
     <!-- TODO: Update blank fragment layout -->
     <ListView
+        android:id="@+id/subWedgeListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/subWedgeListView"
         android:layout_marginTop="2dp"
-        android:dividerHeight="2dp"
+        android:background="@drawable/golfya_bg3"
 
+        android:divider="#ffffff"
+        android:dividerHeight="2dp"
         android:overScrollMode="never"
-        android:scrollbars="none"
-        android:divider="#ffffff"></ListView>
+        android:scrollbars="none"></ListView>
 
 </FrameLayout>

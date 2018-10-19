@@ -53,49 +53,23 @@ public class AdsFull {
         });
     }
 
-    public void  setAds1(Context context) {//
+    public void  setAds(Context context) {//
 
         MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
 
         //MobileAds.initialize(getApplicationContext(), "ca-app-pub-3940256099942544~3347511713");//test
 
 //
+
+        Log.d("adView", "" + R.id.adView);
         AdView adView = (AdView) ((Activity) context).findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                //.addTestDevice("F04045E9794CCECCCE886A59B2FF79DA")
                 .build();
         adView.loadAd(adRequest);
 
     }
 
 
-    public void  setAds2(Context context) {//
-
-        MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
-
-
-        AdView adView = (AdView) ((Activity) context).findViewById(R.id.adView2);
-        AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        adView.loadAd(adRequest);
-
-
-    }
-
-
-    public void  setAds3(Context context) {//
-
-        MobileAds.initialize(context, context.getResources().getString(R.string.ap_ad_id));
-
-
-
-        AdView adView = (AdView) ((Activity) context).findViewById(R.id.adView3);
-        AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        adView.loadAd(adRequest);
-
-
-    }
 }

@@ -6,14 +6,15 @@
     tools:context=".DriverFragment">
 
     <ListView
+        android:id="@+id/subDriverListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/subDriverListView"
         android:layout_marginTop="2dp"
-        android:dividerHeight="2dp"
+        android:background="@drawable/golfya_bg3"
 
+        android:divider="#ffffff"
+        android:dividerHeight="2dp"
         android:overScrollMode="never"
-        android:scrollbars="none"
-        android:divider="#ffffff"></ListView>
+        android:scrollbars="none"></ListView>
 
 </RelativeLayout>
