@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("target",drivertarget);
+                intent.putExtra("title","드라이버 레슨 영상");
 
 
                 AdsFull.getInstance(getApplicationContext()).setAdsFull();
@@ -109,7 +110,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d("전송 URL", woodtarget);
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
-                intent.putExtra("target",woodtarget);AdsFull.getInstance(getApplicationContext()).setAdsFull();
+                intent.putExtra("target",woodtarget);
+                intent.putExtra("title","우드/유틸 레슨 영상");
+
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
                 startActivity(intent);
             }
         });
@@ -120,6 +124,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("전송 URL", irontarget);
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("target",irontarget);
+                intent.putExtra("title","아이언 레슨 영상");
+
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
                 startActivity(intent);
             }
         });
@@ -130,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("전송 URL", wedgetarget);
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("target",wedgetarget);
+                intent.putExtra("title","웨지 레슨 영상");
+
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
                 startActivity(intent);
             }
         });
@@ -140,6 +150,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("전송 URL", puttertarget);
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("target",puttertarget);
+                intent.putExtra("title","퍼터 레슨 영상");
+
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
                 startActivity(intent);
             }
         });
