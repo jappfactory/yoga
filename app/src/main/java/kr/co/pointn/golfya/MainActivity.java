@@ -48,15 +48,22 @@ public class MainActivity extends AppCompatActivity {
     public List<DriverMovie> driverMovieList;
     public DriverMovieListAdapter driveradapter;
 
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=15&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g";
+    String target2 = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g";
     private static Context context;
     private static  int networkYn = 0;
 
-    String drivertarget = target +"&q=골프+드라이버+원포인트+레슨";
+    String drivertarget = target +"&q=드라이버+원포인트+레슨";
     String woodtarget = target +"&q=골프+우드+유틸리티+원포인트+레슨";
     String irontarget = target +"&q=골프+아이언+원포인트+레슨";
     String wedgetarget = target +"&q=골프+웨지+원포인트+레슨";
     String puttertarget = target +"&q=골프+퍼팅+원포인트+레슨";
+
+    String drivertarget2 = target2 +"&q=드라이버+원포인트+레슨";
+    String woodtarget2 = target2 +"&q=골프+우드+유틸리티+원포인트+레슨";
+    String irontarget2 = target2 +"&q=골프+아이언+원포인트+레슨";
+    String wedgetarget2 = target2 +"&q=골프+웨지+원포인트+레슨";
+    String puttertarget2 = target2 +"&q=골프+퍼팅+원포인트+레슨";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("target",drivertarget);
 
 
-
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
                 startActivity(intent);
             }
         });
@@ -100,8 +107,9 @@ public class MainActivity extends AppCompatActivity {
         woodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("전송 URL", woodtarget);
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
-                intent.putExtra("target",woodtarget);
+                intent.putExtra("target",woodtarget);AdsFull.getInstance(getApplicationContext()).setAdsFull();
                 startActivity(intent);
             }
         });
@@ -109,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         ironButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("전송 URL", irontarget);
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("target",irontarget);
                 startActivity(intent);
@@ -118,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         wedgeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("전송 URL", wedgetarget);
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("target",wedgetarget);
                 startActivity(intent);
@@ -127,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         putterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("전송 URL", puttertarget);
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 intent.putExtra("target",puttertarget);
                 startActivity(intent);
@@ -136,15 +147,16 @@ public class MainActivity extends AppCompatActivity {
         driverMovieListView  = findViewById(R.id.driveronepoint);
         driverMovieList = new ArrayList<DriverMovie>();
 
-        new LoadMovieTask(this, driverMovieList, driverMovieListView, drivertarget).execute();
+        Log.d("전송 URL", drivertarget2);
+        new LoadMovieTask(this, driverMovieList, driverMovieListView, drivertarget2).execute();
 
         driverMovieListView  = findViewById(R.id.woodonepoint);
         driverMovieList = new ArrayList<DriverMovie>();
-        new LoadMovieTask(this, driverMovieList, driverMovieListView, woodtarget).execute();
+        new LoadMovieTask(this, driverMovieList, driverMovieListView, woodtarget2).execute();
 
         driverMovieListView  = findViewById(R.id.irononepoint);
         driverMovieList = new ArrayList<DriverMovie>();
-        new LoadMovieTask(this, driverMovieList, driverMovieListView, irontarget).execute();
+        new LoadMovieTask(this, driverMovieList, driverMovieListView, irontarget2).execute();
 
 
 
