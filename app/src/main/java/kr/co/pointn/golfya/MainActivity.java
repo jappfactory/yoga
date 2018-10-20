@@ -43,36 +43,25 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     final AppCompatActivity activity = this;
 
-    private ListView newsListView;
-    private NewsListAdapter adapter;
-    private List<News> newsList;
 
     public  ListView driverMovieListView;
     public List<DriverMovie> driverMovieList;
     public DriverMovieListAdapter driveradapter;
 
-    String target;
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=15&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g";
     private static Context context;
     private static  int networkYn = 0;
+
+    String drivertarget = target +"&q=골프+드라이버+원포인트+레슨";
+    String woodtarget = target +"&q=골프+우드+유틸리티+원포인트+레슨";
+    String irontarget = target +"&q=골프+아이언+원포인트+레슨";
+    String wedgetarget = target +"&q=골프+웨지+원포인트+레슨";
+    String puttertarget = target +"&q=골프+퍼팅+원포인트+레슨";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
-        /*
-        newsListView = findViewById(R.id.mainNewsListView);
-        newsList = new ArrayList<News>();
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-
-        adapter = new NewsListAdapter(getApplicationContext(), newsList);
-        newsListView.setAdapter(adapter);
-
-*/
 
 
         // final Button newsButton = (Button) findViewById(R.id.newsButton);
@@ -92,161 +81,73 @@ public class MainActivity extends AppCompatActivity {
         wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
         putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment, new HomeFragment());
-        fragmentTransaction.commit();
-/*
-        newsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                main_news.setVisibility(View.GONE);
-                newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new NewsFragment());
-                fragmentTransaction.commit();
-
-            }
-        });
-*/
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //main_news.setVisibility(View.GONE);
-                //main_news.setVisibility(View.GONE);
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new HomeFragment());
-                fragmentTransaction.commit();
-
-            }
-        });
         driverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                Log.d("전송 URL", drivertarget);
 
-
-                // main_news.setVisibility(View.GONE);
-                //newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                intent.putExtra("target",drivertarget);
 
 
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new DriverFragment());
-                fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAdsFull();
-
-                //setContentView(R.layout.driver);
+                startActivity(intent);
             }
         });
 
         woodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  main_news.setVisibility(View.GONE);
-                //  newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WoodFragment());
-                fragmentTransaction.commit();
-                //AdsFull.getInstance(getApplicationContext()).setAdsFull();
-
+                Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                intent.putExtra("target",woodtarget);
+                startActivity(intent);
             }
         });
-
-
 
         ironButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  main_news.setVisibility(View.GONE);
-                //newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new IronFragment());
-                fragmentTransaction.commit();
-                //AdsFull.getInstance(getApplicationContext()).setAdsFull();
-
+                Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                intent.putExtra("target",irontarget);
+                startActivity(intent);
             }
         });
-
 
         wedgeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  main_news.setVisibility(View.GONE);
-                //  newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
-                fragmentTransaction.commit();
-                // AdsFull.getInstance(getApplicationContext()).setAdsFull();
-
+                Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                intent.putExtra("target",wedgetarget);
+                startActivity(intent);
             }
         });
 
         putterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  main_news.setVisibility(View.GONE);
-                // newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new PutterFragment());
-                fragmentTransaction.commit();
-                // AdsFull.getInstance(getApplicationContext()).setAdsFull();
-
+                Intent intent = new Intent(getApplicationContext(), SubActivity.class);
+                intent.putExtra("target",puttertarget);
+                startActivity(intent);
             }
         });
+
+        driverMovieListView  = findViewById(R.id.driveronepoint);
+        driverMovieList = new ArrayList<DriverMovie>();
+
+        new LoadMovieTask(this, driverMovieList, driverMovieListView, drivertarget).execute();
+
+        driverMovieListView  = findViewById(R.id.woodonepoint);
+        driverMovieList = new ArrayList<DriverMovie>();
+        new LoadMovieTask(this, driverMovieList, driverMovieListView, woodtarget).execute();
+
+        driverMovieListView  = findViewById(R.id.irononepoint);
+        driverMovieList = new ArrayList<DriverMovie>();
+        new LoadMovieTask(this, driverMovieList, driverMovieListView, irontarget).execute();
+
+
+
 
         AdsFull.getInstance(getApplicationContext()).setAds(this);
 
@@ -258,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -444,34 +346,45 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
         Log.e("드라이버2", ""+result);
         try {
             JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("list");
+            JSONArray jsonArray = jsonObject.getJSONArray("items");
             int count = 0;
             Log.e("드라이버3", ""+jsonArray.length());
 
-            String thum_pic, subjectText, viewCount, viewDate, viewCnt;
+            String thum_pic, subjectText, viewCount, viewDate, viewCnt="0", videoId;
 
 
             while (count < jsonArray.length()) {
+
                 JSONObject object = jsonArray.getJSONObject(count);
 
 
-                thum_pic = object.getString("thumbnails");
-                subjectText = object.getString("title");
-                viewDate = object.getString("viewDate");
-                viewCnt = object.getString("cnt");
 
-                DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt);
+                videoId = object.getJSONObject("id").getString("videoId");
+                subjectText = object.getJSONObject("snippet").getString("title");
+                viewDate = object.getJSONObject("snippet").getString("publishedAt")
+                        .substring(0, 10);
+                thum_pic = object.getJSONObject("snippet")
+                        .getJSONObject("thumbnails").getJSONObject("high")
+                        .getString("url"); // 썸내일 이미지 URL값
+
 
 
                 Log.e("thum_pic", ""+thum_pic);
                 Log.e("subjectText", ""+subjectText);
                 Log.e("viewDate", ""+viewDate);
-                Log.e("viewCnt", ""+viewCnt);
-                Log.e("드라이버4", "" + object);
+                //Log.e("드라이버4", "" + object);
+/*
+
+                thum_pic = object.getString("thumbnails");
+                subjectText = object.getString("title");
+                viewDate = object.getString("viewDate");
+                viewCnt = object.getString("cnt");
+*/
+
+                DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt);
+
 
                 // Log.e("드라이버5", "" + driverMovieList);
-
-                // driverMovieList.add(new DriverMovie("11", "비기너골퍼를", "2018", "0"));
 
                 driverMovieList.add(drivermovie);
 

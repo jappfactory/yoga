@@ -5,6 +5,8 @@
         <!-- Customize your theme here. -->
         <item name="windowNoTitle">true</item> <!-- 타이틀바 제거 -->
         <item name="android:windowFullscreen">true</item> <!-- 풀스크린 -->
+        <item name="toolbarStyle">@style/AppTheme.ToolbarStyle</item>
+
     </style>
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@mipmap/golfya_splash</item>
@@ -16,5 +18,12 @@
     <style name="OfflineTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="windowNoTitle">true</item> <!-- 타이틀바 제거 -->
         <item name="android:windowFullscreen">true</item> <!-- 풀스크린 -->
+    </style>
+
+
+    <style name="AppTheme.ToolbarStyle" parent="Base.Widget.AppCompat.Toolbar">
+        <!--<item name="actionOverflowButtonStyle">@style/AppTheme.OverflowButtonStyle</item>-->
+        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle</item>
     </style>
 </resources>
