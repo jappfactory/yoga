@@ -1,19 +1,14 @@
 package kr.co.pointn.golfya;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +93,7 @@ public class HomeFragment extends Fragment  {
 
         driverMovieListView  = getView().findViewById(R.id.driveronepoint);
         driverMovieList = new ArrayList<DriverMovie>();
+       // driverMovieListView.setAdapter(driveradapter);
 
 
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
@@ -111,6 +107,7 @@ public class HomeFragment extends Fragment  {
         driverMovieListView  = getView().findViewById(R.id.woodonepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+        //driverMovieListView.setAdapter(driveradapter);
 
 
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
@@ -120,6 +117,7 @@ public class HomeFragment extends Fragment  {
         driverMovieListView  = getView().findViewById(R.id.irononepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+        //driverMovieListView.setAdapter(driveradapter);
 
 
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));

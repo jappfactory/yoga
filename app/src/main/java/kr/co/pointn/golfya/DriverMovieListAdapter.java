@@ -84,9 +84,9 @@ public class DriverMovieListAdapter extends BaseAdapter {
 
         v.setTag(driverMovieList.get(i).getMovie_title());
 
-        //Button viewButton = (layout) v.findViewById(R.id.viewplay);
+        Button viewButton = (Button) v.findViewById(R.id.viewButton);
 
-        driverMovieListView.setOnClickListener(new View.OnClickListener() {
+        viewButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
