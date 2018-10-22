@@ -1,15 +1,18 @@
 package kr.co.pointn.golfya;
 
 import android.content.Context;
-import android.text.Layout;
+import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,11 +20,19 @@ import java.util.List;
 
 public class DriverMovieListAdapter extends BaseAdapter {
     private Context context;
+    private Fragment parent;
+    private String videoId;
+    private String videodesc;
+    private String videotitle;
     private List<DriverMovie> driverMovieList;
 
-    public DriverMovieListAdapter(Context context, List<DriverMovie> driverMovieList) {
+    public ListView driverMovieListView;
+
+    public DriverMovieListAdapter(Context context, List<DriverMovie> driverMovieList, Fragment parent) {
         this.context = context;
+        this.parent = parent;
         this.driverMovieList = driverMovieList;
+
     }
 
 
@@ -64,11 +75,36 @@ public class DriverMovieListAdapter extends BaseAdapter {
         //thum_pic.setImageBitmap(back.class.etBitmapFromURL(driverMovieList.get(i).getThum_img()));
 
         //thum_pic.setImageURI(Uri.parse(driverMovieList.get(i).getThum_img()));
-        subjectText.setText(driverMovieList.get(i).getMovie_title());
+        subjectText.setText(driverMovieList.get(i).getMovie_title() +"/"+driverMovieList.get(i).getMovie_videoId());
         viewCount.setText(driverMovieList.get(i).getMovie_count());
         viewDate.setText(driverMovieList.get(i).getMovie_date());
+        videoId = driverMovieList.get(i).getMovie_videoId();
+        videodesc = driverMovieList.get(i).getMovie_desc();
+        videotitle = driverMovieList.get(i).getMovie_title();
 
         v.setTag(driverMovieList.get(i).getMovie_title());
+
+        //Button viewButton = (layout) v.findViewById(R.id.viewplay);
+
+        driverMovieListView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                intent.putExtra("videoId", ""+  videoId);
+                intent.putExtra("videodesc", ""+  videodesc);
+                intent.putExtra("title",""+ videotitle);
+
+
+                Toast.makeText (context, "클릭" + videoId , Toast.LENGTH_LONG).show();
+                view.getContext().startActivity(intent);
+
+            }
+
+        });
 
         return v;
     }

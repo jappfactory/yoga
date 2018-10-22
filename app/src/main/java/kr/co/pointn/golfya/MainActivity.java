@@ -3,6 +3,7 @@ package kr.co.pointn.golfya;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
@@ -32,7 +33,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**dc dddd
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        // 화면을 landscape(가로) 화면으로 고정하고 싶은 경우
 
         /*
         newsListView = findViewById(R.id.mainNewsListView);
@@ -393,9 +395,10 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
     String target;
 
 
-    public LoadMovieTask(Context context, List<DriverMovie> driverMovieList, ListView view, String target) {
+    public LoadMovieTask(Context context, List<DriverMovie> driverMovieList, ListView view, DriverMovieListAdapter driveradapter, String target) {
         this.mContext = context;
         this.driverMovieList = driverMovieList;
+        this.driveradapter = driveradapter;
         this.driverMovieListView = view;
         this.target = target;
     }
@@ -444,23 +447,45 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
         Log.e("드라이버2", ""+result);
         try {
             JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("list");
+            JSONArray jsonArray = jsonObject.getJSONArray("items");
             int count = 0;
             Log.e("드라이버3", ""+jsonArray.length());
 
-            String thum_pic, subjectText, viewCount, viewDate, viewCnt;
+            String thum_pic, subjectText, descriptionText, viewCount, viewDate, viewCnt, videoId;
 
 
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
 
 
+                videoId = object.getJSONObject("id").getString("videoId");
+                subjectText = object.getJSONObject("snippet").getString("title");
+                descriptionText = object.getJSONObject("snippet").getString("description");
+                viewDate = object.getJSONObject("snippet").getString("publishedAt")
+                        .substring(0, 10);
+                thum_pic = object.getJSONObject("snippet")
+                        .getJSONObject("thumbnails").getJSONObject("high")
+                        .getString("url"); // 썸내일 이미지 URL값
+
+
+
+                Log.e("thum_pic", ""+thum_pic);
+                Log.e("subjectText", ""+subjectText);
+                Log.e("viewDate", ""+viewDate);
+                viewCnt = "0";
+                //Log.e("드라이버4", "" + object);
+/*
+
+                videoId = object.getString("videoId");
                 thum_pic = object.getString("thumbnails");
                 subjectText = object.getString("title");
                 viewDate = object.getString("viewDate");
                 viewCnt = object.getString("cnt");
+*/
 
-                DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt);
+
+
+                DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt, videoId , descriptionText);
 
 
                 Log.e("thum_pic", ""+thum_pic);
@@ -479,9 +504,11 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
                 count++;
             }
 
-            Log.d("driverMovieListView2 ", ""+driverMovieListView);
-            driveradapter = new DriverMovieListAdapter(mContext.getApplicationContext(), driverMovieList);
+
+
             driverMovieListView.setAdapter(driveradapter);
+
+            Log.d("driverMovieListView2 ", ""+driverMovieListView);
 
 
             Log.d("driverMovieList7", ""+driverMovieList);

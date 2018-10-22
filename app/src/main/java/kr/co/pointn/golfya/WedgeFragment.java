@@ -35,6 +35,14 @@ public class WedgeFragment extends Fragment {
     String target;
     private OnFragmentInteractionListener mListener;
 
+    MainActivity activity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        activity = (MainActivity) getActivity();
+    }
     public WedgeFragment() {}
 
     public static WedgeFragment newInstance() {
@@ -56,17 +64,19 @@ public class WedgeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
-        target = "http://golfya.pointn.co.kr/index.php/MovieSearch/wedge";
+        String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&q=웨지+스윙+레슨";
 
         driverMovieListView  = getView().findViewById(R.id.subWedgeListView);
 
         Log.d("driverMovieListView", ""+driverMovieListView);
 
         driverMovieList = new ArrayList<DriverMovie>();
+        driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+        driverMovieListView.setAdapter(driveradapter);
 
         Log.d("driverMovieList", ""+driverMovieList);
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
-        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, target).execute();
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).execute();
         Log.d("driverMovieList6", ""+driverMovieList);
 
 
@@ -94,7 +104,7 @@ public class WedgeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        new LoadMovieTask(getContext(),driverMovieList, driverMovieListView, target).cancel(true);
+        //new LoadMovieTask(getContext(),driverMovieList, driverMovieListView, target).cancel(true);
     }
 
     public interface OnFragmentInteractionListener {

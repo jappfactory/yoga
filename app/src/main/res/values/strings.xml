@@ -10,6 +10,7 @@
     <string name="exitmsgN">취소</string>
     <string name="title_activity_splash">SplashActivity</string>
 
+    <string name="action_settings">Settings</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="news_fragment">골프뉴스</string>
 

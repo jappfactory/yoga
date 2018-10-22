@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.List;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class HomeFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -85,24 +86,44 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = getView().findViewById(R.id.subWoodListView);
+
+        String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g";
+
+
+        String drivertarget = target +"&q=드라이버+원포인트+레슨";
+        String woodtarget = target +"&q=골프+우드+유틸리티+원포인트+레슨";
+        String irontarget = target +"&q=골프+아이언+원포인트+레슨";
+        String wedgetarget = target +"&q=골프+웨지+원포인트+레슨";
+        String puttertarget = target +"&q=골프+퍼팅+원포인트+레슨";
 
         driverMovieListView  = getView().findViewById(R.id.driveronepoint);
         driverMovieList = new ArrayList<DriverMovie>();
+
+
+        driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
 
 
-        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, "http://golfya.pointn.co.kr/index.php/MovieSearch/driveronepoint").execute();
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, drivertarget).execute();
+
 
         driverMovieListView  = getView().findViewById(R.id.woodonepoint);
         driverMovieList = new ArrayList<DriverMovie>();
+        driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+
+
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
-        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, "http://golfya.pointn.co.kr/index.php/MovieSearch/woodonepoint").execute();
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, woodtarget).execute();
+
 
         driverMovieListView  = getView().findViewById(R.id.irononepoint);
         driverMovieList = new ArrayList<DriverMovie>();
+        driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+
+
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
-        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, "http://golfya.pointn.co.kr/index.php/MovieSearch/irononepoint").execute();
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter,  irontarget).execute();
 
 
     }
@@ -113,21 +134,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemClickLis
         // Inflate the layout for this fragment
 
 
-        driverMovieListView.setOnItemClickListener(this);
+        //driverMovieListView.setOnItemClickListener(this);
 
 
-
-
+        //Toast.makeText (getActivity(), "클릭", Toast.LENGTH_LONG).show();
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // handle click here
-
-        Log.e("드라이버5", "" + driverMovieList);
-
-    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
