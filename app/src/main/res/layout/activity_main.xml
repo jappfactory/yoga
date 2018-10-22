@@ -115,90 +115,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="8">
 
-        <ScrollView
+
+
+        <RelativeLayout
+            android:id="@+id/fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="none">
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/main_news"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginTop="4dp"
-                    android:drawableLeft="@drawable/ic_chat_black_24dp"
-                    android:text="원포인트 드라이버 레슨"
-                    android:textColor="#000000"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
-
-                <ListView
-                    android:id="@+id/driveronepoint"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="0dp"
-                    android:background="@drawable/golfya_bg2"
-                    android:divider="#ffffff"
-                    android:dividerHeight="1dp"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"></ListView>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginTop="4dp"
-                    android:drawableLeft="@drawable/ic_chat_black_24dp"
-                    android:text="원포인트 우드 레슨"
-                    android:textColor="#000000"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
-
-                <ListView
-                    android:id="@+id/woodonepoint"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="0dp"
-                    android:background="@drawable/golfya_bg2"
-                    android:divider="#ffffff"
-                    android:dividerHeight="1dp"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"></ListView>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginTop="4dp"
-                    android:drawableLeft="@drawable/ic_chat_black_24dp"
-                    android:text="원포인트 아이언 레슨"
-                    android:textColor="#000000"
-                    android:textSize="15dp"
-                    android:textStyle="bold" />
-
-                <ListView
-                    android:id="@+id/irononepoint"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:layout_marginTop="0dp"
-                    android:background="@drawable/golfya_bg2"
-                    android:divider="#ffffff"
-                    android:dividerHeight="1dp"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"></ListView>
-
-
-            </LinearLayout>
-        </ScrollView>
+        </RelativeLayout>
 
 
     </FrameLayout>
