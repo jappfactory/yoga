@@ -415,11 +415,11 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
 
-            //Log.e("inputStream", ""+inputStream);
+            Log.e("inputStream", ""+inputStream);
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-            // Log.e("bufferedReader", ""+bufferedReader);
+           Log.e("bufferedReader", ""+bufferedReader);
             String temp;
             StringBuilder stringBuilder = new StringBuilder();
 
