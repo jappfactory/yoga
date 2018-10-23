@@ -531,7 +531,7 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
 
 
-                //Log.e("thum_pic", ""+thum_pic);
+                Log.e("thum_pic", ""+thum_pic);
                 //Log.e("subjectText", ""+subjectText);
                 //Log.e("viewDate", ""+viewDate);
                 viewCnt = "0";
@@ -568,7 +568,7 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
 
 
-            driverMovieListView.setAdapter(driveradapter);
+            //driverMovieListView.setAdapter(driveradapter);
 
            // Log.d("driverMovieListView2 ", ""+driverMovieListView);
 

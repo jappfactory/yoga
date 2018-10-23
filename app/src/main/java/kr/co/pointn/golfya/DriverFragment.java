@@ -38,15 +38,14 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     public  ListView driverMovieListView;
     public List<DriverMovie> driverMovieList;
-    public DriverMovieListAdapter driveradapter;private
-    ProgressBar progressBar;                // 데이터 로딩중을 표시할 프로그레스바
+    public DriverMovieListAdapter driveradapter;
+    private  ProgressBar progressBar;                // 데이터 로딩중을 표시할 프로그레스바
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
 
 
-     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
+    Activity activity;
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
 
-    String pageToken;
     private OnFragmentInteractionListener mListener;
 
 
@@ -84,24 +83,24 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
         driverMovieListView  = getView().findViewById(R.id.subDriverListView);
         driverMovieList = new ArrayList<DriverMovie>();
+        driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
 
-        driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
 
         Log.d("driverMovieList", ""+driverMovieList);
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
-        AsyncTask<Void, Void, String> result = new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).execute();
+        //new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).execute();
 
 
-        //Toast.makeText (getActivity(), "클릭" + result , Toast.LENGTH_LONG).show();
+        //Toast.makeText (getActivity(), "클릭a"  , Toast.LENGTH_LONG).show();
 
         progressBar.setVisibility(View.GONE);
 
-        Log.d("driverMovieList6", ""+driverMovieList);
+        //Log.d("driverMovieList6", ""+driverMovieList);
         driverMovieListView.setOnScrollListener(this);
 
         // 다음 데이터를 불러온다.
-       // getItem(target);
+        getItem(target);
     }
     @Override
     public void onScrollStateChanged(AbsListView absListView, int scrollState) {
@@ -116,7 +115,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBar.setVisibility(View.VISIBLE);
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
 
 
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
@@ -130,7 +129,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
                 //Context context = MainActivity.getAppContext();
                //mactivity = (MainActivity) context.getApplicationContext();
                 target = target + aa;
-                Toast.makeText (getActivity(), "클릭2" + target , Toast.LENGTH_LONG).show();
+                //Toast.makeText (getActivity(), "클릭2" + target , Toast.LENGTH_LONG).show();
 
             }catch (Exception e){
 
@@ -175,6 +174,15 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
                // driveradapter.setNotifyOnChange(false);
                 progressBar.setVisibility(View.GONE);
                 mLockListView = false;
+
+ /*               int fVisible = driverMovieListView.getFirstVisiblePosition();
+                View vFirst = driverMovieListView.getChildAt(0);
+                int pos = 0;
+                if (vFirst != null) pos = vFirst.getTop();
+
+//Restore the position
+                driverMovieListView.setSelectionFromTop(fVisible, pos);*/
+
             }
         },1000);
     }
