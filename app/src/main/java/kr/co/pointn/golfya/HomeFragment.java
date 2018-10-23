@@ -82,7 +82,8 @@ public class HomeFragment extends Fragment  {
         super.onActivityCreated(b);
 
 
-        String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g";
+        //https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLQMjx4uteLr3uJ_WGHjNydTJJctPl_vlU&maxResults=15&key=AIzaSyAfQNbrF9o9J3ji7x-81Ox1G_Rqg6GkmPE  채널목록
+        String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video";
 
 
         String drivertarget = target +"&q=드라이버+원포인트+레슨";
@@ -93,10 +94,8 @@ public class HomeFragment extends Fragment  {
 
         driverMovieListView  = getView().findViewById(R.id.driveronepoint);
         driverMovieList = new ArrayList<DriverMovie>();
-       // driverMovieListView.setAdapter(driveradapter);
-
-
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+        driverMovieListView.setAdapter(driveradapter);
 
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
 
@@ -107,7 +106,7 @@ public class HomeFragment extends Fragment  {
         driverMovieListView  = getView().findViewById(R.id.woodonepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
-        //driverMovieListView.setAdapter(driveradapter);
+        driverMovieListView.setAdapter(driveradapter);
 
 
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
@@ -117,7 +116,7 @@ public class HomeFragment extends Fragment  {
         driverMovieListView  = getView().findViewById(R.id.irononepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
-        //driverMovieListView.setAdapter(driveradapter);
+        driverMovieListView.setAdapter(driveradapter);
 
 
         //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));

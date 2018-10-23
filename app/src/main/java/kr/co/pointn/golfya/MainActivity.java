@@ -3,6 +3,7 @@ package kr.co.pointn.golfya;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -20,8 +21,11 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -39,9 +43,12 @@ import java.util.List;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     final AppCompatActivity activity = this;
+
+    private String pageToken;
 
     private ListView newsListView;
     private NewsListAdapter adapter;
@@ -52,12 +59,17 @@ public class MainActivity extends AppCompatActivity {
     public DriverMovieListAdapter driveradapter;
 
     String target;
+    private  String nextPageToken;
     private static Context context;
     private static  int networkYn = 0;
-
+    private SharedPreferences PageToken;
+    private SharedPreferences.Editor pt;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
+         SharedPreferences  PageToken = getSharedPreferences(nextPageToken, 0);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // 화면을 landscape(가로) 화면으로 고정하고 싶은 경우
@@ -160,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.commit();
                 AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
-                //setContentView(R.layout.driver);
             }
         });
 
@@ -180,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WoodFragment());
                 fragmentTransaction.commit();
-                //AdsFull.getInstance(getApplicationContext()).setAdsFull();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -203,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new IronFragment());
                 fragmentTransaction.commit();
-                //AdsFull.getInstance(getApplicationContext()).setAdsFull();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -225,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
                 fragmentTransaction.commit();
-                // AdsFull.getInstance(getApplicationContext()).setAdsFull();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -245,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new PutterFragment());
                 fragmentTransaction.commit();
-                // AdsFull.getInstance(getApplicationContext()).setAdsFull();
+                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -260,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -381,6 +393,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public String getpageToken(){
+        return pageToken;
+    }
+    public void SetpageToken(String pageToken){
+        this.pageToken= pageToken;
+    }
 }
 
 
@@ -388,13 +406,16 @@ public class MainActivity extends AppCompatActivity {
 class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
 
+    private SharedPreferences PageToken;
+    private SharedPreferences.Editor pt;
+
     private  Context mContext;
     private DriverMovieListAdapter driveradapter;
     private List<DriverMovie> driverMovieList;
     private ListView driverMovieListView;
     String target;
 
-
+    private MainActivity activity;
     public LoadMovieTask(Context context, List<DriverMovie> driverMovieList, ListView view, DriverMovieListAdapter driveradapter, String target) {
         this.mContext = context;
         this.driverMovieList = driverMovieList;
@@ -415,16 +436,16 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
 
-            Log.e("inputStream", ""+inputStream);
+           // Log.e("inputStream", ""+inputStream);
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-           Log.e("bufferedReader", ""+bufferedReader);
+           //Log.e("bufferedReader", ""+bufferedReader);
             String temp;
             StringBuilder stringBuilder = new StringBuilder();
 
             while ((temp = bufferedReader.readLine()) != null) {
-                Log.e("temp", ""+temp);
+               // Log.e("temp", ""+temp);
                 stringBuilder.append(temp + "\n");
             }
             bufferedReader.close();
@@ -437,6 +458,8 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
         }
 
     }
+
+
     @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
@@ -448,8 +471,47 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
         try {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+            String nextPageToken = jsonObject.getString("nextPageToken");
+
+
+           // SharedPreferences  PageToken = mContext.getSharedPreferences(nextPageToken, 0);
+           // pt = PageToken.edit();
+           // pt.putString("nextPageToken", nextPageToken);
+           // pt.commit();
+           // String slat= PageToken.getString("nextPageToken", "");
+
+            SharedPreference.putSharedPreference(mContext, "nextPageToken", nextPageToken);
+            //Toast.makeText (mContext, "클릭" + slat , Toast.LENGTH_LONG).show();
+
+
+
+            // Toast.makeText (mContext, "클릭" + nextPageToken , Toast.LENGTH_LONG).show();
+            try {
+               // View v = View.inflate(mContext, R.layout.activity_main, null);
+
+                //TextView pageTokenText =  (TextView) v.findViewById(R.id.pageTokenText);
+
+                //Toast.makeText (mContext, "클릭" + nextPageToken , Toast.LENGTH_LONG).show();
+
+               // Log.e("pageToken setText Error", "Error pageToken result ");
+               // pageTokenText.setText(nextPageToken);
+
+               // activity = ((MainActivity) mContext.getApplicationContext());
+               // activity.SetpageToken(nextPageToken);
+
+
+               //Toast.makeText (mContext, "클릭" + pageTokenText.getText().toString() , Toast.LENGTH_LONG).show();
+
+                //Log.e("pageToken setText Error", "Error pageToken result ");
+
+            }catch (Exception e){
+                Log.e("pageToken Error", "Error pageToken result " + e.toString());
+            }
+
+
             int count = 0;
-            Log.e("드라이버3", ""+jsonArray.length());
+           // Log.e("드라이버3", ""+jsonArray.length());
 
             String thum_pic, subjectText, descriptionText, viewCount, viewDate, viewCnt, videoId;
 
@@ -469,9 +531,9 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
 
 
-                Log.e("thum_pic", ""+thum_pic);
-                Log.e("subjectText", ""+subjectText);
-                Log.e("viewDate", ""+viewDate);
+                //Log.e("thum_pic", ""+thum_pic);
+                //Log.e("subjectText", ""+subjectText);
+                //Log.e("viewDate", ""+viewDate);
                 viewCnt = "0";
                 //Log.e("드라이버4", "" + object);
 /*
@@ -488,11 +550,11 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
                 DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt, videoId , descriptionText);
 
 
-                Log.e("thum_pic", ""+thum_pic);
-                Log.e("subjectText", ""+subjectText);
-                Log.e("viewDate", ""+viewDate);
-                Log.e("viewCnt", ""+viewCnt);
-                Log.e("드라이버4", "" + object);
+               // Log.e("thum_pic", ""+thum_pic);
+               // Log.e("subjectText", ""+subjectText);
+               // Log.e("viewDate", ""+viewDate);
+               // Log.e("viewCnt", ""+viewCnt);
+               // Log.e("드라이버4", "" + object);
 
                 // Log.e("드라이버5", "" + driverMovieList);
 
@@ -508,10 +570,10 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
             driverMovieListView.setAdapter(driveradapter);
 
-            Log.d("driverMovieListView2 ", ""+driverMovieListView);
+           // Log.d("driverMovieListView2 ", ""+driverMovieListView);
 
 
-            Log.d("driverMovieList7", ""+driverMovieList);
+            //Log.d("driverMovieList7", ""+driverMovieList);
 
 
         } catch (Exception e) {

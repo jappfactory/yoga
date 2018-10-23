@@ -16,5 +16,10 @@
         android:dividerHeight="2dp"
         android:overScrollMode="never"
         android:scrollbars="none"></ListView>
-y
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

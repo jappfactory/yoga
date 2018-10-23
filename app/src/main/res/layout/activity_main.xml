@@ -26,7 +26,13 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         />-->
-
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="pageToken"
+            android:padding="0dp"
+            android:textColor="#666666"
+            android:id="@+id/pageTokenText" />
         <Button
             android:id="@+id/homeButton"
             android:layout_width="match_parent"

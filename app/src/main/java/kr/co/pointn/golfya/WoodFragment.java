@@ -67,9 +67,6 @@ public class WoodFragment extends Fragment {
         String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&q=우드+유틸리티+스윙+레슨";
 
         driverMovieListView  = getView().findViewById(R.id.subWoodListView);
-
-        Log.d("driverMovieListView", ""+driverMovieListView);
-
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);

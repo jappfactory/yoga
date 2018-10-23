@@ -53,7 +53,6 @@ public class DriverMovieListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View v, ViewGroup viewGroup) {
-
         if(v == null) {
              v = View.inflate(context, R.layout.driver, null);
         }
@@ -66,7 +65,7 @@ public class DriverMovieListAdapter extends BaseAdapter {
 
         if(!TextUtils.isEmpty(driverMovieList.get(i).getThum_img())) {
 
-            Log.e("getThum_img", driverMovieList.get(i).getThum_img());
+            //Log.e("getThum_img", driverMovieList.get(i).getThum_img());
 
             Picasso.with(context)
                     .load(driverMovieList.get(i).getThum_img())
@@ -94,12 +93,13 @@ public class DriverMovieListAdapter extends BaseAdapter {
                 Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
+
                 intent.putExtra("videoId", ""+  videoId);
                 intent.putExtra("videodesc", ""+  videodesc);
                 intent.putExtra("title",""+ videotitle);
 
 
-                Toast.makeText (context, "클릭" + videoId , Toast.LENGTH_LONG).show();
+               // Toast.makeText (context, "클릭" + videoId , Toast.LENGTH_LONG).show();
                 view.getContext().startActivity(intent);
 
             }
