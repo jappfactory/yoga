@@ -2,10 +2,8 @@ package kr.co.pointn.golfya;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,23 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.AbsListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 
 public class DriverFragment extends Fragment implements AbsListView.OnScrollListener {
@@ -44,7 +32,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,13 +55,8 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
-
-       // progressBar.setVisibility(View.GONE);
-
-
+        //progressBar.setVisibility(View.GONE);
     }
 
 
@@ -86,19 +69,23 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
 
+        driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Log.d("driverMovieList", ""+driverMovieList);
-        //driverMovieList.add(new DriverMovie("https://www.sacoop.kr/upload/project_img/33.jpg","쥬피터 아이언 영상","2018-10-10", "0"));
-        //new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).execute();
+                Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("videoId", ""+  driverMovieList.get(position).getMovie_videoId());
+                intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
+                intent.putExtra("title",""+ driverMovieList.get(position).getMovie_title());
 
+                view.getContext().startActivity(intent);
 
-        //Toast.makeText (getActivity(), "클릭a"  , Toast.LENGTH_LONG).show();
+            }
+        });
 
         progressBar.setVisibility(View.GONE);
-
-        //Log.d("driverMovieList6", ""+driverMovieList);
         driverMovieListView.setOnScrollListener(this);
-
         // 다음 데이터를 불러온다.
         getItem(target);
     }
@@ -115,29 +102,9 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBar.setVisibility(View.VISIBLE);
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
-
-
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
-
-
-
-          //Toast.makeText (getActivity(), "아래" + aa, Toast.LENGTH_LONG).show();
-
-            try {
-
-                //Context context = MainActivity.getAppContext();
-               //mactivity = (MainActivity) context.getApplicationContext();
-                target = target + aa;
-                //Toast.makeText (getActivity(), "클릭2" + target , Toast.LENGTH_LONG).show();
-
-            }catch (Exception e){
-
-            }
-
-            //Toast.makeText (getActivity(), "클릭" + MainActivity.pageToken , Toast.LENGTH_LONG).show();
-
-
+            target = target + aa;
             // 다음 데이터를 불러온다.
             getItem(target);
         }
@@ -159,7 +126,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         mLockListView = true;
         //Log.d("target", ""+target);
 
-        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).execute();
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
        // driverMovieListView.setAdapter(driveradapter);
         Log.d("driverMovieList6", ""+driverMovieList);
@@ -185,6 +152,8 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
             }
         },1000);
+
+        AdsFull.getInstance(getActivity()).setAdsFull();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -1,10 +1,8 @@
 package kr.co.pointn.golfya;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -74,10 +71,10 @@ public class DriverMovieListAdapter extends BaseAdapter {
         //thum_pic.setImageBitmap(back.class.etBitmapFromURL(driverMovieList.get(i).getThum_img()));
 
         //thum_pic.setImageURI(Uri.parse(driverMovieList.get(i).getThum_img()));
-        subjectText.setText(driverMovieList.get(i).getMovie_title() +"/"+driverMovieList.get(i).getMovie_videoId());
+        subjectText.setText(driverMovieList.get(i).getMovie_title()+driverMovieList.get(i).getMovie_videoId());
         viewCount.setText(driverMovieList.get(i).getMovie_count());
         viewDate.setText(driverMovieList.get(i).getMovie_date());
-        videoId = driverMovieList.get(i).getMovie_videoId();
+         videoId = driverMovieList.get(i).getMovie_videoId();
         videodesc = driverMovieList.get(i).getMovie_desc();
         videotitle = driverMovieList.get(i).getMovie_title();
 
@@ -85,6 +82,8 @@ public class DriverMovieListAdapter extends BaseAdapter {
 
         Button viewButton = (Button) v.findViewById(R.id.viewButton);
 
+
+/*
         viewButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -99,12 +98,13 @@ public class DriverMovieListAdapter extends BaseAdapter {
                 intent.putExtra("title",""+ videotitle);
 
 
-               // Toast.makeText (context, "클릭" + videoId , Toast.LENGTH_LONG).show();
+                Toast.makeText (context, "클릭" + videoId , Toast.LENGTH_SHORT).show();
                 view.getContext().startActivity(intent);
 
             }
 
         });
+ */
 
         return v;
     }

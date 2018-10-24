@@ -20,12 +20,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -170,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new DriverFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAdsFull();
+
 
             }
         });
@@ -191,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WoodFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAdsFull();
+
 
             }
         });
@@ -214,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new IronFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAdsFull();
+
 
             }
         });
@@ -236,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAdsFull();
+
 
             }
         });
@@ -256,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new PutterFragment());
                 fragmentTransaction.commit();
-                AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
             }
         });
@@ -393,12 +390,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String getpageToken(){
-        return pageToken;
-    }
-    public void SetpageToken(String pageToken){
-        this.pageToken= pageToken;
-    }
 }
 
 
@@ -409,6 +400,7 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
     private SharedPreferences PageToken;
     private SharedPreferences.Editor pt;
 
+    private  String location;
     private  Context mContext;
     private DriverMovieListAdapter driveradapter;
     private List<DriverMovie> driverMovieList;
@@ -416,12 +408,14 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
     String target;
 
     private MainActivity activity;
-    public LoadMovieTask(Context context, List<DriverMovie> driverMovieList, ListView view, DriverMovieListAdapter driveradapter, String target) {
+    public LoadMovieTask(Context context, List<DriverMovie> driverMovieList, ListView view, DriverMovieListAdapter driveradapter, String target, String location) {
         this.mContext = context;
         this.driverMovieList = driverMovieList;
         this.driveradapter = driveradapter;
         this.driverMovieListView = view;
         this.target = target;
+        this.location = location;
+
     }
 
 
@@ -436,11 +430,8 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
 
-           // Log.e("inputStream", ""+inputStream);
-
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-           //Log.e("bufferedReader", ""+bufferedReader);
             String temp;
             StringBuilder stringBuilder = new StringBuilder();
 
@@ -475,44 +466,11 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
             String nextPageToken = jsonObject.getString("nextPageToken");
 
 
-           // SharedPreferences  PageToken = mContext.getSharedPreferences(nextPageToken, 0);
-           // pt = PageToken.edit();
-           // pt.putString("nextPageToken", nextPageToken);
-           // pt.commit();
-           // String slat= PageToken.getString("nextPageToken", "");
-
             SharedPreference.putSharedPreference(mContext, "nextPageToken", nextPageToken);
             //Toast.makeText (mContext, "클릭" + slat , Toast.LENGTH_LONG).show();
 
 
-
-            // Toast.makeText (mContext, "클릭" + nextPageToken , Toast.LENGTH_LONG).show();
-            try {
-               // View v = View.inflate(mContext, R.layout.activity_main, null);
-
-                //TextView pageTokenText =  (TextView) v.findViewById(R.id.pageTokenText);
-
-                //Toast.makeText (mContext, "클릭" + nextPageToken , Toast.LENGTH_LONG).show();
-
-               // Log.e("pageToken setText Error", "Error pageToken result ");
-               // pageTokenText.setText(nextPageToken);
-
-               // activity = ((MainActivity) mContext.getApplicationContext());
-               // activity.SetpageToken(nextPageToken);
-
-
-               //Toast.makeText (mContext, "클릭" + pageTokenText.getText().toString() , Toast.LENGTH_LONG).show();
-
-                //Log.e("pageToken setText Error", "Error pageToken result ");
-
-            }catch (Exception e){
-                Log.e("pageToken Error", "Error pageToken result " + e.toString());
-            }
-
-
             int count = 0;
-           // Log.e("드라이버3", ""+jsonArray.length());
-
             String thum_pic, subjectText, descriptionText, viewCount, viewDate, viewCnt, videoId;
 
 
@@ -529,51 +487,38 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
                         .getJSONObject("thumbnails").getJSONObject("high")
                         .getString("url"); // 썸내일 이미지 URL값
 
-
-
-                Log.e("thum_pic", ""+thum_pic);
-                //Log.e("subjectText", ""+subjectText);
-                //Log.e("viewDate", ""+viewDate);
                 viewCnt = "0";
-                //Log.e("드라이버4", "" + object);
-/*
-
-                videoId = object.getString("videoId");
-                thum_pic = object.getString("thumbnails");
-                subjectText = object.getString("title");
-                viewDate = object.getString("viewDate");
-                viewCnt = object.getString("cnt");
-*/
 
 
 
                 DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt, videoId , descriptionText);
 
-
-               // Log.e("thum_pic", ""+thum_pic);
-               // Log.e("subjectText", ""+subjectText);
-               // Log.e("viewDate", ""+viewDate);
-               // Log.e("viewCnt", ""+viewCnt);
-               // Log.e("드라이버4", "" + object);
-
-                // Log.e("드라이버5", "" + driverMovieList);
-
-                // driverMovieList.add(new DriverMovie("11", "비기너골퍼를", "2018", "0"));
-
                 driverMovieList.add(drivermovie);
-
 
                 count++;
             }
 
 
-
-            //driverMovieListView.setAdapter(driveradapter);
-
-           // Log.d("driverMovieListView2 ", ""+driverMovieListView);
+            if(location =="main"){
+                driverMovieListView.setAdapter(driveradapter);
 
 
-            //Log.d("driverMovieList7", ""+driverMovieList);
+                driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("videoId", ""+  driverMovieList.get(position).getMovie_videoId());
+                        intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
+                        intent.putExtra("title",""+ driverMovieList.get(position).getMovie_title());
+
+                        view.getContext().startActivity(intent);
+
+                    }
+                });
+
+            }
 
 
         } catch (Exception e) {
