@@ -16,7 +16,10 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +32,12 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     public DriverMovieListAdapter driveradapter;
     private  ProgressBar progressBar;                // 데이터 로딩중을 표시할 프로그레스바
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
+    public int loading = 0;
+    public int loadingresult = 0;
 
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,6 +74,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
 
+
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -102,7 +108,9 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBar.setVisibility(View.VISIBLE);
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
+
+
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=드라이버+스윙+레슨&pageToken=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
             // 다음 데이터를 불러온다.
@@ -121,6 +129,11 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     }
 
     public void getItem(String target){
+        loading ++ ;
+        loadingresult = loading % 5;
+        if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
+
+        //Toast.makeText (getActivity(), "로딩 카운트 : " + loadingresult , Toast.LENGTH_SHORT).show();
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
@@ -128,8 +141,17 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
+
+        String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
+
+        DecimalFormat myFormatter = new DecimalFormat("###,###");
+        TextView searchcnt =  getView().findViewById(R.id.searchcnt);
+
+        searchcnt.setText(myFormatter.format(totalResults));
+
+
        // driverMovieListView.setAdapter(driveradapter);
-        Log.d("driverMovieList6", ""+driverMovieList);
+        //Log.d("driverMovieList6", ""+driverMovieList);
 
         // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
         new Handler().postDelayed(new Runnable() {
@@ -153,7 +175,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
             }
         },1000);
 
-        AdsFull.getInstance(getActivity()).setAdsFull();
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

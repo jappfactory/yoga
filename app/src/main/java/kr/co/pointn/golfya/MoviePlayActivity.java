@@ -7,7 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -53,6 +55,7 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         title.setText(subject);
         desc.setText(videodesc);
 
+
         //Toast.makeText (getApplicationContext(), "클릭" + videoId , Toast.LENGTH_LONG).show();
 
 
@@ -61,6 +64,13 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
 
         youtubeView.initialize("AIzaSyCBOFrruYNwGIjpNZ9mEHUDyJg3qE3gwco", listener);
 
+        ImageView btn_go_back = (ImageView) findViewById(R.id.back_button);
+        btn_go_back.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //Toast.makeText(getApplicationContext(), "Go Back", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
 
     }
 

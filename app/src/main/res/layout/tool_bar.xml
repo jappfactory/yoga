@@ -10,7 +10,9 @@
     android:background="@color/colorBlue"
 
     android:theme="@style/Toolbar"
-
+    android:layout_gravity="left"
+    android:layout_marginLeft="0dp"
+    app:contentInsetStart="0dp"
     android:minHeight="?attr/actionBarSize"
 
     >
@@ -19,37 +21,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="0dp"
-        >
-    <LinearLayout
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="0dp"
-        android:layout_gravity="left"
+        android:gravity="left"
+        android:orientation="horizontal">
 
-        >
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:layout_marginLeft="0dp"
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_arrow_back_black_24dp" />
+            android:layout_weight="1">
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="0dp"
-        >
-        <TextView
-            android:id="@+id/toolbar_title"
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/before_black" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:text="Toolbar Title"
-            android:layout_gravity="bottom"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:gravity="center_vertical"
+                android:padding="1dp"
+                android:layout_marginLeft="4dp"
+                android:text="Toolbar Title"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.Toolbar>
 

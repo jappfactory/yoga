@@ -29,10 +29,12 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
     public DriverMovieListAdapter driveradapter;
     private  ProgressBar progressBar;                // 데이터 로딩중을 표시할 프로그레스바
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
+    public int loading = 0;
+    public int loadingresult = 0;
 
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=퍼터+스윙+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=퍼터+스윙+레슨&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -109,7 +111,7 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBar.setVisibility(View.VISIBLE);
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=퍼터+스윙+레슨&pageToken=";
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=퍼터+스윙+레슨&pageToken=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
             // 다음 데이터를 불러온다.
@@ -128,6 +130,9 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
     }
 
     public void getItem(String target){
+        loading ++ ;
+        loadingresult = loading % 5;
+        if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
@@ -160,7 +165,6 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
             }
         },1000);
 
-        AdsFull.getInstance(getActivity()).setAdsFull();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

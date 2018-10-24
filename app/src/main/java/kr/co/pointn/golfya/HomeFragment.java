@@ -26,7 +26,7 @@ public class HomeFragment extends Fragment  {
     private DriverMovieListAdapter driveradapter;
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
 
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=2&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&maxResults=3&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&videoSyndicated=true";
 
 
     Activity activity;
@@ -66,11 +66,11 @@ public class HomeFragment extends Fragment  {
         super.onActivityCreated(b);
 
 
-        String drivertarget = target +"&q=드라이버+원포인트+레슨";
-        String woodtarget = target +"&q=골프+우드+유틸리티+원포인트+레슨";
-        String irontarget = target +"&q=골프+아이언+원포인트+레슨";
-        String wedgetarget = target +"&q=골프+웨지+원포인트+레슨";
-        String puttertarget = target +"&q=골프+퍼팅+원포인트+레슨";
+        String drivertarget = target +"&q=골프+드라이버";
+        String woodtarget = target +"&q=골프+우드";
+        String irontarget = target +"&q=골프+아이언";
+        String wedgetarget = target +"&q=골프+웨지";
+        String puttertarget = target +"&q=골프+퍼팅";
 
 
         driverMovieListView  = getView().findViewById(R.id.driveronepoint);
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment  {
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, drivertarget , "main").execute();
         //driverMovieListView.setAdapter(driveradapter);
 
-
+        Log.d("target", ""+woodtarget);
         driverMovieListView  = getView().findViewById(R.id.woodonepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
@@ -93,65 +93,22 @@ public class HomeFragment extends Fragment  {
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, irontarget , "main").execute();
 
 
-        // 다음 데이터를 불러온다.
-        // getItem(target);
-    }
-
-    public void getItem(String target){
-
+        driverMovieListView  = getView().findViewById(R.id.wedgeonepoint);
         driverMovieList = new ArrayList<DriverMovie>();
-        //driverMovieListView.setAdapter(driveradapter);
-        // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
-        mLockListView = true;
-        //Log.d("target", ""+target);
-
-        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target, "main").execute();
-
-        // driverMovieListView.setAdapter(driveradapter);
-        Log.d("driverMovieList6", ""+driverMovieList);
-
-        // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-              // driveradapter.notifyDataSetChanged();
-
-                // driveradapter.setNotifyOnChange(false);
-                mLockListView = false;
+        driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, wedgetarget , "main").execute();
 
 
-            }
-        },1000);
+        driverMovieListView  = getView().findViewById(R.id.putteronepoint);
+        driverMovieList = new ArrayList<DriverMovie>();
+        driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, puttertarget , "main").execute();
+
+
+
+
     }
 
-    public void getItem2(String target, DriverMovieListAdapter driveradapter){
-
-        Toast.makeText (getActivity(), "우드" , Toast.LENGTH_LONG).show();
-        // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
-        mLockListView = true;
-        //Log.d("target", ""+target);
-
-        driverMovieListView.setAdapter(driveradapter);
-        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target, "main").execute();
-
-        // driverMovieListView.setAdapter(driveradapter);
-        Log.d("driverMovieList6", ""+driverMovieList);
-
-        // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                //driveradapter.notifyDataSetChanged();
-
-                // driveradapter.setNotifyOnChange(false);
-                mLockListView = false;
-
-
-            }
-        },1000);
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment

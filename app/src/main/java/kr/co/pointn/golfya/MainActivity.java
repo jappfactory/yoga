@@ -454,8 +454,11 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
             JSONArray jsonArray = jsonObject.getJSONArray("items");
 
             String nextPageToken = jsonObject.getString("nextPageToken");
+            String totalResults = jsonObject.getJSONObject("pageInfo").getString("totalResults");
 
 
+
+            SharedPreference.putSharedPreference(mContext, "totalResults", totalResults);
             SharedPreference.putSharedPreference(mContext, "nextPageToken", nextPageToken);
             //Toast.makeText (mContext, "클릭" + slat , Toast.LENGTH_LONG).show();
 
