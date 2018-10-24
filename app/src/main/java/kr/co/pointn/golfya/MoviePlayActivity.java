@@ -3,6 +3,7 @@ package kr.co.pointn.golfya;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
 
     YouTubePlayer mPlayer;
     private String videoId;
+    Toolbar myToolbar;
 
     YouTubePlayer.OnInitializedListener listener;
 
@@ -38,14 +40,11 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         setContentView(R.layout.activity_movie_play);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-       // android.support.v7.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-       // setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayShowTitleEnabled(false);
+        myToolbar = (Toolbar) findViewById(R.id.toolbar);
+
 
         TextView title = findViewById(R.id.toolbar_title);
         TextView desc = findViewById(R.id.movie_desc);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
-
 
         Intent intent = getIntent();
         String subject = intent.getStringExtra("title");

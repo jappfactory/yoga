@@ -46,16 +46,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     final AppCompatActivity activity = this;
 
-    private String pageToken;
-
-    private ListView newsListView;
-    private NewsListAdapter adapter;
-    private List<News> newsList;
-
-    public  ListView driverMovieListView;
-    public List<DriverMovie> driverMovieList;
-    public DriverMovieListAdapter driveradapter;
-
     String target;
     private  String nextPageToken;
     private static Context context;
@@ -484,7 +474,7 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
                 viewDate = object.getJSONObject("snippet").getString("publishedAt")
                         .substring(0, 10);
                 thum_pic = object.getJSONObject("snippet")
-                        .getJSONObject("thumbnails").getJSONObject("high")
+                        .getJSONObject("thumbnails").getJSONObject("medium")
                         .getString("url"); // 썸내일 이미지 URL값
 
                 viewCnt = "0";
