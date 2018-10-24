@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,12 +143,6 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
 
-        String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
-
-        DecimalFormat myFormatter = new DecimalFormat("###,###");
-        TextView searchcnt =  getView().findViewById(R.id.searchcnt);
-
-        searchcnt.setText(myFormatter.format(totalResults));
 
 
        // driverMovieListView.setAdapter(driveradapter);
@@ -160,6 +155,11 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
                 driveradapter.notifyDataSetChanged();
 
+                String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
+                TextView searchcnt =  getView().findViewById(R.id.searchcnt);
+                searchcnt.setText(totalResults);
                // driveradapter.setNotifyOnChange(false);
                 progressBar.setVisibility(View.GONE);
                 mLockListView = false;

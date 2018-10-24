@@ -3,11 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:background="#eaeaea"
+    android:background="#e9e7e7"
     android:id="@+id/viewplay"
     android:layout_height="98dp"
     android:padding="2dp"
     android:descendantFocusability="blocksDescendants">
+
+
+    <LinearLayout
+
+        android:background="#f2f1f1"
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:orientation="horizontal" >
+
+
 
     <ImageView
         android:id="@+id/thumimg"
@@ -31,7 +41,7 @@
             android:elegantTextHeight="true"
             android:padding="0dp"
             android:text="제목"
-            android:textColor="#000000"
+            android:textColor="#282828"
             android:textSize="14dp"
             android:textStyle="bold" />
 
@@ -110,5 +120,6 @@
 
         </LinearLayout>
 
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
