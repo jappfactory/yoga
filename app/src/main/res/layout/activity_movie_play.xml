@@ -55,7 +55,7 @@
             android:layout_marginTop="0dp">
 
             <Button
-                android:id="@+id/homeButton"
+                android:id="@+id/shereButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/driverButton"
+                android:id="@+id/favoritesButton"
                 android:text="즐겨찾기"
                 android:textStyle="bold"
                 android:textColor="#ffffff"

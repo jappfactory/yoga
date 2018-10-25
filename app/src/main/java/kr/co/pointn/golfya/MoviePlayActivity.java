@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +22,10 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
     YouTubePlayerView youtubeView;
 
     YouTubePlayer mPlayer;
-    private String videoId;
+    public String videoId;
     Toolbar myToolbar;
+
+    public String subject;
 
     YouTubePlayer.OnInitializedListener listener;
 
@@ -45,12 +48,13 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
+
         TextView title = findViewById(R.id.toolbar_title);
         TextView desc = findViewById(R.id.movie_desc);
 
         Intent intent = getIntent();
-        String subject = intent.getStringExtra("title");
-        String videoId = intent.getStringExtra("videoId");
+        subject = intent.getStringExtra("title");
+        videoId = intent.getStringExtra("videoId");
         String videodesc = intent.getStringExtra("videodesc");
         title.setText(subject);
         desc.setText(videodesc);
@@ -69,6 +73,32 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
             public void onClick(View v) {
                 //Toast.makeText(getApplicationContext(), "Go Back", Toast.LENGTH_LONG).show();
                 finish();
+            }
+        });
+
+        Button favoritesButton = (Button) findViewById(R.id.favoritesButton);
+        favoritesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "즐겨찾기에 등록되었습니다~", Toast.LENGTH_LONG).show();
+            }
+        });
+        Button shereButton = (Button) findViewById(R.id.shereButton);
+        shereButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String EXTRA_TEXT ="https://www.youtube.com/watch?v="+videoId;
+                 EXTRA_TEXT +="\n\n" +
+                         "언제나 함께하는 쉬운골프레슨 설치\n" +
+                         "https://play.google.com/store/apps/details?id=kr.co.pointn.golfya";
+
+                //Toast.makeText(getApplicationContext(), "Go Back", Toast.LENGTH_LONG).show();
+                Intent msg = new Intent (Intent.ACTION_SEND);
+                msg.addCategory(Intent.CATEGORY_DEFAULT);
+                msg.putExtra(Intent.EXTRA_SUBJECT, subject);
+                msg.setType("text/plain");
+
+                msg.putExtra(Intent.EXTRA_TEXT,EXTRA_TEXT);
+                startActivity(Intent.createChooser(msg, "공유하기"));
+
             }
         });
 
