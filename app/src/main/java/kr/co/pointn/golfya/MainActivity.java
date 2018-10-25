@@ -415,7 +415,7 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
         try {
 
             URL url = new URL(target);
-            Log.e("주소 url", ""+url);
+            //Log.e("주소 url", ""+url);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
@@ -448,7 +448,7 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
 
 
-        Log.e("드라이버2", ""+result);
+        //Log.e("드라이버2", ""+result);
         try {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("items");

@@ -16,7 +16,9 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,7 +138,8 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
 
         loading ++ ;
         loadingresult = loading % 5;
-        if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
+        //if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
+        AdsFull.getInstance(getActivity()).setAdsFull();
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
@@ -153,6 +156,13 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
             public void run() {
 
                 driveradapter.notifyDataSetChanged();
+
+                String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
+                DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
+                TextView searchcnt =  getView().findViewById(R.id.searchcnt);
+                searchcnt.setText(totalResults);
+
 
                 // driveradapter.setNotifyOnChange(false);
                 progressBar.setVisibility(View.GONE);

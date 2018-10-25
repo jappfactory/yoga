@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,8 +129,8 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     public void getItem(String target){
         loading ++ ;
         loadingresult = loading % 5;
-        if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
-
+        //if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
+        AdsFull.getInstance(getActivity()).setAdsFull();
         //Toast.makeText (getActivity(), "로딩 카운트 : " + loadingresult , Toast.LENGTH_SHORT).show();
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.

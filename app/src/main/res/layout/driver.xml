@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#e9e7e7"
     android:id="@+id/viewplay"
-    android:layout_height="98dp"
+    android:layout_height="96dp"
     android:padding="2dp"
     android:descendantFocusability="blocksDescendants">
 
@@ -14,7 +14,7 @@
 
         android:background="#f2f1f1"
         android:layout_width="match_parent"
-        android:layout_height="98dp"
+        android:layout_height="96dp"
         android:orientation="horizontal" >
 
 
