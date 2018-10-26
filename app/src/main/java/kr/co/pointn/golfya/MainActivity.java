@@ -46,39 +46,39 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     final AppCompatActivity activity = this;
 
-    String target;
+    private String  target ="http://golfya.pointn.co.kr/index.php/gms/reg/";;
     private  String nextPageToken;
     private static Context context;
     private static  int networkYn = 0;
     private SharedPreferences PageToken;
     private SharedPreferences.Editor pt;
+
+    MyFirebaseInstanceIDService mf;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "token::" + token);
 
-         SharedPreferences  PageToken = getSharedPreferences(nextPageToken, 0);
+            //   target = target + token;
+
+            new gms_reg().execute();
+
+            //Log.e("주소 url", ""+url);
+
+
+
+        SharedPreferences  PageToken = getSharedPreferences(nextPageToken, 0);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // 화면을 landscape(가로) 화면으로 고정하고 싶은 경우
 
-        /*
-        newsListView = findViewById(R.id.mainNewsListView);
-        newsList = new ArrayList<News>();
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-        newsList.add(new News("뉴스입니다","쥬피터","2018-10-10"));
-
-        adapter = new NewsListAdapter(getApplicationContext(), newsList);
-        newsListView.setAdapter(adapter);
-
-*/
 
 
         // final Button newsButton = (Button) findViewById(R.id.newsButton);
-        final Button homeButton = (Button) findViewById(R.id.homeButton);
+       // final Button homeButton = (Button) findViewById(R.id.homeButton);
         final Button driverButton = (Button) findViewById(R.id.driverButton);
         final Button woodButton = (Button) findViewById(R.id.woodButton);
         final Button ironButton = (Button) findViewById(R.id.ironButton);
@@ -87,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
         final LinearLayout main_news = (LinearLayout) findViewById(R.id.main_news) ;
 
-        homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-        driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+       // homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+        driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
         woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
         ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
         wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
@@ -96,47 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment, new HomeFragment());
+        fragmentTransaction.replace(R.id.fragment, new DriverFragment());
         fragmentTransaction.commit();
-/*
-        newsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                main_news.setVisibility(View.GONE);
-                newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new NewsFragment());
-                fragmentTransaction.commit();
 
-            }
-        });
-*/
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //main_news.setVisibility(View.GONE);
-                //main_news.setVisibility(View.GONE);
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new HomeFragment());
-                fragmentTransaction.commit();
-
-            }
-        });
         driverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // main_news.setVisibility(View.GONE);
                 //newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+               // homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
                 woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
@@ -158,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new DriverFragment());
                 fragmentTransaction.commit();
-
+                Online();
+                if(networkYn==2) NotOnline();
 
             }
         });
@@ -168,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //  main_news.setVisibility(View.GONE);
                 //  newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+               // homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
                 ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
@@ -180,7 +144,8 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.fragment, new WoodFragment());
                 fragmentTransaction.commit();
 
-
+                Online();
+                if(networkYn==2) NotOnline();
             }
         });
 
@@ -191,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //  main_news.setVisibility(View.GONE);
                 //newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                //homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
@@ -203,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.replace(R.id.fragment, new IronFragment());
                 fragmentTransaction.commit();
 
-
+                Online();
+                if(networkYn==2) NotOnline();
             }
         });
 
@@ -213,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //  main_news.setVisibility(View.GONE);
                 //  newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+               // homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
@@ -224,7 +190,8 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
                 fragmentTransaction.commit();
-
+                Online();
+                if(networkYn==2) NotOnline();
 
             }
         });
@@ -244,15 +211,14 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new PutterFragment());
                 fragmentTransaction.commit();
-
+                Online();
+                if(networkYn==2) NotOnline();
             }
         });
 
         AdsFull.getInstance(getApplicationContext()).setAds(this);
 
-        String token = FirebaseInstanceId.getInstance().getToken();
         updateIconBadge(activity,  0);
-
 
 
 
@@ -270,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        AdsFull.getInstance(getApplicationContext()).setAdsFull();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
 
@@ -293,7 +260,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-            Online();
             if(networkYn==2){
 
                 NotOnline();
@@ -355,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
                 }).show();
 
 
-        // startActivity(new Intent(getApplicationContext(), OfflineActivity.class));
+         //startActivity(new Intent(getApplicationContext(), OfflineActivity.class));
 
 
     }
@@ -398,6 +364,9 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
     String target;
 
     private MainActivity activity;
+
+
+
     public LoadMovieTask(Context context, List<DriverMovie> driverMovieList, ListView view, DriverMovieListAdapter driveradapter, String target, String location) {
         this.mContext = context;
         this.driverMovieList = driverMovieList;
@@ -522,5 +491,57 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
     }
 
+
+}
+
+
+
+
+class gms_reg extends AsyncTask<Void, Void, String> {
+    private  Context mContext;
+    String target ="http://golfya.pointn.co.kr/index.php/gms/reg/"+FirebaseInstanceId.getInstance().getToken();
+
+    @Override
+    protected String doInBackground(Void... voids) {
+
+        try {
+
+
+            URL url = new URL(target);
+            Log.e("주소 url", ""+url);
+
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            InputStream inputStream = httpURLConnection.getInputStream();
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+            String temp;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((temp = bufferedReader.readLine()) != null) {
+                // Log.e("temp", ""+temp);
+                stringBuilder.append(temp + "\n");
+            }
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+            return stringBuilder.toString().trim();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+    }
+    protected void onPostExecute(String result) {
+
+
+
+    }
 
 }

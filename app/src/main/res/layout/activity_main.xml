@@ -34,14 +34,14 @@
                 android:layout_height="30dp"
                 android:layout_weight="1">
 
-                <ImageButton
+                <!--<ImageButton
                     android:id="@+id/a11"
                     android:layout_width="26dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
                     android:background="@drawable/before_black"
-                    android:src="@drawable/ic_menu_black_24dp" />
+                    android:src="@drawable/baseline_menu_black_18dp" />-->
 
             </LinearLayout>
 
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:text="골프영상시청"
+                    android:text="골프레슨영상"
                     android:textColor="@color/colorBlueDark"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -71,13 +71,13 @@
                 android:layout_weight="1"
                 android:gravity="right">
 
-                <ImageButton
+               <!-- <ImageButton
                     android:id="@+id/a33"
                     android:layout_width="26dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/before_black"
-                    android:src="@drawable/ic_settings_black_24dp" />
+                    android:src="@drawable/ic_search_black_24dp" /> -->
 
             </LinearLayout>
 
@@ -107,18 +107,6 @@
             android:layout_marginTop="0dp"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/homeButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_weight="1"
-                android:background="@color/colorBlue"
-                android:text="Home"
-                android:textColor="#ffffff"
-                android:textSize="14dp"
-                android:textStyle="bold" />
 
 
             <Button

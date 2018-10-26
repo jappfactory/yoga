@@ -17,12 +17,12 @@ import okhttp3.RequestBody;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     private static final String TAG = MyFirebaseInstanceIDService.class.getSimpleName();
-    public static Context mContext;
+    public  static  Context mContext;
 
 
     // 토큰 재생성
     @Override
-    public void onTokenRefresh() {
+    public  void onTokenRefresh() {
 
         // Get updated InstanceID token.
         String token = FirebaseInstanceId.getInstance().getToken();
@@ -31,7 +31,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         sendRegistrationToServer(token);
     }
 
-    public void sendRegistrationToServer(String token) {
+    public static void sendRegistrationToServer(String token) {
 
         // Add custom implementation, as needed.
 
@@ -43,7 +43,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         Log.d(TAG, "gsm/reg = " + token);
         //request
         Request request = new Request.Builder()
-                .url("http://dev.sacoop.kr/gms/reg/"+token)
+                .url("http://golfya.pointn.co.kr/index.php/gms/reg/"+token)
                 .post(body)
                 .build();
 

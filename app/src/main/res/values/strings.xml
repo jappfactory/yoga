@@ -5,7 +5,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="networkmsg">네트워크가 연결되어있지않습니다. 확인후 재접속 바랍니다.</string>
 
-    <string name="exitmsg">매일보는골프를 종료하시겠습니까?</string>
+    <string name="exitmsg">골프레슨영상을 종료하시겠습니까?</string>
     <string name="exitmsgY">종료</string>
     <string name="exitmsgN">취소</string>
     <string name="title_activity_splash">SplashActivity</string>
