@@ -1,4 +1,4 @@
-package kr.co.pointn.golfya;
+package kr.co.pointn.billiardya;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
