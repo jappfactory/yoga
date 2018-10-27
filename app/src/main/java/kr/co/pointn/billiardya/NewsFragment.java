@@ -1,6 +1,5 @@
-package kr.co.pointn.golfya;
+package kr.co.pointn.billiardya;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
