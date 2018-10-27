@@ -501,13 +501,14 @@ class gms_reg extends AsyncTask<Void, Void, String> {
     private  Context mContext;
     String target ="http://golfya.pointn.co.kr/index.php/gms/reg/"+FirebaseInstanceId.getInstance().getToken();
 
+    String target2 ="http://golfya.pointn.co.kr/index.php/gms/cnt/"+FirebaseInstanceId.getInstance().getToken();
     @Override
     protected String doInBackground(Void... voids) {
 
         try {
 
 
-            URL url = new URL(target);
+            URL url = new URL(target2);
             Log.e("주소 url", ""+url);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -522,14 +523,48 @@ class gms_reg extends AsyncTask<Void, Void, String> {
                 // Log.e("temp", ""+temp);
                 stringBuilder.append(temp + "\n");
             }
+
             bufferedReader.close();
             inputStream.close();
             httpURLConnection.disconnect();
-            return stringBuilder.toString().trim();
+
+             Log.e("stringBuilder", ""+stringBuilder.toString().trim());
+
+
+            try {
+
+
+                 url = new URL(target);
+                Log.e("주소 url", ""+url);
+
+                 httpURLConnection = (HttpURLConnection) url.openConnection();
+                 inputStream = httpURLConnection.getInputStream();
+
+                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+
+                 stringBuilder = new StringBuilder();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    // Log.e("temp", ""+temp);
+                    stringBuilder.append(temp + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+                return stringBuilder.toString().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+
 
     }
 
