@@ -1,4 +1,4 @@
-package kr.co.pointn.billiardya;
+package kr.co.pointn.golfya;
 
 import android.content.Context;
 import android.util.Log;
@@ -43,7 +43,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         Log.d(TAG, "gsm/reg = " + token);
         //request
         Request request = new Request.Builder()
-                .url("http://billiardya.pointn.co.kr/index.php/gms/reg/"+token)
+                .url("http://golfya.pointn.co.kr/index.php/gms/reg/"+token)
                 .post(body)
                 .build();
 

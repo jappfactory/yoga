@@ -1,4 +1,4 @@
-package kr.co.pointn.billiardya;
+package kr.co.pointn.golfya;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

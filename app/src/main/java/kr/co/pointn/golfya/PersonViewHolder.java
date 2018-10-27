@@ -1,4 +1,4 @@
-package kr.co.pointn.billiardya;
+package kr.co.pointn.golfya;
 
 import android.widget.ImageView;
 import android.widget.TextView;

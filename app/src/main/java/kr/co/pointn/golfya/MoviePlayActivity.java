@@ -1,4 +1,4 @@
-package kr.co.pointn.billiardya;
+package kr.co.pointn.golfya;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -66,7 +66,7 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         youtubeView = (YouTubePlayerView) findViewById(R.id.youtubeView);
         youtubeView.initialize(mApiKey, this);
 
-        youtubeView.initialize("AIzaSyCBOFrruYNwGIjpNZ9mEHUDyJg3qE3gwco", listener);
+        //youtubeView.initialize("AIzaSyCBOFrruYNwGIjpNZ9mEHUDyJg3qE3gwco", listener);
 
         ImageView btn_go_back = (ImageView) findViewById(R.id.back_button);
         btn_go_back.setOnClickListener(new View.OnClickListener() {
@@ -87,8 +87,8 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
             public void onClick(View v) {
                 String EXTRA_TEXT ="https://www.youtube.com/watch?v="+videoId;
                  EXTRA_TEXT +="\n\n" +
-                         "언제나 함께하는 쉬운골프레슨 설치\n" +
-                         "https://play.google.com/store/apps/details?id=kr.co.pointn.billiardya";
+                         "언제나 함께하는 골프레슨영상 설치\n" +
+                         "https://play.google.com/store/apps/details?id=kr.co.pointn.golfya";
 
                 //Toast.makeText(getApplicationContext(), "Go Back", Toast.LENGTH_LONG).show();
                 Intent msg = new Intent (Intent.ACTION_SEND);
