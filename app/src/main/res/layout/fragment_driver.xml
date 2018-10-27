@@ -56,7 +56,7 @@
     <ListView
         android:id="@+id/subDriverListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:background="@drawable/golfya_bg3"
 
@@ -65,12 +65,14 @@
         android:overScrollMode="never"
         android:scrollbars="none"></ListView>
 
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
 
         </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
+
     </LinearLayout>
+
 </LinearLayout>

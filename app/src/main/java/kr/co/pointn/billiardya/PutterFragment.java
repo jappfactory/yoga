@@ -1,4 +1,4 @@
-package kr.co.pointn.golfya;
+package kr.co.pointn.billiardya;
 
 import android.app.Activity;
 import android.content.Context;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WedgeFragment extends Fragment implements AbsListView.OnScrollListener {
+public class PutterFragment extends Fragment implements AbsListView.OnScrollListener {
 
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     public  ListView driverMovieListView;
@@ -36,7 +36,7 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
 
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=웨지+스윙+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+퍼터+레슨&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,10 +47,10 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
 
         activity = (Activity) getActivity();
     }
-    public WedgeFragment() {}
+    public PutterFragment() {}
 
-    public static WedgeFragment newInstance() {
-        WedgeFragment fragment = new WedgeFragment();
+    public static PutterFragment newInstance() {
+        PutterFragment fragment = new PutterFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -73,7 +73,7 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = getView().findViewById(R.id.subWedgeListView);
+        driverMovieListView  = getView().findViewById(R.id.subPutterListView);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
@@ -97,7 +97,6 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
         progressBar.setVisibility(View.GONE);
 
         driverMovieListView.setOnScrollListener(this);
-
         // 다음 데이터를 불러온다.
         getItem(target);
     }
@@ -114,7 +113,7 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBar.setVisibility(View.VISIBLE);
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=웨지+스윙+레슨&pageToken=";
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+퍼터+레슨&pageToken=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
             // 다음 데이터를 불러온다.
@@ -133,7 +132,6 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
     }
 
     public void getItem(String target){
-
         loading ++ ;
         loadingresult = loading % 6;
         if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
@@ -190,7 +188,7 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
         super.onCreate(savedInstanceState);
         //new LoadMovieTask(getContext(), driverMovieList).execute();
 
-        View view=inflater.inflate(R.layout.fragment_wedge, container, false);
+        View view=inflater.inflate(R.layout.fragment_putter, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
         //progressBar.setVisibility(View.GONE);
