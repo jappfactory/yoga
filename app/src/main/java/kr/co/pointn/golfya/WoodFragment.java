@@ -36,7 +36,7 @@ public class WoodFragment extends Fragment implements AbsListView.OnScrollListen
 
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+우드+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+우드+레슨&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,6 +78,12 @@ public class WoodFragment extends Fragment implements AbsListView.OnScrollListen
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
 
+        String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
+        TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
+        searchcnt.setText(totalResults);
+
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -114,7 +120,7 @@ public class WoodFragment extends Fragment implements AbsListView.OnScrollListen
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBar.setVisibility(View.VISIBLE);
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=date&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+우드+레슨&pageToken=";
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+우드+레슨&pageToken=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
 
@@ -153,15 +159,11 @@ public class WoodFragment extends Fragment implements AbsListView.OnScrollListen
             @Override
             public void run() {
 
-                driveradapter.notifyDataSetChanged();
 
 
                 try {
-                    String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
-                    DecimalFormat decimalFormat = new DecimalFormat("#,###");
-                    totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
-                    TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
-                    searchcnt.setText(totalResults);
+                    driveradapter.notifyDataSetChanged();
+                    driveradapter.notifyDataSetChanged();
 
                 }catch  (Exception e) {
                     e.printStackTrace();

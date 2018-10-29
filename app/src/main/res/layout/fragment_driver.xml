@@ -53,17 +53,17 @@
             android:layout_marginLeft="0dp"
             android:layout_weight="1"
             android:orientation="vertical">
-    <ListView
-        android:id="@+id/subDriverListView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/golfya_bg3"
 
-        android:divider="#ffffff"
-        android:dividerHeight="2dp"
-        android:overScrollMode="never"
-        android:scrollbars="none"></ListView>
+            <ListView
+                android:id="@+id/subDriverListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+
+                android:divider="#ffffff"
+                android:dividerHeight="2dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"></ListView>
 
 
         </LinearLayout>
