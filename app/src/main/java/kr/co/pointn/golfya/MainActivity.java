@@ -499,28 +499,31 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
 class gms_reg extends AsyncTask<Void, Void, String> {
     private  Context mContext;
-    String target ="http://golfya.pointn.co.kr/index.php/gms/reg/"+FirebaseInstanceId.getInstance().getToken();
+    String target ="http://golfya.pointn.co.kr/index.php/Gms/reg/"+FirebaseInstanceId.getInstance().getToken();
 
-    String target2 ="http://golfya.pointn.co.kr/index.php/gms/cnt/"+FirebaseInstanceId.getInstance().getToken();
+    String target2 ="http://golfya.pointn.co.kr/index.php/Gms/cnt/"+FirebaseInstanceId.getInstance().getToken();
     @Override
     protected String doInBackground(Void... voids) {
+        HttpURLConnection httpURLConnection;
+        InputStream inputStream;
+        BufferedReader bufferedReader;
+        StringBuilder stringBuilder;
+        String temp;
+        URL url;
 
         try {
+             url = new URL(target2);
+            Log.e("주소 url 2 ", ""+url);
 
+             httpURLConnection = (HttpURLConnection) url.openConnection();
+             inputStream = httpURLConnection.getInputStream();
 
-            URL url = new URL(target2);
-            Log.e("주소 url", ""+url);
+             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            InputStream inputStream = httpURLConnection.getInputStream();
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String temp;
-            StringBuilder stringBuilder = new StringBuilder();
-
+             stringBuilder = new StringBuilder();
+            Log.e("stringBuilder : ", ""+stringBuilder);
             while ((temp = bufferedReader.readLine()) != null) {
-                // Log.e("temp", ""+temp);
+                 Log.e("temp", ""+temp);
                 stringBuilder.append(temp + "\n");
             }
 
@@ -528,38 +531,44 @@ class gms_reg extends AsyncTask<Void, Void, String> {
             inputStream.close();
             httpURLConnection.disconnect();
 
-             Log.e("stringBuilder", ""+stringBuilder.toString().trim());
+            int numInt = Integer.parseInt(stringBuilder.toString().trim());
+
+            Log.e("numInt", ""+numInt);
+            if (numInt == 0 ) {
 
 
-            try {
+                try {
 
 
-                 url = new URL(target);
-                Log.e("주소 url", ""+url);
-
-                 httpURLConnection = (HttpURLConnection) url.openConnection();
-                 inputStream = httpURLConnection.getInputStream();
-
-                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    url = new URL(target);
+                    Log.e("주소 url 1", ""+url);
 
 
-                 stringBuilder = new StringBuilder();
+                    httpURLConnection = (HttpURLConnection) url.openConnection();
+                    inputStream = httpURLConnection.getInputStream();
 
-                while ((temp = bufferedReader.readLine()) != null) {
-                    // Log.e("temp", ""+temp);
-                    stringBuilder.append(temp + "\n");
+                    bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+
+                    stringBuilder = new StringBuilder();
+
+                    while ((temp = bufferedReader.readLine()) != null) {
+                        // Log.e("temp", ""+temp);
+                        stringBuilder.append(temp + "\n");
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+                    return stringBuilder.toString().trim();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
                 }
 
-                bufferedReader.close();
-                inputStream.close();
-                httpURLConnection.disconnect();
-                return stringBuilder.toString().trim();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+
             }
-
-
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

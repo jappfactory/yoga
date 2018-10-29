@@ -71,33 +71,33 @@ public class HomeFragment extends Fragment  {
         String puttertarget = target +"&q=골프+퍼팅";
 
 
-        driverMovieListView  = getView().findViewById(R.id.driveronepoint);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.driveronepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, drivertarget , "main").execute();
         //driverMovieListView.setAdapter(driveradapter);
 
         Log.d("target", ""+woodtarget);
-        driverMovieListView  = getView().findViewById(R.id.woodonepoint);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.woodonepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, woodtarget , "main").execute();
         //driverMovieListView.setAdapter(driveradapter);
 
 
-        driverMovieListView  = getView().findViewById(R.id.irononepoint);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.irononepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, irontarget , "main").execute();
 
 
-        driverMovieListView  = getView().findViewById(R.id.wedgeonepoint);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.wedgeonepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, wedgetarget , "main").execute();
 
 
-        driverMovieListView  = getView().findViewById(R.id.putteronepoint);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.putteronepoint);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, puttertarget , "main").execute();

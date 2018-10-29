@@ -52,10 +52,10 @@ public class DriverMovieListAdapter extends BaseAdapter {
         if(v == null) {
              v = View.inflate(context, R.layout.driver, null);
         }
-        ImageView thum_pic =  v.findViewById(R.id.thumimg);
-        TextView subjectText =  v.findViewById(R.id.subjectText);
-        TextView viewDate =  v.findViewById(R.id.viewDate);
-        TextView viewCount =  v.findViewById(R.id.viewCount);
+        ImageView thum_pic = (ImageView) v.findViewById(R.id.thumimg);
+        TextView subjectText = (TextView) v.findViewById(R.id.subjectText);
+        TextView viewDate = (TextView) v.findViewById(R.id.viewDate);
+        TextView viewCount = (TextView) v.findViewById(R.id.viewCount);
 
 
 

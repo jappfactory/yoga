@@ -49,8 +49,8 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
 
 
 
-        TextView title = findViewById(R.id.toolbar_title);
-        TextView desc = findViewById(R.id.movie_desc);
+        TextView title = (TextView) findViewById(R.id.toolbar_title);
+        TextView desc = (TextView) findViewById(R.id.movie_desc);
 
         Intent intent = getIntent();
         subject = intent.getStringExtra("title");

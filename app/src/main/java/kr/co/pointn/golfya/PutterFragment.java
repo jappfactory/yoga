@@ -73,7 +73,7 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = getView().findViewById(R.id.subPutterListView);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.subPutterListView);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
@@ -158,7 +158,7 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
                     String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
                     DecimalFormat decimalFormat = new DecimalFormat("#,###");
                     totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
-                    TextView searchcnt =  getView().findViewById(R.id.searchcnt);
+                    TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
 
                 }catch  (Exception e) {
