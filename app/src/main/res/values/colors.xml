@@ -8,4 +8,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorDarkRed">#bf0101</color>
     <color name="black_overlay">#66414141</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="DarkNavy">#717070</color>
+    <color name="DarkNavy2">#252424</color>
 </resources>

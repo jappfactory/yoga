@@ -11,6 +11,10 @@
         android:layout_marginLeft="0dp"
         android:orientation="vertical">
 
+        <include
+            layout="@layout/club_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></include>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"

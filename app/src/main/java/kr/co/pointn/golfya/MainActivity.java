@@ -11,12 +11,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -24,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -42,7 +50,7 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     final AppCompatActivity activity = this;
 
@@ -52,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     private static  int networkYn = 0;
     private SharedPreferences PageToken;
     private SharedPreferences.Editor pt;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+    Toolbar myToolbar;
 
     MyFirebaseInstanceIDService mf;
 
@@ -64,163 +75,45 @@ public class MainActivity extends AppCompatActivity {
 
             //   target = target + token;
 
-            new gms_reg().execute();
-
-            //Log.e("주소 url", ""+url);
-
-
-
         SharedPreferences  PageToken = getSharedPreferences(nextPageToken, 0);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         // 화면을 landscape(가로) 화면으로 고정하고 싶은 경우
 
 
+        new gms_reg().execute();
 
-        // final Button newsButton = (Button) findViewById(R.id.newsButton);
-       // final Button homeButton = (Button) findViewById(R.id.homeButton);
-        final Button driverButton = (Button) findViewById(R.id.driverButton);
-        final Button woodButton = (Button) findViewById(R.id.woodButton);
-        final Button ironButton = (Button) findViewById(R.id.ironButton);
-        final Button wedgeButton = (Button) findViewById(R.id.wedgeButton);
-        final Button putterButton = (Button) findViewById(R.id.putterButton);
 
-        final LinearLayout main_news = (LinearLayout) findViewById(R.id.main_news) ;
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
 
-       // homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-        driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-        woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-        ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-        wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-        putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
 
+
+        myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_left_menu); //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
+
+        /** * 기본 화면 설정 */
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment, new DriverFragment());
         fragmentTransaction.commit();
 
-
-        driverButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-                // main_news.setVisibility(View.GONE);
-                //newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-               // homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new DriverFragment());
-                fragmentTransaction.commit();
-                Online();
-                if(networkYn==2) NotOnline();
-
-            }
-        });
-
-        woodButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  main_news.setVisibility(View.GONE);
-                //  newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-               // homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WoodFragment());
-                fragmentTransaction.commit();
-
-                Online();
-                if(networkYn==2) NotOnline();
-            }
-        });
-
-
-
-        ironButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  main_news.setVisibility(View.GONE);
-                //newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                //homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new IronFragment());
-                fragmentTransaction.commit();
-
-                Online();
-                if(networkYn==2) NotOnline();
-            }
-        });
-
-
-        wedgeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  main_news.setVisibility(View.GONE);
-                //  newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-               // homeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
-                fragmentTransaction.commit();
-                Online();
-                if(networkYn==2) NotOnline();
-
-            }
-        });
-
-        putterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //  main_news.setVisibility(View.GONE);
-                // newsButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new PutterFragment());
-                fragmentTransaction.commit();
-                Online();
-                if(networkYn==2) NotOnline();
-            }
-        });
-
         AdsFull.getInstance(getApplicationContext()).setAds(this);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setVerticalFadingEdgeEnabled(false);
+
         updateIconBadge(activity,  0);
-
-
 
 
     }
@@ -256,6 +149,49 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(mToggle.onOptionsItemSelected(item)){
+
+
+            Toast.makeText (getApplicationContext(), "클릭"  , Toast.LENGTH_LONG).show();
+
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Handle navigation view item clicks here.
+        Toast.makeText (getApplicationContext(), "클릭2"  , Toast.LENGTH_LONG).show();
+
+        int id = item.getItemId();
+        if (id == R.id.nav_account) {
+            transaction.replace(R.id.fragment, new DriverFragment());
+        } else if (id == R.id.nav_settings) {
+            transaction.replace(R.id.fragment, new IronFragment());
+        } else {
+
+        }
+
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
+        drawer.closeDrawer(GravityCompat.START);
+
+        //mDrawerLayout.closeDrawer(); return true;
+
+        return true;
+    }
+
     private class WebViewClientClass extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {

@@ -8,12 +8,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,7 +41,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
     public int loading = 0;
     public int loadingresult = 0;
-
+    Toolbar myToolbar;
 
     Activity activity;
     String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+드라이버+레슨&pageToken=";
@@ -59,6 +67,9 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         //progressBar.setVisibility(View.GONE);
     }
 
@@ -71,6 +82,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
+
 
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,7 +142,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         loading ++ ;
         loadingresult = loading % 6;
         if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
-        //AdsFull.getInstance(getActivity()).setAdsFull();
+        AdsFull.getInstance(getActivity()).setAdsFull();
         //Toast.makeText (getActivity(), "로딩 카운트 : " + loadingresult , Toast.LENGTH_SHORT).show();
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
@@ -189,6 +201,121 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         View view=inflater.inflate(R.layout.fragment_driver, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
+        myToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
+        TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        title.setText("클럽별 레슨 영상 - 드라이버");
+
+
+        final Button driverButton = (Button) view.findViewById(R.id.driverButton);
+        final Button woodButton = (Button) view.findViewById(R.id.woodButton);
+        final Button ironButton = (Button) view.findViewById(R.id.ironButton);
+        final Button wedgeButton = (Button) view.findViewById(R.id.wedgeButton);
+        final Button putterButton = (Button) view.findViewById(R.id.putterButton);
+
+
+        driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+
+        driverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new DriverFragment());
+                fragmentTransaction.commit();
+                // Online();
+                // if(networkYn==2) NotOnline();
+
+            }
+        });
+
+        woodButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new WoodFragment());
+                fragmentTransaction.commit();
+
+                // Online();
+                // if(networkYn==2) NotOnline();
+            }
+        });
+
+
+
+        ironButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new IronFragment());
+                fragmentTransaction.commit();
+
+                // Online();
+                // if(networkYn==2) NotOnline();
+            }
+        });
+
+
+        wedgeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
+                fragmentTransaction.commit();
+                // Online();
+                // if(networkYn==2) NotOnline();
+
+            }
+        });
+
+        putterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new PutterFragment());
+                fragmentTransaction.commit();
+                // Online();
+                // if(networkYn==2) NotOnline();
+            }
+        });
         //progressBar.setVisibility(View.GONE);
 
         return view;
