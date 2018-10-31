@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "token::" + token);
 
-            //   target = target + token;
+        //   target = target + token;
 
         SharedPreferences  PageToken = getSharedPreferences(nextPageToken, 0);
         setContentView(R.layout.activity_main);
@@ -112,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setVerticalFadingEdgeEnabled(false);
+        navigationView.setVerticalScrollBarEnabled(false);
+        navigationView.setHorizontalScrollBarEnabled(false);
 
         updateIconBadge(activity,  0);
 
@@ -150,6 +153,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void disableNavigationViewScrollbars(NavigationView navigationView) {
+        if (navigationView != null) {
+            NavigationMenuView navigationMenuView = (NavigationMenuView) navigationView.getChildAt(0);
+            if (navigationMenuView != null) {
+                navigationMenuView.setVerticalScrollBarEnabled(false);
+            }
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(mToggle.onOptionsItemSelected(item)){
@@ -173,9 +184,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toast.makeText (getApplicationContext(), "클릭2"  , Toast.LENGTH_LONG).show();
 
         int id = item.getItemId();
-        if (id == R.id.nav_account) {
+        if (id == R.id.club_movie) {
             transaction.replace(R.id.fragment, new DriverFragment());
-        } else if (id == R.id.nav_settings) {
+        } else if (id == R.id.channel_1) {
             transaction.replace(R.id.fragment, new IronFragment());
         } else {
 
@@ -257,7 +268,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }).show();
 
 
-         //startActivity(new Intent(getApplicationContext(), OfflineActivity.class));
+        //startActivity(new Intent(getApplicationContext(), OfflineActivity.class));
 
 
     }
@@ -331,7 +342,7 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
             StringBuilder stringBuilder = new StringBuilder();
 
             while ((temp = bufferedReader.readLine()) != null) {
-               // Log.e("temp", ""+temp);
+                // Log.e("temp", ""+temp);
                 stringBuilder.append(temp + "\n");
             }
             bufferedReader.close();
@@ -448,18 +459,18 @@ class gms_reg extends AsyncTask<Void, Void, String> {
         URL url;
 
         try {
-             url = new URL(target2);
+            url = new URL(target2);
             Log.e("주소 url 2 ", ""+url);
 
-             httpURLConnection = (HttpURLConnection) url.openConnection();
-             inputStream = httpURLConnection.getInputStream();
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            inputStream = httpURLConnection.getInputStream();
 
-             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-             stringBuilder = new StringBuilder();
+            stringBuilder = new StringBuilder();
             Log.e("stringBuilder : ", ""+stringBuilder);
             while ((temp = bufferedReader.readLine()) != null) {
-                 Log.e("temp", ""+temp);
+                Log.e("temp", ""+temp);
                 stringBuilder.append(temp + "\n");
             }
 

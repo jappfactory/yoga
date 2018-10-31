@@ -1,44 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
 
-    >
-
-
-
-    <item android:id="@+id/nav_account"
-        android:background="@color/colorBlue"
-        android:title="My Account"
-        />
-
-    <item android:id="@+id/nav_settings"
-        android:title="Settings" />
-
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-    <item android:id="@+id/nav_logout"
-        android:title="Log out" />
-
-
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/club_movie" android:title="" app:actionLayout="@layout/fb_menu_item" > </item>
+    </group>
+    <group android:checkableBehavior="single">
+    <item android:title="유튜브 레슨 채널">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title=""
+                    android:id="@+id/channel_1" app:actionLayout="@layout/fb_menu_item2"/>
+            </group>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="channel_1"
+                    android:id="@+id/channel_2"/>
+            </group>
+            <group android:checkableBehavior="single">
+                <item
+                    android:title="channel_1"
+                    android:id="@+id/channel_3"/>
+            </group>
+        </menu>
+    </item>
+</group>
 </menu>

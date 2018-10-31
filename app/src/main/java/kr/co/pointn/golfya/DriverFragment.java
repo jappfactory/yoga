@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
@@ -85,9 +84,11 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
         String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
+
         totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
         TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
         searchcnt.setText(totalResults);
+
 
 
 

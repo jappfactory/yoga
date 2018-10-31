@@ -12,4 +12,7 @@
     <color name="black">#000000</color>
     <color name="DarkNavy">#717070</color>
     <color name="DarkNavy2">#252424</color>
+
+    <color name="actionbar_color">#bf360c</color>
+    <color name="drawer_arrow_second_color">#303f9f</color>
 </resources>

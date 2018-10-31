@@ -10,10 +10,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
 
-        android:paddingTop="5dp">
+        android:paddingTop="10dp">
+        <!--
     <ImageView
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
         android:layout_marginLeft="3dp"
         android:src="@drawable/golfya_icon" />
 
@@ -28,7 +29,7 @@
         android:layout_height="36dp"
         android:layout_marginLeft="3dp"
         android:gravity="center"
-        android:text="asdafsd@gmail.com"
-        android:textColor="@color/white" />
+        android:text="클럽별 레슨 영상"
+        android:textColor="@color/colorBlueDark" />-->
     </LinearLayout>
 </LinearLayout>
