@@ -1,4 +1,4 @@
-package kr.co.pointn.golfya;
+package kr.appfactory.golf;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

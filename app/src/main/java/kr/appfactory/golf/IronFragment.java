@@ -1,4 +1,4 @@
-package kr.co.pointn.golfya;
+package kr.appfactory.golf;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PutterFragment extends Fragment implements AbsListView.OnScrollListener {
+public class IronFragment extends Fragment implements AbsListView.OnScrollListener {
 
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     public  ListView driverMovieListView;
@@ -42,8 +42,7 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
 
 
     Activity activity;
-
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+퍼터+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+아이언+레슨&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -54,10 +53,10 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
 
         activity = (Activity) getActivity();
     }
-    public PutterFragment() {}
+    public IronFragment() {}
 
-    public static PutterFragment newInstance() {
-        PutterFragment fragment = new PutterFragment();
+    public static IronFragment newInstance() {
+        IronFragment fragment = new IronFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -80,7 +79,7 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = (ListView) getView().findViewById(R.id.subPutterListView);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.subIronListView);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
@@ -109,7 +108,9 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
 
         progressBar.setVisibility(View.GONE);
 
+        //Log.d("driverMovieList6", ""+driverMovieList);
         driverMovieListView.setOnScrollListener(this);
+
         // 다음 데이터를 불러온다.
         getItem(target);
     }
@@ -126,9 +127,10 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBar.setVisibility(View.VISIBLE);
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+퍼터+레슨&pageToken=";
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+아이언+레슨&pageToken=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
+
             // 다음 데이터를 불러온다.
             getItem(target);
         }
@@ -145,6 +147,7 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
     }
 
     public void getItem(String target){
+
         loading ++ ;
         loadingresult = loading % 6;
         if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
@@ -163,7 +166,6 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
 
 
                 try {
@@ -190,20 +192,21 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
         },1000);
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
         //new LoadMovieTask(getContext(), driverMovieList).execute();
 
-        View view=inflater.inflate(R.layout.fragment_putter, container, false);
+        View view=inflater.inflate(R.layout.fragment_iron, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+
 
         myToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        title.setText("클럽별 레슨 영상 - 퍼터");
-
+        title.setText("클럽별 레슨 영상 - 아이언");
 
         final Button driverButton = (Button) view.findViewById(R.id.driverButton);
         final Button woodButton = (Button) view.findViewById(R.id.woodButton);
@@ -212,8 +215,7 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
         final Button putterButton = (Button) view.findViewById(R.id.putterButton);
 
 
-        putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-
+        ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
 
         driverButton.setOnClickListener(new View.OnClickListener() {
             @Override

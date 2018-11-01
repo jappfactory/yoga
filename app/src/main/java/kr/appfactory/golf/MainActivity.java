@@ -1,4 +1,4 @@
-package kr.co.pointn.golfya;
+package kr.appfactory.golf;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = MainActivity.class.getSimpleName();
     final AppCompatActivity activity = this;
 
-    private String  target ="http://golfya.pointn.co.kr/index.php/gms/reg/";;
+    private String  target ="http://golf.pointn.co.kr/index.php/gms/reg/";;
     private  String nextPageToken;
     private static Context context;
     private static  int networkYn = 0;
@@ -446,9 +446,9 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
 class gms_reg extends AsyncTask<Void, Void, String> {
     private  Context mContext;
-    String target ="http://golfya.pointn.co.kr/index.php/Gms/reg/"+FirebaseInstanceId.getInstance().getToken();
+    String target ="http://golf.pointn.co.kr/index.php/Gms/reg/"+FirebaseInstanceId.getInstance().getToken();
 
-    String target2 ="http://golfya.pointn.co.kr/index.php/Gms/cnt/"+FirebaseInstanceId.getInstance().getToken();
+    String target2 ="http://golf.pointn.co.kr/index.php/Gms/cnt/"+FirebaseInstanceId.getInstance().getToken();
     @Override
     protected String doInBackground(Void... voids) {
         HttpURLConnection httpURLConnection;

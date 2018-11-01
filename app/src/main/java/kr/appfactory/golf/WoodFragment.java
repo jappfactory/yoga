@@ -1,4 +1,4 @@
-package kr.co.pointn.golfya;
+package kr.appfactory.golf;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class IronFragment extends Fragment implements AbsListView.OnScrollListener {
+public class WoodFragment extends Fragment implements AbsListView.OnScrollListener {
 
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     public  ListView driverMovieListView;
@@ -42,7 +42,7 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
 
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+아이언+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+우드+레슨&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -53,10 +53,10 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
 
         activity = (Activity) getActivity();
     }
-    public IronFragment() {}
+    public WoodFragment() {}
 
-    public static IronFragment newInstance() {
-        IronFragment fragment = new IronFragment();
+    public static WoodFragment newInstance() {
+        WoodFragment fragment = new WoodFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -79,7 +79,7 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = (ListView) getView().findViewById(R.id.subIronListView);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.subWoodListView);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
@@ -89,6 +89,7 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
         totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
         TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
         searchcnt.setText(totalResults);
+
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -107,8 +108,6 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
 
 
         progressBar.setVisibility(View.GONE);
-
-        //Log.d("driverMovieList6", ""+driverMovieList);
         driverMovieListView.setOnScrollListener(this);
 
         // 다음 데이터를 불러온다.
@@ -127,7 +126,7 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBar.setVisibility(View.VISIBLE);
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+아이언+레슨&pageToken=";
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+우드+레슨&pageToken=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
 
@@ -152,7 +151,6 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
         loadingresult = loading % 6;
         if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
         AdsFull.getInstance(getActivity()).setAdsFull();
-
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
         //Log.d("target", ""+target);
@@ -168,7 +166,9 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
             public void run() {
 
 
+
                 try {
+                    driveradapter.notifyDataSetChanged();
                     driveradapter.notifyDataSetChanged();
 
                 }catch  (Exception e) {
@@ -190,23 +190,20 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
 
             }
         },1000);
-
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
         //new LoadMovieTask(getContext(), driverMovieList).execute();
 
-        View view=inflater.inflate(R.layout.fragment_iron, container, false);
+        View view=inflater.inflate(R.layout.fragment_wood, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
-
 
         myToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        title.setText("클럽별 레슨 영상 - 아이언");
+        title.setText("클럽별 레슨 영상 - 우드");
 
         final Button driverButton = (Button) view.findViewById(R.id.driverButton);
         final Button woodButton = (Button) view.findViewById(R.id.woodButton);
@@ -215,7 +212,8 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
         final Button putterButton = (Button) view.findViewById(R.id.putterButton);
 
 
-        ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+        woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+
 
         driverButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -317,7 +315,6 @@ public class IronFragment extends Fragment implements AbsListView.OnScrollListen
                 // if(networkYn==2) NotOnline();
             }
         });
-
         //progressBar.setVisibility(View.GONE);
 
         return view;
