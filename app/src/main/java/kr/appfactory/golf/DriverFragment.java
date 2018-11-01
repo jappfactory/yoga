@@ -85,10 +85,10 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
-        totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
-        TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
-        searchcnt.setText(totalResults);
 
+            totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
+            TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
+            searchcnt.setText(totalResults);
 
 
 

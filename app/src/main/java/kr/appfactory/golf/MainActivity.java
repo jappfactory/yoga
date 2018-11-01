@@ -483,9 +483,7 @@ class gms_reg extends AsyncTask<Void, Void, String> {
             Log.e("numInt", ""+numInt);
             if (numInt == 0 ) {
 
-
                 try {
-
 
                     url = new URL(target);
                     Log.e("주소 url 1", ""+url);

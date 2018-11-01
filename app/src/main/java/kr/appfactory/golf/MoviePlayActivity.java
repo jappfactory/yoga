@@ -18,7 +18,7 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
 public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
-    String mApiKey = "AIzaSyCBOFrruYNwGIjpNZ9mEHUDyJg3qE3gwco";
+    String mApiKey = "AIzaSyBepkrOwooKDltImT5MhFKlW7QcnPm_hNE";
     YouTubePlayerView youtubeView;
 
     YouTubePlayer mPlayer;
