@@ -73,10 +73,104 @@
         android:overScrollMode="never"
         android:background="@drawable/menu_bg"
         app:headerLayout="@layout/header"
-        app:menu="@menu/navigation"
+
         android:scrollbars="none"
         >
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            tools:context=".MainActivity">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:layout_marginTop="0dp"
+                android:orientation="vertical">
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="0dp"
+                    android:orientation="horizontal">
+
+
+
+                    <Button
+                        android:id="@+id/driverButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorBlue"
+                        android:text="드라이버"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/woodButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorBlue"
+                        android:text="우드"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/ironButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorBlue"
+                        android:text="아이언"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/wedgeButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorBlue"
+                        android:text="웨지"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/putterButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/colorBlue"
+                        android:text="퍼터"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
