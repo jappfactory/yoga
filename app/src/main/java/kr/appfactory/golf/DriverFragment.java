@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -82,14 +83,16 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
 
+
+
+            Toast.makeText (activity, "isEmpty"  , Toast.LENGTH_LONG).show();
+/*
         String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
 
-
-            totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
+            totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",", "")));
             TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
-            searchcnt.setText(totalResults);
-
+            searchcnt.setText(totalResults);*/
 
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -158,6 +161,12 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
+
+        String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
+        TextView searchcnt =  getView().findViewById(R.id.searchcnt);
+        searchcnt.setText(totalResults);
 
 
 
