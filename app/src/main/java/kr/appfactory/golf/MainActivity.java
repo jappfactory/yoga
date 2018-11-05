@@ -29,8 +29,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -44,6 +43,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**dc dddd
@@ -64,12 +64,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     Toolbar myToolbar;
+    private ListView mnuListView;
+    public List<MenuItema> itemList;
+    public MenuItemAdapter menuItemAdapter;
 
     MyFirebaseInstanceIDService mf;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "token::" + token);
@@ -83,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         new gms_reg().execute();
-
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
 
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
@@ -110,11 +110,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         AdsFull.getInstance(getApplicationContext()).setAds(this);
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setVerticalFadingEdgeEnabled(false);
         navigationView.setVerticalScrollBarEnabled(false);
         navigationView.setHorizontalScrollBarEnabled(false);
+
 
         updateIconBadge(activity,  0);
 
@@ -166,6 +168,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(mToggle.onOptionsItemSelected(item)){
 
 
+
+            // 데이터 원본 준비
+            itemList =  new ArrayList<MenuItema>();
+
+            itemList.add(new MenuItema("드라이버 레슨 영상","aaaa"));
+            itemList.add(new MenuItema("우드 레슨 영상","aaaa"));
+            itemList.add(new MenuItema("아이언 레슨 영상","aaaa"));
+            itemList.add(new MenuItema("웨지 레슨 영상","aaaa"));
+            itemList.add(new MenuItema("퍼터 레슨 영상","aaaa"));
+            //  menuItemAdapter = new MenuItemAdapter(context,  itemList, this);
+
+            //어댑터 생성
+            menuItemAdapter = new MenuItemAdapter(this,  itemList);
+
+            //어댑터 연결
+            mnuListView = (ListView) findViewById(R.id.club_lesson);
+
+            Toast.makeText (activity, "클릭3" + mnuListView  , Toast.LENGTH_LONG).show();
+            //mnuListView.setAdapter(menuItemAdapter);
+
+
             Toast.makeText (getApplicationContext(), "클릭"  , Toast.LENGTH_LONG).show();
 
 
@@ -202,7 +225,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
-
     private class WebViewClientClass extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {

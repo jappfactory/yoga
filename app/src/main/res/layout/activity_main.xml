@@ -17,160 +17,128 @@
         android:layout_height="match_parent">
 
 
-    <include
-        layout="@layout/main_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="34dp"></include>
-
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="8">
-
-
-
-        <RelativeLayout
-            android:id="@+id/fragment"
+        <include
+            layout="@layout/main_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </RelativeLayout>
+            android:layout_height="34dp"></include>
 
 
-    </FrameLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:orientation="vertical"
-        >
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:padding="2dp"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/banner_ad_unit_id">
+            android:layout_height="wrap_content"
+            android:layout_weight="8">
 
-        </com.google.android.gms.ads.AdView>
+
+
+            <RelativeLayout
+                android:id="@+id/fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:orientation="vertical"
+            >
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:padding="2dp"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_ad_unit_id">
+
+            </com.google.android.gms.ads.AdView>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    </LinearLayout>
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
+        android:layout_width="260dp"
         android:layout_gravity="start"
         android:overScrollMode="never"
-        android:background="@drawable/menu_bg"
+        android:layout_height="match_parent"
         app:headerLayout="@layout/header"
-
+        android:layout_marginTop="120dp"
         android:scrollbars="none"
         >
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
+
+        <ScrollView
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:orientation="vertical"
-            tools:context=".MainActivity">
+            android:background="@color/colorBlueDark"
+            android:scrollbars="none">
 
             <LinearLayout
+                android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_marginTop="0dp"
                 android:orientation="vertical">
 
-
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="36dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="4dp"
+                    android:text="클럽별 레슨 동영상"
+                    android:textColor="#FFFFFF"
+
+                    android:background="@color/colorBlueDark"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/club_lesson"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
                     android:layout_marginTop="0dp"
-                    android:orientation="horizontal">
+                    android:divider="#ffffff"
+                    android:dividerHeight="1dp"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"></ListView>
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="4dp"
+                    android:text="프로별 레슨 동영상"
+                    android:textColor="#FFFFFF"
+                    android:background="@color/colorBlueDark"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-                    <Button
-                        android:id="@+id/driverButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorBlue"
-                        android:text="드라이버"
-                        android:textColor="#ffffff"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
+                <ListView
+                    android:id="@+id/pro_lesson"
+                    android:layout_width="match_parent"
+                    android:layout_height="205dp"
+                    android:layout_marginTop="0dp"
+                    android:divider="#ffffff"
+                    android:dividerHeight="1dp"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"></ListView>
 
-                    <Button
-                        android:id="@+id/woodButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorBlue"
-                        android:text="우드"
-                        android:textColor="#ffffff"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/ironButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorBlue"
-                        android:text="아이언"
-                        android:textColor="#ffffff"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/wedgeButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorBlue"
-                        android:text="웨지"
-                        android:textColor="#ffffff"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/putterButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_weight="1"
-                        android:background="@color/colorBlue"
-                        android:text="퍼터"
-                        android:textColor="#ffffff"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
 
             </LinearLayout>
+        </ScrollView>
 
-        </LinearLayout>
+
     </android.support.design.widget.NavigationView>
+
 
 </android.support.v4.widget.DrawerLayout>
