@@ -70,11 +70,20 @@
         android:layout_gravity="start"
         android:overScrollMode="never"
         android:layout_height="match_parent"
-        app:headerLayout="@layout/header"
-        android:layout_marginTop="120dp"
         android:scrollbars="none"
         >
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="0dp"
+            android:orientation="vertical">
 
+
+            <ImageView
+                android:layout_width="260dp"
+                android:layout_height="94dp"
+                android:src="@drawable/head_bg"
+                />
 
         <ScrollView
             android:layout_height="wrap_content"
@@ -91,10 +100,12 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_gravity="left"
-                    android:layout_marginTop="4dp"
-                    android:text="클럽별 레슨 동영상"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="클럽별 레슨 영상"
                     android:textColor="#FFFFFF"
 
                     android:background="@color/colorBlueDark"
@@ -106,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="0dp"
-                    android:divider="#ffffff"
+                    android:divider="@color/colorBlueDark"
                     android:dividerHeight="1dp"
                     android:overScrollMode="never"
                     android:scrollbars="none"></ListView>
@@ -114,10 +125,12 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_gravity="left"
                     android:layout_marginTop="4dp"
-                    android:text="프로별 레슨 동영상"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="4dp"
+                    android:text="프로별 레슨 영상"
                     android:textColor="#FFFFFF"
                     android:background="@color/colorBlueDark"
                     android:textSize="20dp"
@@ -126,9 +139,9 @@
                 <ListView
                     android:id="@+id/pro_lesson"
                     android:layout_width="match_parent"
-                    android:layout_height="205dp"
+                    android:layout_height="580dp"
                     android:layout_marginTop="0dp"
-                    android:divider="#ffffff"
+                    android:divider="@color/colorBlueDark"
                     android:dividerHeight="1dp"
                     android:overScrollMode="never"
                     android:scrollbars="none"></ListView>
@@ -137,6 +150,7 @@
             </LinearLayout>
         </ScrollView>
 
+        </LinearLayout>
 
     </android.support.design.widget.NavigationView>
 

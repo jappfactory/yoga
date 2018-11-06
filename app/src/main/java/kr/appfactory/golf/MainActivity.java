@@ -15,7 +15,6 @@ import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,8 +27,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -51,7 +51,7 @@ import java.util.List;
  * status bar and navigation/system bar) with user interaction.
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity  {
     private static final String TAG = MainActivity.class.getSimpleName();
     final AppCompatActivity activity = this;
 
@@ -65,8 +65,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle mToggle;
     Toolbar myToolbar;
     private ListView mnuListView;
+    private ListView mnuListView2;
     public List<MenuItema> itemList;
+    public List<MenuItema> itemList2;
     public MenuItemAdapter menuItemAdapter;
+    public MenuItemAdapter menuItemAdapter2;
 
     MyFirebaseInstanceIDService mf;
 
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //navigationView.setNavigationItemSelectedListener(this);
         navigationView.setVerticalFadingEdgeEnabled(false);
         navigationView.setVerticalScrollBarEnabled(false);
         navigationView.setHorizontalScrollBarEnabled(false);
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 
-        Log.d(TAG, "페이지이동 ");
+       // Log.d(TAG, "페이지이동 ");
 
         return super.onKeyDown(keyCode, event);
     }
@@ -168,34 +171,94 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(mToggle.onOptionsItemSelected(item)){
 
 
-
             // 데이터 원본 준비
             itemList =  new ArrayList<MenuItema>();
 
-            itemList.add(new MenuItema("드라이버 레슨 영상","aaaa"));
-            itemList.add(new MenuItema("우드 레슨 영상","aaaa"));
-            itemList.add(new MenuItema("아이언 레슨 영상","aaaa"));
-            itemList.add(new MenuItema("웨지 레슨 영상","aaaa"));
-            itemList.add(new MenuItema("퍼터 레슨 영상","aaaa"));
+
+
+            itemList.add(new MenuItema("드라이버 레슨 영상","driver"));
+            itemList.add(new MenuItema("우드 레슨 영상","wood"));
+            itemList.add(new MenuItema("아이언 레슨 영상","iron"));
+            itemList.add(new MenuItema("웨지 레슨 영상","wedge"));
+            itemList.add(new MenuItema("퍼터 레슨 영상","putter"));
             //  menuItemAdapter = new MenuItemAdapter(context,  itemList, this);
 
             //어댑터 생성
-            menuItemAdapter = new MenuItemAdapter(this,  itemList);
+            menuItemAdapter = new MenuItemAdapter(activity,  itemList);
 
             //어댑터 연결
-            mnuListView = (ListView) findViewById(R.id.club_lesson);
+            mnuListView = (ListView)  findViewById(R.id.club_lesson);
 
-            Toast.makeText (activity, "클릭3" + mnuListView  , Toast.LENGTH_LONG).show();
-            //mnuListView.setAdapter(menuItemAdapter);
+            //Toast.makeText (activity, "클릭3" + mnuListView  , Toast.LENGTH_LONG).show();
+            mnuListView.setAdapter(menuItemAdapter);
+
+            mnuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-            Toast.makeText (getApplicationContext(), "클릭"  , Toast.LENGTH_LONG).show();
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    if(itemList.get(position).getMenu_link() =="driver")  fragmentTransaction.replace(R.id.fragment, new DriverFragment());
+                    if(itemList.get(position).getMenu_link() =="wood")  fragmentTransaction.replace(R.id.fragment, new WoodFragment());
+                    if(itemList.get(position).getMenu_link() =="iron")  fragmentTransaction.replace(R.id.fragment, new IronFragment());
+                    if(itemList.get(position).getMenu_link() =="wedge")  fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
+                    if(itemList.get(position).getMenu_link() =="putter")  fragmentTransaction.replace(R.id.fragment, new PutterFragment());
+
+
+                    fragmentTransaction.commit();
+                    mDrawerLayout.closeDrawers();
+
+                   // Toast.makeText (activity, "클릭 getMenu_title" + itemList.get(position).getMenu_title()  , Toast.LENGTH_SHORT).show();
+                    //Toast.makeText (activity, "클릭 getMenu_link" + itemList.get(position).getMenu_link()  , Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // 데이터 원본 준비
+            itemList2 =  new ArrayList<MenuItema>();
+
+            itemList2.add(new MenuItema("정프로의 장타 노하우!","https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLJjPXwl6J0C9pGTQMSfoBktaTz6-heDQN&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+            itemList2.add(new MenuItema("1분레슨 - 1분이면 충분하다","https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLQMjx4uteLr3uJ_WGHjNydTJJctPl_vlU&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g"));
+            itemList2.add(new MenuItema("프로 채널 레슨 영상3","bbb3"));
+            //  menuItemAdapter = new MenuItemAdapter(context,  itemList, this);
+
+            //어댑터 생성
+            menuItemAdapter2 = new MenuItemAdapter(activity,  itemList2);
+
+            //어댑터 연결
+            mnuListView2 = (ListView) findViewById(R.id.pro_lesson);
+
+            //Toast.makeText (activity, "클릭3" + mnuListView  , Toast.LENGTH_LONG).show();
+            mnuListView2.setAdapter(menuItemAdapter2);
+
+
+            mnuListView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment, ChannelFragment.newInstance(itemList2.get(position).getMenu_link(),itemList2.get(position).getMenu_title()));
+                    fragmentTransaction.commit();
+                    mDrawerLayout.closeDrawers();
+                    //Toast.makeText (activity, "클릭 getMenu_title" + itemList2.get(position).getMenu_title()  , Toast.LENGTH_SHORT).show();
+
+
+
+
+                }
+            });
+
 
 
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+/*
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -204,16 +267,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
         // Handle navigation view item clicks here.
-        Toast.makeText (getApplicationContext(), "클릭2"  , Toast.LENGTH_LONG).show();
+       // Toast.makeText (getApplicationContext(), "클릭2"  , Toast.LENGTH_LONG).show();
 
         int id = item.getItemId();
-        if (id == R.id.club_movie) {
-            transaction.replace(R.id.fragment, new DriverFragment());
-        } else if (id == R.id.channel_1) {
-            transaction.replace(R.id.fragment, new IronFragment());
-        } else {
 
-        }
+
+        Toast.makeText (getApplicationContext(), "클릭 id" + id  , Toast.LENGTH_LONG).show();
 
         transaction.addToBackStack(null);
         transaction.commit();
@@ -225,6 +284,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
     }
+
+*/
+
     private class WebViewClientClass extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -358,7 +420,9 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));
 
             String temp;
             StringBuilder stringBuilder = new StringBuilder();
@@ -396,35 +460,67 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
 
 
+
             SharedPreference.putSharedPreference(mContext, "totalResults", totalResults);
             SharedPreference.putSharedPreference(mContext, "nextPageToken", nextPageToken);
-            //Toast.makeText (mContext, "클릭" + slat , Toast.LENGTH_LONG).show();
 
 
             int count = 0;
             String thum_pic, subjectText, descriptionText, viewCount, viewDate, viewCnt, videoId;
 
+            //Toast.makeText (mContext, "클릭" + jsonArray.length() , Toast.LENGTH_SHORT).show();
 
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
 
+                if(jsonObject.getString("kind").equals("youtube#playlistItemListResponse")){
+                   // Toast.makeText (mContext, "클릭" + jsonObject.getString("kind"), Toast.LENGTH_SHORT).show();
 
-                videoId = object.getJSONObject("id").getString("videoId");
-                subjectText = object.getJSONObject("snippet").getString("title");
-                descriptionText = object.getJSONObject("snippet").getString("description");
-                viewDate = object.getJSONObject("snippet").getString("publishedAt")
-                        .substring(0, 10);
-                thum_pic = object.getJSONObject("snippet")
-                        .getJSONObject("thumbnails").getJSONObject("medium")
-                        .getString("url"); // 썸내일 이미지 URL값
+                    subjectText = object.getJSONObject("snippet").getString("title");
+                    descriptionText = object.getJSONObject("snippet").getString("description");
+                    viewDate = object.getJSONObject("snippet").getString("publishedAt")
+                            .substring(0, 10);
 
-                viewCnt = "0";
+                    videoId = object.getJSONObject("snippet")
+                              .getJSONObject("resourceId").getString("videoId");
+
+                    thum_pic = object.getJSONObject("snippet")
+                            .getJSONObject("thumbnails").getJSONObject("medium")
+                            .getString("url"); // 썸내일 이미지 URL값
+
+
+                    viewCnt = "0";
+                    DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt, videoId , descriptionText);
+                    driverMovieList.add(drivermovie);
+                }else if(jsonObject.getString("kind").equals("youtube#searchListResponse")){
+
+                    //Toast.makeText (mContext, "클릭" + jsonObject.getString("kind"), Toast.LENGTH_SHORT).show();
+
+                 //   Toast.makeText (mContext, "클릭" + object.getJSONObject("id").getString("videoId") , Toast.LENGTH_SHORT).show();
+
+
+                    videoId = object.getJSONObject("id").getString("videoId");
+                    subjectText = object.getJSONObject("snippet").getString("title");
+                    descriptionText = object.getJSONObject("snippet").getString("description");
+                    viewDate = object.getJSONObject("snippet").getString("publishedAt")
+                            .substring(0, 10);
+                    thum_pic = object.getJSONObject("snippet")
+                            .getJSONObject("thumbnails").getJSONObject("medium")
+                            .getString("url"); // 썸내일 이미지 URL값
+
+                   // Log.e("videoId", ""+videoId);
+                  //  Log.e("subjectText", ""+subjectText);
+                   // Log.e("viewDate", ""+viewDate);
+                   // Log.e("thum_pic", ""+thum_pic);
+
+                    viewCnt = "0";
+                    DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt, videoId , descriptionText);
+                    driverMovieList.add(drivermovie);
+                }
 
 
 
-                DriverMovie drivermovie = new DriverMovie(thum_pic, subjectText, viewDate, viewCnt, videoId , descriptionText);
 
-                driverMovieList.add(drivermovie);
 
                 count++;
             }
@@ -434,7 +530,7 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
                 driverMovieListView.setAdapter(driveradapter);
 
 
-                driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                driverMovieListView.setOnItemClickListener(new OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -556,3 +652,6 @@ class gms_reg extends AsyncTask<Void, Void, String> {
     }
 
 }
+
+
+

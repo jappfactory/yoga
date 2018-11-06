@@ -3,6 +3,7 @@ package kr.appfactory.golf;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -80,6 +81,7 @@ public class DriverMovieListAdapter extends BaseAdapter {
         v.setTag(driverMovieList.get(i).getMovie_title());
 
 
+        //Log.e("subjectText", ""+driverMovieList.get(i).getMovie_title());
 
 
 /*     Button viewButton = (Button) v.findViewById(R.id.viewButton);

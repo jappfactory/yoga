@@ -45,20 +45,23 @@ public class MenuItemAdapter  extends BaseAdapter {
         View v = View.inflate(context, R.layout.menu_item, null);
 
         TextView menu_title = (TextView) v.findViewById(R.id.menu_title);
+        TextView menu_url = (TextView) v.findViewById(R.id.menu_url);
 
 
         menu_title.setText(itemList.get(i).getMenu_title());
+        menu_url.setText(itemList.get(i).getMenu_link());
 
 
         return v;
 
     }
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String title, String link) {
-        MenuItema item = new MenuItema("","");
+    public void addItem(String title, String link  ) {
+        MenuItema item = new MenuItema("","" );
 
         item.setMenu_title(title);
-        //item.setMenu_link(link);
+        item.setMenu_link(link);
+        //item.setMenu_type(link);
 
         itemList.add(item);
     }
@@ -70,7 +73,7 @@ class MenuItema {
     String menu_title;
     String menu_link;
 
-    public MenuItema(String menu_title, String menu_link) {
+    public MenuItema(String menu_title, String menu_link ) {
         this.menu_title = menu_title;
         this.menu_link = menu_link;
     }

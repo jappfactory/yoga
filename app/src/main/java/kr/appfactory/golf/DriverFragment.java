@@ -85,7 +85,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
 
 
-            Toast.makeText (activity, "isEmpty"  , Toast.LENGTH_LONG).show();
+  //          Toast.makeText (activity, "isEmpty"  , Toast.LENGTH_LONG).show();
 /*
         String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
@@ -164,7 +164,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
 
        // driverMovieListView.setAdapter(driveradapter);
-        //Log.d("driverMovieList6", ""+driverMovieList);
+        Log.d("driverMovieList6", ""+driverMovieList);
 
         // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
         new Handler().postDelayed(new Runnable() {
