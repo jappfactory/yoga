@@ -50,8 +50,7 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
     Activity activity;
 
 
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+드라이버+레슨&pageToken=";
-
+    String target ;
     private OnFragmentInteractionListener mListener;
 
 
@@ -140,8 +139,10 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
             progressBar.setVisibility(View.VISIBLE);
 
             //String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+퍼터+레슨&pageToken=";
-            String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
-            target = mParam1 + aa;
+            String nextPageToken= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
+            target = mParam1 + nextPageToken;
+
+            //Toast.makeText (getActivity(), "nextPageToken" + nextPageToken, Toast.LENGTH_LONG).show();
             // 다음 데이터를 불러온다.
             getItem(target);
         }
@@ -153,24 +154,29 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
         // visibleItemCount : 화면에 보이는 리스트 아이템의 갯수
         // totalItemCount : 리스트 전체의 총 갯수
         // 리스트의 갯수가 0개 이상이고, 화면에 보이는 맨 하단까지의 아이템 갯수가 총 갯수보다 크거나 같을때.. 즉 리스트의 끝일때. true
-        lastItemVisibleFlag = true;
-        // Toast.makeText (getActivity(), "위로" , Toast.LENGTH_LONG).show();
+
+        String nextPageToken= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
+        if(nextPageToken.isEmpty()) lastItemVisibleFlag = false;
+        else  lastItemVisibleFlag = true;
+        //Toast.makeText (getActivity(), "firstVisibleItem" + firstVisibleItem, Toast.LENGTH_LONG).show();
+        //Toast.makeText (getActivity(), "visibleItemCount" + visibleItemCount, Toast.LENGTH_LONG).show();
+       // Toast.makeText (getActivity(), "totalItemCount" + totalItemCount, Toast.LENGTH_LONG).show();
     }
 
     public void getItem(String target){
         loading ++ ;
-        loadingresult = loading % 6;
-        //if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
+        loadingresult = loading % 10;
+        if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
         //AdsFull.getInstance(getActivity()).setAdsFull();
 
         //Toast.makeText (activity, "클릭 target : " + target  , Toast.LENGTH_LONG).show();
 
-        Log.d("target", ""+target);
+       // Log.d("target", ""+target);
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
         //Log.d("target", ""+target);
 
-        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"main").execute();
+        new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
         // driverMovieListView.setAdapter(driveradapter);
         //Log.d("driverMovieList6", ""+driverMovieList);
@@ -180,10 +186,14 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
             @Override
             public void run() {
 
-
-
                 try {
                     driveradapter.notifyDataSetChanged();
+
+                    String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
+                    DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                    totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
+                    TextView searchcnt =  getView().findViewById(R.id.searchcnt);
+                    searchcnt.setText(totalResults);
 
                 }catch  (Exception e) {
                     e.printStackTrace();
@@ -202,7 +212,7 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
 
-        Toast.makeText (activity, "mParam1" + mParam1   , Toast.LENGTH_SHORT).show();
+       // Toast.makeText (activity, "mParam1" + mParam1   , Toast.LENGTH_SHORT).show();
        // Toast.makeText (activity, "mParam2" + mParam2   , Toast.LENGTH_SHORT).show();
 
         View view=inflater.inflate(R.layout.fragment_channel, container, false);

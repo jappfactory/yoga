@@ -130,7 +130,7 @@
                     android:layout_marginTop="4dp"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="4dp"
-                    android:text="프로별 레슨 영상"
+                    android:text="채널별 레슨 영상"
                     android:textColor="#FFFFFF"
                     android:background="@color/colorBlueDark"
                     android:textSize="20dp"
@@ -139,12 +139,13 @@
                 <ListView
                     android:id="@+id/pro_lesson"
                     android:layout_width="match_parent"
-                    android:layout_height="580dp"
+                    android:layout_height="1000dp"
                     android:layout_marginTop="0dp"
                     android:divider="@color/colorBlueDark"
                     android:dividerHeight="1dp"
                     android:overScrollMode="never"
-                    android:scrollbars="none"></ListView>
+                    android:scrollbars="none"
+                    android:paddingBottom="20dp"></ListView>
 
 
             </LinearLayout>
