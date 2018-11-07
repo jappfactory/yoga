@@ -150,8 +150,8 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
     public void getItem(String target){
         loading ++ ;
-        loadingresult = loading % 6;
-       // if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
+        loadingresult = loading % 10;
+        if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
        // AdsFull.getInstance(getActivity()).setAdsFull();
         //Toast.makeText (getActivity(), "로딩 카운트 : " + loadingresult , Toast.LENGTH_SHORT).show();
 
