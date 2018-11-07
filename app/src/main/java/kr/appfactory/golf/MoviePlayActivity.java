@@ -1,7 +1,9 @@
 package kr.appfactory.golf;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -16,16 +18,26 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.google.firebase.iid.FirebaseInstanceId;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
     String mApiKey = "AIzaSyBepkrOwooKDltImT5MhFKlW7QcnPm_hNE";
     YouTubePlayerView youtubeView;
-
     YouTubePlayer mPlayer;
-    public String videoId;
     Toolbar myToolbar;
-
+    public String videoId;
     public String subject;
+    public String videodesc;
+    public String publishedAt;
+    public String thum_pic;
+
+    DBHelper dbHelper;
 
     YouTubePlayer.OnInitializedListener listener;
 
@@ -46,16 +58,17 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
-
         TextView title = (TextView) findViewById(R.id.toolbar_title);
         TextView desc = (TextView) findViewById(R.id.movie_desc);
 
+        dbHelper = new DBHelper(getApplicationContext());
         Intent intent = getIntent();
         subject = intent.getStringExtra("title");
         videoId = intent.getStringExtra("videoId");
-        String videodesc = intent.getStringExtra("videodesc");
+        videodesc = intent.getStringExtra("videodesc");
+
+        publishedAt = intent.getStringExtra("publishedAt");
+        thum_pic = intent.getStringExtra("thum_pic");
         title.setText(subject);
         desc.setText(videodesc);
 
@@ -79,6 +92,11 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         Button favoritesButton = (Button) findViewById(R.id.favoritesButton);
         favoritesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+
+
+               dbHelper.insert(videoId, subject, videodesc, publishedAt,  thum_pic);
+
                 Toast.makeText(getApplicationContext(), "즐겨찾기에 등록되었습니다~", Toast.LENGTH_LONG).show();
             }
         });
@@ -141,3 +159,5 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         }
     }
 }
+
+
