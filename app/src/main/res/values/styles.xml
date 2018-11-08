@@ -11,7 +11,7 @@
         <item name="android:windowBackground">@mipmap/golfya_splash</item>
     </style>
     <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/black_overlay</item>
+        <item name="colorAccent">@color/DarkNavy2</item>
     </style>
 
     <style name="OfflineTheme" parent="Theme.AppCompat.NoActionBar">
