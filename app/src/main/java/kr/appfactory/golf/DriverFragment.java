@@ -85,7 +85,8 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
 
 
-  //          Toast.makeText (activity, "isEmpty"  , Toast.LENGTH_LONG).show();
+
+        //          Toast.makeText (activity, "isEmpty"  , Toast.LENGTH_LONG).show();
 /*
         String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
@@ -106,6 +107,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
                 intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
                 intent.putExtra("publishedAt",""+ driverMovieList.get(position).getMovie_date());
                 intent.putExtra("thum_pic",""+ driverMovieList.get(position).getThum_img());
+
 
                 view.getContext().startActivity(intent);
 

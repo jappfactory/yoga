@@ -30,6 +30,7 @@ import android.webkit.WebViewClient;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -124,6 +125,24 @@ public class MainActivity extends AppCompatActivity  {
         updateIconBadge(activity,  0);
 
 
+
+
+        Button MyfavoritesButton = (Button) findViewById(R.id.MyfavoritesButton);
+
+        //즐겨찾기저장추가
+        MyfavoritesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new FavoritesFragment());
+                fragmentTransaction.commit();
+                mDrawerLayout.closeDrawers();
+
+            }
+        });
+
     }
 
     @Override
@@ -175,14 +194,6 @@ public class MainActivity extends AppCompatActivity  {
             itemList =  new ArrayList<MenuItema>();
 
 
-
-            itemList.add(new MenuItema("드라이버 레슨 영상","driver"));
-            itemList.add(new MenuItema("우드 레슨 영상","wood"));
-            itemList.add(new MenuItema("아이언 레슨 영상","iron"));
-            itemList.add(new MenuItema("웨지 레슨 영상","wedge"));
-            itemList.add(new MenuItema("퍼터 레슨 영상","putter"));
-            //  menuItemAdapter = new MenuItemAdapter(context,  itemList, this);
-
             //어댑터 생성
             menuItemAdapter = new MenuItemAdapter(activity,  itemList);
 
@@ -191,6 +202,14 @@ public class MainActivity extends AppCompatActivity  {
 
             //Toast.makeText (activity, "클릭3" + mnuListView  , Toast.LENGTH_LONG).show();
             mnuListView.setAdapter(menuItemAdapter);
+
+
+            itemList.add(new MenuItema("드라이버 레슨 영상","driver"));
+            itemList.add(new MenuItema("우드 레슨 영상","wood"));
+            itemList.add(new MenuItema("아이언 레슨 영상","iron"));
+            itemList.add(new MenuItema("웨지 레슨 영상","wedge"));
+            itemList.add(new MenuItema("퍼터 레슨 영상","putter"));
+            //  menuItemAdapter = new MenuItemAdapter(context,  itemList, this);
 
             mnuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

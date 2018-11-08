@@ -1,15 +1,22 @@
 package kr.appfactory.golf;
 
 import android.content.Context;
+
+
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    private Context context;
 
-    private static final String Database = "JappfactoryGolf.db";
-    private static final String Table = "JappfactoryGolf.db";
+    private static final String Database = "Jappfactory.db";
+    private static final String Table = "MyVideo";
 
     // DBHelper 생성자로 관리할 DB 이름과 버전 정보를 받음
     public DBHelper(Context context) {
@@ -40,6 +47,13 @@ public class DBHelper extends SQLiteOpenHelper {
         // 읽고 쓰기가 가능하게 DB 열기
         SQLiteDatabase db = getWritableDatabase();
         // DB에 입력한 값으로 행 추가
+
+        //Toast.makeText (context , "INSERT INTO "+ Table + " VALUES(null, '" + videoId + "' , '" + title + "' , '" + description + "' , '" + publishedAt + "' , '" + thum_pic   , Toast.LENGTH_LONG).show();
+
+        Log.e("temp", "INSERT INTO "+ Table + " VALUES(null, '" + videoId + "' , '" + title + "' , '" + description + "' , '" + publishedAt + "' , '" + thum_pic );
+
+
+
         db.execSQL("INSERT INTO "+ Table + " VALUES(null, '" + videoId + "' , '" + title + "' , '" + description + "' , '" + publishedAt + "' , '" + thum_pic + "');");
         db.close();
     }
@@ -64,38 +78,24 @@ public class DBHelper extends SQLiteOpenHelper {
         String result = "";
 
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
-        Cursor cursor = db.rawQuery("SELECT * FROM "+ Table + " where videoId=" + videoId + "", null);
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM "+ Table + " where videoId='" + videoId + "'", null);
         while (cursor.moveToNext()) {
-            result += cursor.getString(0)
-                    + " : "
-                    + cursor.getString(1)
-                    + " | "
-                    + cursor.getString(2)
-                    + "원 "
-                    + cursor.getString(3)
-                    + "\n";
+            result = cursor.getString(0);
         }
 
         return result;
     }
-    public String getResult() {
+    public  Cursor getResult() {
         // 읽기가 가능하게 DB 열기
         SQLiteDatabase db = getReadableDatabase();
         String result = "";
 
+
+        Log.d("videoId : " ,"결과를 가져옵니다");
+
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
         Cursor cursor = db.rawQuery("SELECT * FROM "+ Table + " ", null);
-        while (cursor.moveToNext()) {
-            result += cursor.getString(0)
-                    + " : "
-                    + cursor.getString(1)
-                    + " | "
-                    + cursor.getString(2)
-                    + "원 "
-                    + cursor.getString(3)
-                    + "\n";
-        }
 
-        return result;
+        return cursor;
     }
 }

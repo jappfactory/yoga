@@ -64,6 +64,7 @@
 
     </LinearLayout>
 
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="260dp"
@@ -72,6 +73,7 @@
         android:layout_height="match_parent"
         android:scrollbars="none"
         >
+
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -85,10 +87,14 @@
                 android:src="@drawable/head_bg"
                 />
 
+            <RelativeLayout
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:orientation="vertical">
         <ScrollView
             android:layout_height="wrap_content"
             android:overScrollMode="never"
-
+            android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:background="@color/colorBlueDark"
             android:scrollbars="none">
@@ -150,6 +156,22 @@
 
             </LinearLayout>
         </ScrollView>
+
+                <Button
+                    android:id="@+id/MyfavoritesButton"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorGreen"
+                    android:text="나의즐겨찾기"
+                    android:textColor="#ffffff"
+                    android:layout_alignBottom="@id/scrollview"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

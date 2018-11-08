@@ -1,9 +1,7 @@
 package kr.appfactory.golf;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -13,18 +11,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.database.Cursor;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
-import com.google.firebase.iid.FirebaseInstanceId;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
     String mApiKey = "AIzaSyBepkrOwooKDltImT5MhFKlW7QcnPm_hNE";
@@ -89,17 +81,46 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
             }
         });
 
-        Button favoritesButton = (Button) findViewById(R.id.favoritesButton);
+
+         Button favoritesButton = (Button) findViewById(R.id.favoritesButton);
+        Button favoritesdelButton = (Button) findViewById(R.id.favoritesdelButton);
+
+        //즐겨찾기 추가여부
+        Integer getCnt = Integer.parseInt(dbHelper.getCnt(videoId));
+        if(getCnt==0) {
+            favoritesButton.setVisibility(View.VISIBLE);
+            favoritesdelButton.setVisibility(View.INVISIBLE);
+        }else{
+
+            favoritesButton.setVisibility(View.INVISIBLE);
+            favoritesdelButton.setVisibility(View.VISIBLE);
+        }
+
+        //즐겨찾기저장추가
         favoritesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-
-
-               dbHelper.insert(videoId, subject, videodesc, publishedAt,  thum_pic);
-
-                Toast.makeText(getApplicationContext(), "즐겨찾기에 등록되었습니다~", Toast.LENGTH_LONG).show();
+                dbHelper.insert(videoId, subject, videodesc, publishedAt,  thum_pic);
+                Button favoritesButton = (Button) findViewById(R.id.favoritesButton);
+                Button favoritesdelButton = (Button) findViewById(R.id.favoritesdelButton);
+                favoritesButton.setVisibility(View.INVISIBLE);
+                favoritesdelButton.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), "즐겨찾기에 저장되었습니다~", Toast.LENGTH_SHORT).show();
             }
         });
+
+        //즐겨찾기삭제추가
+        favoritesdelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dbHelper.delete(videoId);
+                Button favoritesButton = (Button) findViewById(R.id.favoritesButton);
+                Button favoritesdelButton = (Button) findViewById(R.id.favoritesdelButton);
+                favoritesButton.setVisibility(View.VISIBLE);
+                favoritesdelButton.setVisibility(View.INVISIBLE);
+
+                Toast.makeText(getApplicationContext(), "즐겨찾기에서 삭제되었습니다~", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         Button shereButton = (Button) findViewById(R.id.shereButton);
         shereButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

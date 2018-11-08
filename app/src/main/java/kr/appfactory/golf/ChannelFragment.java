@@ -110,8 +110,10 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
                 Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("videoId", ""+  driverMovieList.get(position).getMovie_videoId());
-                intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
                 intent.putExtra("title",""+ driverMovieList.get(position).getMovie_title());
+                intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
+                intent.putExtra("publishedAt",""+ driverMovieList.get(position).getMovie_date());
+                intent.putExtra("thum_pic",""+ driverMovieList.get(position).getThum_img());
 
                 view.getContext().startActivity(intent);
 
