@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity  {
                 fragmentTransaction.replace(R.id.fragment, SearchFragment.newInstance(query));
                 fragmentTransaction.commit();
 
-                Toast.makeText(getApplicationContext(),"Query: " + query,Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"Query: " + query,Toast.LENGTH_LONG).show();
                 return false;
             }
 
