@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -220,10 +221,13 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
         View view=inflater.inflate(R.layout.fragment_channel, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
-        myToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        myToolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        title.setText(mParam2);
+        actionBar.setTitle(mParam2);
+        //TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        //title.setText(mParam2);
 
 
         return view;

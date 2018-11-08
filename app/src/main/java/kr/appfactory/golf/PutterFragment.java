@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -201,10 +202,13 @@ public class PutterFragment extends Fragment implements AbsListView.OnScrollList
         View view=inflater.inflate(R.layout.fragment_putter, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
-        myToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        myToolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        title.setText("클럽별 레슨 영상 - 퍼터");
+        actionBar.setTitle("클럽별 레슨 영상 - 퍼터");
+        //TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        //title.setText("클럽별 레슨 영상 - 퍼터");
 
 
         final Button driverButton = (Button) view.findViewById(R.id.driverButton);

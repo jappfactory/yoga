@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -154,10 +155,15 @@ public class FavoritesFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_favorites, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
-        myToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+
+        myToolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        title.setText("나의 즐겨찾기");
+        actionBar.setTitle("My 즐겨찾기");
+
+       // TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
+        //title.setText("My 즐겨찾기");
 
 
         return view;

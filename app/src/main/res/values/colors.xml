@@ -6,6 +6,7 @@
     <color name="colorBlue">#30749f</color>
     <color name="colorBlueDark">#163e58</color>
     <color name="colorGreen">#366b37</color>
+    <color name="colorGreenLight">#01a904</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorDarkRed">#bf0101</color>
     <color name="black_overlay">#66414141</color>

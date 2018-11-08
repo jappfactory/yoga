@@ -10,11 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +23,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class DriverFragment extends Fragment implements AbsListView.OnScrollListener {
+public class SearchFragment extends Fragment implements AbsListView.OnScrollListener {
 
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     public  ListView driverMovieListView;
@@ -43,9 +40,11 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     public int loading = 0;
     public int loadingresult = 0;
     Toolbar myToolbar;
+    private static final String ARG_PARAM1 = "param1";
+    private String mParam1;
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+드라이버+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -56,19 +55,28 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
         activity = (Activity) getActivity();
     }
-    public DriverFragment() {}
+    public SearchFragment() {}
 
-    public static DriverFragment newInstance() {
-        DriverFragment fragment = new DriverFragment();
+
+    public static SearchFragment newInstance(String param1) {
+        SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
 
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+
+        }
 
 
         //progressBar.setVisibility(View.GONE);
@@ -79,7 +87,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = (ListView) getView().findViewById(R.id.subDriverListView);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.subSearchListView);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
@@ -118,6 +126,9 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         progressBar.setVisibility(View.GONE);
         driverMovieListView.setOnScrollListener(this);
         // 다음 데이터를 불러온다.
+
+        target = target + mParam1 +"&pageToken=";
+
         getItem(target);
     }
     @Override
@@ -135,9 +146,13 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
 
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+드라이버+레슨&pageToken=";
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
-            target = target + aa;
+
+
+            target = target + mParam1 +"&pageToken="+ aa;
+
+
             // 다음 데이터를 불러온다.
             getItem(target);
         }
@@ -195,13 +210,6 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
                 progressBar.setVisibility(View.GONE);
                 mLockListView = false;
 
- /*               int fVisible = driverMovieListView.getFirstVisiblePosition();
-                View vFirst = driverMovieListView.getChildAt(0);
-                int pos = 0;
-                if (vFirst != null) pos = vFirst.getTop();
-
-//Restore the position
-                driverMovieListView.setSelectionFromTop(fVisible, pos);*/
 
             }
         },1000);
@@ -214,127 +222,13 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         super.onCreate(savedInstanceState);
         //new LoadMovieTask(getContext(), driverMovieList).execute();
 
-        View view=inflater.inflate(R.layout.fragment_driver, container, false);
+        View view=inflater.inflate(R.layout.fragment_search, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
         myToolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setTitle("클럽별 레슨 영상 - 드라이버");
-        //TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        //title.setText("클럽별 레슨 영상 - 드라이버");
-
-
-        final Button driverButton = (Button) view.findViewById(R.id.driverButton);
-        final Button woodButton = (Button) view.findViewById(R.id.woodButton);
-        final Button ironButton = (Button) view.findViewById(R.id.ironButton);
-        final Button wedgeButton = (Button) view.findViewById(R.id.wedgeButton);
-        final Button putterButton = (Button) view.findViewById(R.id.putterButton);
-
-
-        driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
-
-        driverButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new DriverFragment());
-                fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
-
-            }
-        });
-
-        woodButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WoodFragment());
-                fragmentTransaction.commit();
-
-                // Online();
-                // if(networkYn==2) NotOnline();
-            }
-        });
-
-
-
-        ironButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new IronFragment());
-                fragmentTransaction.commit();
-
-                // Online();
-                // if(networkYn==2) NotOnline();
-            }
-        });
-
-
-        wedgeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
-                fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
-
-            }
-        });
-
-        putterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new PutterFragment());
-                fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
-            }
-        });
-        //progressBar.setVisibility(View.GONE);
+        actionBar.setTitle("\""+mParam1+"\" 로 검색된 결과");
 
         return view;
     }

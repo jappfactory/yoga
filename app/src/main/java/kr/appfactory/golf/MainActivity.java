@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -23,11 +24,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -35,6 +37,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,7 +49,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 /**dc dddd
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity  {
     private SharedPreferences PageToken;
     private SharedPreferences.Editor pt;
     private DrawerLayout mDrawerLayout;
+    private View drawerView;
     private ActionBarDrawerToggle mToggle;
     Toolbar myToolbar;
     private ListView mnuListView;
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity  {
     public List<MenuItema> itemList2;
     public MenuItemAdapter menuItemAdapter;
     public MenuItemAdapter menuItemAdapter2;
-
+    private MaterialSearchView searchView;
     MyFirebaseInstanceIDService mf;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,15 +92,68 @@ public class MainActivity extends AppCompatActivity  {
 
 
         new gms_reg().execute();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        drawerView = (View) findViewById(R.id.nav_view);
+
+
+
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
 
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
-
-        myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(myToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        //추가된 소스코드, Toolbar의 왼쪽에 버튼을 추가하고 버튼의 아이콘을 바꾼다.
+
+        actionBar.setDisplayShowCustomEnabled(true); //커스터마이징 하기 위해 필요
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_left_menu); //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
+
+
+        searchView = findViewById(R.id.search_view);
+        searchView.setVoiceSearch(false);
+        searchView.setCursorDrawable(R.drawable.custom_cursor);
+        searchView.setEllipsize(true);
+       // searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //SearchProduct(getApplicationContext(), query);
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, SearchFragment.newInstance(query));
+                fragmentTransaction.commit();
+
+                Toast.makeText(getApplicationContext(),"Query: " + query,Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchView.showSuggestions();
+                return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                searchView.showSuggestions();
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
+            }
+        });
+ /*
+
+        //myToolbar = (Toolbar) findViewById(R.id.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ActionBar actionBar = getSupportActionBar();
@@ -105,7 +161,7 @@ public class MainActivity extends AppCompatActivity  {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true); // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
         actionBar.setHomeAsUpIndicator(R.drawable.ic_left_menu); //뒤로가기 버튼을 본인이 만든 아이콘으로 하기 위해 필요
-
+*/
         /** * 기본 화면 설정 */
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -144,7 +200,6 @@ public class MainActivity extends AppCompatActivity  {
         });
 
     }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -185,6 +240,149 @@ public class MainActivity extends AppCompatActivity  {
             }
         }
     }
+
+    //추가된 소스, ToolBar에 menu.xml을 인플레이트함
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case 2131230744: {
+
+                Toast.makeText (activity, "" + item.getItemId() , Toast.LENGTH_SHORT).show();
+                break;
+            }
+
+            case android.R.id.home: {
+
+
+                // 데이터 원본 준비
+                itemList = new ArrayList<MenuItema>();
+
+
+                //어댑터 생성
+                menuItemAdapter = new MenuItemAdapter(activity, itemList);
+
+                //어댑터 연결
+                mnuListView = (ListView) findViewById(R.id.club_lesson);
+
+                //Toast.makeText (activity, "클릭3" + mnuListView  , Toast.LENGTH_LONG).show();
+                mnuListView.setAdapter(menuItemAdapter);
+
+
+                itemList.add(new MenuItema("드라이버 레슨 영상", "driver"));
+                itemList.add(new MenuItema("우드 레슨 영상", "wood"));
+                itemList.add(new MenuItema("아이언 레슨 영상", "iron"));
+                itemList.add(new MenuItema("웨지 레슨 영상", "wedge"));
+                itemList.add(new MenuItema("퍼터 레슨 영상", "putter"));
+                //  menuItemAdapter = new MenuItemAdapter(context,  itemList, this);
+
+                mnuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                        if (itemList.get(position).getMenu_link() == "driver")
+                            fragmentTransaction.replace(R.id.fragment, new DriverFragment());
+                        if (itemList.get(position).getMenu_link() == "wood")
+                            fragmentTransaction.replace(R.id.fragment, new WoodFragment());
+                        if (itemList.get(position).getMenu_link() == "iron")
+                            fragmentTransaction.replace(R.id.fragment, new IronFragment());
+                        if (itemList.get(position).getMenu_link() == "wedge")
+                            fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
+                        if (itemList.get(position).getMenu_link() == "putter")
+                            fragmentTransaction.replace(R.id.fragment, new PutterFragment());
+
+
+                        fragmentTransaction.commit();
+                        mDrawerLayout.closeDrawers();
+
+                        // Toast.makeText (activity, "클릭 getMenu_title" + itemList.get(position).getMenu_title()  , Toast.LENGTH_SHORT).show();
+                        //Toast.makeText (activity, "클릭 getMenu_link" + itemList.get(position).getMenu_link()  , Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // 데이터 원본 준비
+                itemList2 = new ArrayList<MenuItema>();
+
+                itemList2.add(new MenuItema("명품스윙 에이미 조 골프 레슨", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PUKby5Cq9jArperhkdbX1X6g&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("왕초보 골프입문 시리즈 - 심짱", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLCW1r5BxeqUXcarRbwfJuxEN94fS7XQb8&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("독학골퍼를 위한 셀프골프레슨 - 심짱", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLCW1r5BxeqUXIYGmydOpcrt3HxiEugQpP&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("계속보면 좋은 골프기초 - 심짱", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLCW1r5BxeqUWtGBztPJqu088ygieNfyQV&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("박대성프로의 1분레슨", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLUT6r8FkJUXgS5hOfQBiM5OPt2zWiXKdK&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("굿샷김프로 - 동영상 골프레슨", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLatlCU2UD5ayXEonr7kzJjAhuh_e807AM&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("정프로의 클라쓰 몰아보기!", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLJjPXwl6J0C8Djy7W-4osYWsL6bJdU_hO&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("상위1%골프 레슨", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLTKm3iaNcU4JHavt0JzjiD62DO46CqjKf&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("중급 싱글되기 골프레슨 ~ ^^", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PL4OYEpDO4EFttKj5gBtE9lmlBHOgadIW9&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("비거리는 곧 자신감 장타레슨", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLBRks3VEudicyy188_sKojJm0G7DuebDF&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("스코어의 꽃 숏게임", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLBRks3VEudie9OjfJMgepjJx4YXSwuZSB&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("잘 배운 버릇 평생가는 골프기본기", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLBRks3VEudif6y3TYCqpiJOv2u0sdeC_4&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("초보 골프 입문 골퍼분들께 ~ ^^", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PL4OYEpDO4EFu4wPcPtZP_ptWC5luU9LO6&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("[초보레슨]윤소원의 비기너스 골프", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLsoAKjawncjXreuI8oh52DesY3CJCJ1Ya&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("[레슨]박교희의 쉬운골프", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLsoAKjawncjWKyfVHpswFXvxRCij2VBQq&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("[레슨]이동익의 홈메이드 골프", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLsoAKjawncjX5jn8zDZJ1GrjwF05InL2G&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("[레슨]임진한의 스페셜레슨", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLsoAKjawncjVbOlr72df-mVl1WIKMtEBt&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("PGA Class A 함순웅의 골프채널", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=UUluR-EQnCekFsG0IJwM2Ihg&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("이근화프로 (Monit Golf)", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNqL0LyfO8Tiep6g2ub79ksKBhd_Ng_q9&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("문성모프로 (Monit Golf)", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNqL0LyfO8Tg_iXxRyJVqFUUvuZwRKw81&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("전수빈프로 (Monit Golf)", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNqL0LyfO8TgWl3dupeExzdIS2KwdETMU&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("이효주프로 (Monit Golf)", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNqL0LyfO8TgymOrkKPxCDuXakkFp2SIj&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("김종석프로 (Monit Golf)", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNqL0LyfO8TgllZn3IIma6wanpfSCAEdZ&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+                itemList2.add(new MenuItema("정효민프로 (Monit Golf)", "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=PLNqL0LyfO8TjLFkVBX4a4Ook7HH7yIO2m&maxResults=6&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&pageToken="));
+
+
+                //  menuItemAdapter = new MenuItemAdapter(context,  itemList, this);
+
+                //어댑터 생성
+                menuItemAdapter2 = new MenuItemAdapter(activity, itemList2);
+
+                //어댑터 연결
+                mnuListView2 = (ListView) findViewById(R.id.pro_lesson);
+
+                //Toast.makeText (activity, "클릭3" + mnuListView  , Toast.LENGTH_LONG).show();
+                mnuListView2.setAdapter(menuItemAdapter2);
+
+
+                mnuListView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragment, ChannelFragment.newInstance(itemList2.get(position).getMenu_link(), itemList2.get(position).getMenu_title()));
+                        fragmentTransaction.commit();
+                        mDrawerLayout.closeDrawers();
+                        //Toast.makeText (activity, "클릭 getMenu_title" + itemList2.get(position).getMenu_title()  , Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+                mDrawerLayout.openDrawer(drawerView);
+                //mDrawerLayout.closeDrawers();
+            }
+
+                return true;
+            }
+
+        return super.onOptionsItemSelected(item);
+    }
+    /*
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(mToggle.onOptionsItemSelected(item)){
@@ -300,7 +498,7 @@ public class MainActivity extends AppCompatActivity  {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 /*
 
     @SuppressWarnings("StatementWithEmptyBody")
