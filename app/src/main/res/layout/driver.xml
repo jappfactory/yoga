@@ -12,7 +12,7 @@
 
     <LinearLayout
 
-        android:background="#f2f1f1"
+        android:background="@drawable/video_bg"
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:orientation="horizontal" >

@@ -31,7 +31,14 @@ public class DriverMovieListAdapter extends BaseAdapter {
         this.driverMovieList = driverMovieList;
 
     }
+    public void refreshAdapter(List<DriverMovie> driverMovieList) {
 
+        this.driverMovieList.clear();
+
+        this.driverMovieList.addAll(driverMovieList);
+        notifyDataSetChanged();
+
+    }
 
     @Override
     public int getCount() {

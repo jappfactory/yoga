@@ -202,13 +202,13 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
                     TextView searchcnt =  getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
 
+                    progressBar.setVisibility(View.GONE);
+                    mLockListView = false;
 
                 }catch  (Exception e) {
                     e.printStackTrace();
                 }
                // driveradapter.setNotifyOnChange(false);
-                progressBar.setVisibility(View.GONE);
-                mLockListView = false;
 
 
             }

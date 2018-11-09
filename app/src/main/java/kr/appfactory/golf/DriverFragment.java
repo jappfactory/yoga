@@ -85,36 +85,27 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         driverMovieListView.setAdapter(driveradapter);
 
 
-
-
-        //          Toast.makeText (activity, "isEmpty"  , Toast.LENGTH_LONG).show();
-/*
-        String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-
-            totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",", "")));
-            TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
-            searchcnt.setText(totalResults);*/
-
-
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("videoId", ""+  driverMovieList.get(position).getMovie_videoId());
-                intent.putExtra("title",""+ driverMovieList.get(position).getMovie_title());
-                intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
-                intent.putExtra("publishedAt",""+ driverMovieList.get(position).getMovie_date());
-                intent.putExtra("thum_pic",""+ driverMovieList.get(position).getThum_img());
 
 
-                view.getContext().startActivity(intent);
+                    Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("videoId", ""+  driverMovieList.get(position).getMovie_videoId());
+                    intent.putExtra("title",""+ driverMovieList.get(position).getMovie_title());
+                    intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
+                    intent.putExtra("publishedAt",""+ driverMovieList.get(position).getMovie_date());
+                    intent.putExtra("thum_pic",""+ driverMovieList.get(position).getThum_img());
+
+
+                    view.getContext().startActivity(intent);
+
+
 
             }
         });
-
         progressBar.setVisibility(View.GONE);
         driverMovieListView.setOnScrollListener(this);
         // 다음 데이터를 불러온다.
@@ -169,9 +160,10 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
 
        // driverMovieListView.setAdapter(driveradapter);
-        Log.d("driverMovieList6", ""+driverMovieList);
+        //Log.d("driverMovieList6", ""+driverMovieList);
 
         // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -180,32 +172,23 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
                 try {
 
                     driveradapter.notifyDataSetChanged();
-
+                   // driveradapter.refreshAdapter(driverMovieList);
                     String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
                     DecimalFormat decimalFormat = new DecimalFormat("#,###");
                     totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
                     TextView searchcnt =  getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
 
+                    // driveradapter.setNotifyOnChange(false);
+                    mLockListView = false;
+                    progressBar.setVisibility(View.GONE);
 
                 }catch  (Exception e) {
                     e.printStackTrace();
                 }
-               // driveradapter.setNotifyOnChange(false);
-                progressBar.setVisibility(View.GONE);
-                mLockListView = false;
-
- /*               int fVisible = driverMovieListView.getFirstVisiblePosition();
-                View vFirst = driverMovieListView.getChildAt(0);
-                int pos = 0;
-                if (vFirst != null) pos = vFirst.getTop();
-
-//Restore the position
-                driverMovieListView.setSelectionFromTop(fVisible, pos);*/
 
             }
         },1000);
-
 
     }
     @Override

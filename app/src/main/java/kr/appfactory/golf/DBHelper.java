@@ -50,9 +50,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //Toast.makeText (context , "INSERT INTO "+ Table + " VALUES(null, '" + videoId + "' , '" + title + "' , '" + description + "' , '" + publishedAt + "' , '" + thum_pic   , Toast.LENGTH_LONG).show();
 
+
         Log.e("temp", "INSERT INTO "+ Table + " VALUES(null, '" + videoId + "' , '" + title + "' , '" + description + "' , '" + publishedAt + "' , '" + thum_pic );
 
-
+        title = title.replace("'","''");
+        description = description.replace("'","''");
 
         db.execSQL("INSERT INTO "+ Table + " VALUES(null, '" + videoId + "' , '" + title + "' , '" + description + "' , '" + publishedAt + "' , '" + thum_pic + "');");
         db.close();

@@ -42,6 +42,7 @@ public class MenuItemAdapter  extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         View v = View.inflate(context, R.layout.menu_item, null);
 
         TextView menu_title = (TextView) v.findViewById(R.id.menu_title);

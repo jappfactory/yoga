@@ -85,11 +85,6 @@ public class WoodFragment extends Fragment implements AbsListView.OnScrollListen
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
 
-        String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
-        TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
-        searchcnt.setText(totalResults);
 
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -172,16 +167,20 @@ public class WoodFragment extends Fragment implements AbsListView.OnScrollListen
 
                 try {
                     driveradapter.notifyDataSetChanged();
-                    driveradapter.notifyDataSetChanged();
+                    String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
+                    DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                    totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
+                    TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
+                    searchcnt.setText(totalResults);
 
+                    progressBar.setVisibility(View.GONE);
+                    mLockListView = false;
                 }catch  (Exception e) {
                     e.printStackTrace();
                 }
 
 
                 // driveradapter.setNotifyOnChange(false);
-                progressBar.setVisibility(View.GONE);
-                mLockListView = false;
 
  /*               int fVisible = driverMovieListView.getFirstVisiblePosition();
                 View vFirst = driverMovieListView.getChildAt(0);

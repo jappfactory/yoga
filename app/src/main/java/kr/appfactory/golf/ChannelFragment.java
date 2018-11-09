@@ -97,12 +97,6 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
 
-        String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
-        TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
-        searchcnt.setText(totalResults);
-
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -123,7 +117,6 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
 
 
         progressBar.setVisibility(View.GONE);
-
         driverMovieListView.setOnScrollListener(this);
         // 다음 데이터를 불러온다.
         getItem(mParam1);
@@ -198,12 +191,12 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
                     TextView searchcnt =  getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
 
+                    progressBar.setVisibility(View.GONE);
+                    mLockListView = false;
                 }catch  (Exception e) {
                     e.printStackTrace();
                 }
 
-                progressBar.setVisibility(View.GONE);
-                mLockListView = false;
 
 
             }
