@@ -100,7 +100,7 @@ public class FavoritesFragment extends Fragment {
         dbHelper = new DBHelper(getActivity());
 
         //즐겨찾기목록
-        Cursor cursor = dbHelper.getResult();
+        Cursor cursor = dbHelper.getResult_MyVideo();
         int i = 0;
         while (cursor.moveToNext()) {
 

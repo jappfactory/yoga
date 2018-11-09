@@ -86,7 +86,7 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         Button favoritesdelButton = (Button) findViewById(R.id.favoritesdelButton);
 
         //즐겨찾기 추가여부
-        Integer getCnt = Integer.parseInt(dbHelper.getCnt(videoId));
+        Integer getCnt = Integer.parseInt(dbHelper.getCnt_MyVideo(videoId));
         if(getCnt==0) {
             favoritesButton.setVisibility(View.VISIBLE);
             favoritesdelButton.setVisibility(View.INVISIBLE);
@@ -99,7 +99,7 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         //즐겨찾기저장추가
         favoritesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dbHelper.insert(videoId, subject, videodesc, publishedAt,  thum_pic);
+                dbHelper.insert_MyVideo(videoId, subject, videodesc, publishedAt,  thum_pic);
                 Button favoritesButton = (Button) findViewById(R.id.favoritesButton);
                 Button favoritesdelButton = (Button) findViewById(R.id.favoritesdelButton);
                 favoritesButton.setVisibility(View.INVISIBLE);
@@ -111,7 +111,7 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
         //즐겨찾기삭제추가
         favoritesdelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dbHelper.delete(videoId);
+                dbHelper.delete_MyVideo(videoId);
                 Button favoritesButton = (Button) findViewById(R.id.favoritesButton);
                 Button favoritesdelButton = (Button) findViewById(R.id.favoritesdelButton);
                 favoritesButton.setVisibility(View.VISIBLE);
