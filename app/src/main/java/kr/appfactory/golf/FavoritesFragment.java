@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -144,6 +145,34 @@ public class FavoritesFragment extends Fragment {
         });
 
     }
+
+    public void progressBarShow(){
+
+        driverMovieListView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                // 여기서 이벤트를 막습니다.
+                return true;
+            }
+        });
+        // 로딩중을 알리는 프로그레스바를 보인다.
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void progressBarHidden(){
+
+        driverMovieListView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                // 여기서 이벤트를 막습니다.
+                return false;
+            }
+        });
+        // 로딩중을 알리는 프로그레스바를 숨기기.
+        progressBar.setVisibility(View.GONE);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment

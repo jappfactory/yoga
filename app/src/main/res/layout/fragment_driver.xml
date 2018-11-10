@@ -59,6 +59,15 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
             <ListView
                 android:id="@+id/subDriverListView"
                 android:layout_width="match_parent"
@@ -70,6 +79,7 @@
                 android:overScrollMode="never"
                 android:scrollbars="none"></ListView>
 
+        </RelativeLayout>
 
         </LinearLayout>
         <ProgressBar

@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -69,8 +70,6 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         //progressBar.setVisibility(View.GONE);
     }
 
@@ -83,7 +82,6 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
-
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -106,11 +104,39 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
             }
         });
-        progressBar.setVisibility(View.GONE);
+
         driverMovieListView.setOnScrollListener(this);
         // 다음 데이터를 불러온다.
         getItem(target);
     }
+    public void progressBarShow(){
+
+        driverMovieListView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                // 여기서 이벤트를 막습니다.
+                return true;
+            }
+        });
+        // 로딩중을 알리는 프로그레스바를 보인다.
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void progressBarHidden(){
+
+        driverMovieListView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                // 여기서 이벤트를 막습니다.
+                return false;
+            }
+        });
+        // 로딩중을 알리는 프로그레스바를 숨기기.
+        progressBar.setVisibility(View.GONE);
+
+    }
+
+
     @Override
     public void onScrollStateChanged(AbsListView absListView, int scrollState) {
 
@@ -122,7 +148,7 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag && mLockListView == false) {
             // 화면이 바닦에 닿을때 처리
             // 로딩중을 알리는 프로그레스바를 보인다.
-            progressBar.setVisibility(View.VISIBLE);
+            progressBarShow();
 
 
 
@@ -181,7 +207,8 @@ public class DriverFragment extends Fragment implements AbsListView.OnScrollList
 
                     // driveradapter.setNotifyOnChange(false);
                     mLockListView = false;
-                    progressBar.setVisibility(View.GONE);
+                    progressBarHidden();
+
 
                 }catch  (Exception e) {
                     e.printStackTrace();
