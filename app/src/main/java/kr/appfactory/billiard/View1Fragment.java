@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WedgeFragment extends Fragment implements AbsListView.OnScrollListener {
+public class View1Fragment extends Fragment implements AbsListView.OnScrollListener {
 
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     public  ListView driverMovieListView;
@@ -42,9 +42,8 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
     public int loadingresult = 0;
     Toolbar myToolbar;
 
-
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+웨지+레슨&pageToken=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=당구강좌 기초&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,10 +54,10 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
 
         activity = (Activity) getActivity();
     }
-    public WedgeFragment() {}
+    public View1Fragment() {}
 
-    public static WedgeFragment newInstance() {
-        WedgeFragment fragment = new WedgeFragment();
+    public static View1Fragment newInstance() {
+        View1Fragment fragment = new View1Fragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -67,13 +66,8 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
 
-        }
-
-        // progressBar.setVisibility(View.GONE);
-
-
+        //progressBar.setVisibility(View.GONE);
     }
 
 
@@ -81,38 +75,37 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = (ListView) getView().findViewById(R.id.subWedgeListView);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.subView1ListView);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
-
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("videoId", ""+  driverMovieList.get(position).getMovie_videoId());
-                intent.putExtra("title",""+ driverMovieList.get(position).getMovie_title());
-                intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
-                intent.putExtra("publishedAt",""+ driverMovieList.get(position).getMovie_date());
-                intent.putExtra("thum_pic",""+ driverMovieList.get(position).getThum_img());
 
-                view.getContext().startActivity(intent);
+
+                    Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("videoId", ""+  driverMovieList.get(position).getMovie_videoId());
+                    intent.putExtra("title",""+ driverMovieList.get(position).getMovie_title());
+                    intent.putExtra("videodesc", ""+  driverMovieList.get(position).getMovie_desc());
+                    intent.putExtra("publishedAt",""+ driverMovieList.get(position).getMovie_date());
+                    intent.putExtra("thum_pic",""+ driverMovieList.get(position).getThum_img());
+
+
+                    view.getContext().startActivity(intent);
+
+
 
             }
         });
 
-
-       // progressBar.setVisibility(View.GONE);
-
         driverMovieListView.setOnScrollListener(this);
-
         // 다음 데이터를 불러온다.
         getItem(target);
     }
-
     public void progressBarShow(){
 
         driverMovieListView.setOnTouchListener(new View.OnTouchListener() {
@@ -140,6 +133,7 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
 
     }
 
+
     @Override
     public void onScrollStateChanged(AbsListView absListView, int scrollState) {
 
@@ -151,10 +145,10 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag && mLockListView == false) {
             // 화면이 바닦에 닿을때 처리
             // 로딩중을 알리는 프로그레스바를 보인다.
-            //progressBar.setVisibility(View.VISIBLE);
             progressBarShow();
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=골프+웨지+레슨&pageToken=";
+
+
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
             // 다음 데이터를 불러온다.
@@ -169,57 +163,52 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
         // totalItemCount : 리스트 전체의 총 갯수
         // 리스트의 갯수가 0개 이상이고, 화면에 보이는 맨 하단까지의 아이템 갯수가 총 갯수보다 크거나 같을때.. 즉 리스트의 끝일때. true
         lastItemVisibleFlag = true;
-        // Toast.makeText (getActivity(), "위로" , Toast.LENGTH_LONG).show();
+       // Toast.makeText (getActivity(), "위로" , Toast.LENGTH_LONG).show();
     }
 
     public void getItem(String target){
-
         loading ++ ;
         loadingresult = loading % 10;
         if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
-       //AdsFull.getInstance(getActivity()).setAdsFull();
+       // AdsFull.getInstance(getActivity()).setAdsFull();
+        //Toast.makeText (getActivity(), "로딩 카운트 : " + loadingresult , Toast.LENGTH_SHORT).show();
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
-        //Log.d("target", ""+target);
+        Log.d("target", ""+target);
 
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
-        // driverMovieListView.setAdapter(driveradapter);
-        Log.d("driverMovieList6", ""+driverMovieList);
+
+
+       // driverMovieListView.setAdapter(driveradapter);
+        //Log.d("driverMovieList6", ""+driverMovieList);
 
         // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
 
-
                 try {
+
                     driveradapter.notifyDataSetChanged();
+                   // driveradapter.refreshAdapter(driverMovieList);
                     String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
                     DecimalFormat decimalFormat = new DecimalFormat("#,###");
                     totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
-                    TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
+                    TextView searchcnt =  getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
 
-                    // progressBar.setVisibility(View.GONE);
-                    progressBarHidden();
+                    // driveradapter.setNotifyOnChange(false);
                     mLockListView = false;
+                    progressBarHidden();
+
+
                 }catch  (Exception e) {
                     e.printStackTrace();
                 }
-
-
-                // driveradapter.setNotifyOnChange(false);
-
- /*               int fVisible = driverMovieListView.getFirstVisiblePosition();
-                View vFirst = driverMovieListView.getChildAt(0);
-                int pos = 0;
-                if (vFirst != null) pos = vFirst.getTop();
-
-//Restore the position
-                driverMovieListView.setSelectionFromTop(fVisible, pos);*/
 
             }
         },1000);
@@ -231,44 +220,42 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
         super.onCreate(savedInstanceState);
         //new LoadMovieTask(getContext(), driverMovieList).execute();
 
-        View view=inflater.inflate(R.layout.fragment_wedge, container, false);
+        View view=inflater.inflate(R.layout.fragment_view1, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
         myToolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        actionBar.setTitle("클럽별 레슨 영상 - 웨지");
-
+        actionBar.setTitle("당구 기초 영상");
         //TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        //title.setText("클럽별 레슨 영상 - 웨지");
-
-        final Button driverButton = (Button) view.findViewById(R.id.driverButton);
-        final Button woodButton = (Button) view.findViewById(R.id.woodButton);
-        final Button ironButton = (Button) view.findViewById(R.id.ironButton);
-        final Button wedgeButton = (Button) view.findViewById(R.id.wedgeButton);
-        final Button putterButton = (Button) view.findViewById(R.id.putterButton);
+        //title.setText("클럽별 레슨 영상 - 드라이버");
 
 
-        wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+        final Button sub1Button = (Button) view.findViewById(R.id.sub1Button);
+        final Button sub2Button = (Button) view.findViewById(R.id.sub2Button);
+        final Button sub3Button = (Button) view.findViewById(R.id.sub3Button);
+        final Button sub4Button = (Button) view.findViewById(R.id.sub4Button);
+        final Button sub5Button = (Button) view.findViewById(R.id.sub5Button);
 
 
-        driverButton.setOnClickListener(new View.OnClickListener() {
+        sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+
+        sub1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
 
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new DriverFragment());
+                fragmentTransaction.replace(R.id.fragment, new View1Fragment());
                 fragmentTransaction.commit();
                 // Online();
                 // if(networkYn==2) NotOnline();
@@ -276,39 +263,18 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
             }
         });
 
-        woodButton.setOnClickListener(new View.OnClickListener() {
+        sub2Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WoodFragment());
-                fragmentTransaction.commit();
-
-                // Online();
-                // if(networkYn==2) NotOnline();
-            }
-        });
-
-
-
-        ironButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new IronFragment());
+                fragmentTransaction.replace(R.id.fragment, new View2Fragment());
                 fragmentTransaction.commit();
 
                 // Online();
@@ -317,18 +283,39 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
         });
 
 
-        wedgeButton.setOnClickListener(new View.OnClickListener() {
+
+        sub3Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new WedgeFragment());
+                fragmentTransaction.replace(R.id.fragment, new View3Fragment());
+                fragmentTransaction.commit();
+
+                // Online();
+                // if(networkYn==2) NotOnline();
+            }
+        });
+
+
+        sub4Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new View4Fragment());
                 fragmentTransaction.commit();
                 // Online();
                 // if(networkYn==2) NotOnline();
@@ -336,23 +323,25 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
             }
         });
 
-        putterButton.setOnClickListener(new View.OnClickListener() {
+        sub5Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                driverButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                woodButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                ironButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                wedgeButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                putterButton.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragment, new PutterFragment());
+                fragmentTransaction.replace(R.id.fragment, new View5Fragment());
                 fragmentTransaction.commit();
                 // Online();
                 // if(networkYn==2) NotOnline();
+
             }
         });
+
         //progressBar.setVisibility(View.GONE);
 
         return view;
@@ -372,7 +361,7 @@ public class WedgeFragment extends Fragment implements AbsListView.OnScrollListe
         super.onDetach();
         mListener = null;
 
-        // new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).cancel(true);
+       // new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).cancel(true);
 
     }
 

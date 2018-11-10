@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IronFragment">
+    tools:context=".View1Fragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,9 +12,10 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/club_menu"
+            layout="@layout/sub_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></include>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -45,7 +46,7 @@
                 android:id="@+id/searchtitle2"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
-                android:text=" 개의 레슨 영상을 보실수 있습니다."
+                android:text=" 개의 영상을 보실수 있습니다."
                 android:textColor="#2e2e2e"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -58,10 +59,19 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/subIronListView"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+            <ListView
+                android:id="@+id/subView1ListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
 
                 android:divider="#ffffff"
@@ -69,7 +79,7 @@
                 android:overScrollMode="never"
                 android:scrollbars="none"></ListView>
 
-
+        </RelativeLayout>
 
         </LinearLayout>
         <ProgressBar
@@ -79,4 +89,5 @@
             android:layout_alignParentBottom="true"/>
 
     </LinearLayout>
+
 </LinearLayout>
