@@ -167,7 +167,7 @@
                 <ListView
                     android:id="@+id/pro_lesson"
                     android:layout_width="match_parent"
-                    android:layout_height="490dp"
+                    android:layout_height="900dp"
                     android:divider="@color/colorBlueDark"
                     android:dividerHeight="1dp"
                     android:overScrollMode="never"
@@ -191,7 +191,7 @@
                 <ListView
                     android:id="@+id/channel_lesson"
                     android:layout_width="match_parent"
-                    android:layout_height="704dp"
+                    android:layout_height="984dp"
                     android:layout_marginTop="0dp"
                     android:divider="@color/colorBlueDark"
                     android:dividerHeight="1dp"

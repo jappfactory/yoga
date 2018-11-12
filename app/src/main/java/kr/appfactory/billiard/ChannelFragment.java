@@ -168,8 +168,10 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
             String nextPageToken= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = mParam1 + nextPageToken;
 
-            //Toast.makeText (getActivity(), "nextPageToken" + nextPageToken, Toast.LENGTH_LONG).show();
+            Toast.makeText (getActivity(), "mParam1" + mParam1, Toast.LENGTH_LONG).show();
             // 다음 데이터를 불러온다.
+            Log.d("target", ""+target);
+
             getItem(target);
         }
     }
