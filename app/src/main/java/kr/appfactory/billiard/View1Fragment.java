@@ -39,6 +39,7 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
     private  ProgressBar progressBar;                // 데이터 로딩중을 표시할 프로그레스바
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
     public int loading = 0;
+    private static  int networkYn = 0;
     public int loadingresult = 0;
     Toolbar myToolbar;
 
@@ -67,7 +68,6 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //progressBar.setVisibility(View.GONE);
     }
 
 
@@ -85,7 +85,6 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 
-
                     Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("videoId", ""+  driverMovieList.get(position).getMovie_videoId());
@@ -94,11 +93,7 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
                     intent.putExtra("publishedAt",""+ driverMovieList.get(position).getMovie_date());
                     intent.putExtra("thum_pic",""+ driverMovieList.get(position).getThum_img());
 
-
                     view.getContext().startActivity(intent);
-
-
-
             }
         });
 
@@ -175,14 +170,8 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
-        Log.d("target", ""+target);
 
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
-
-
-
-       // driverMovieListView.setAdapter(driveradapter);
-        //Log.d("driverMovieList6", ""+driverMovieList);
 
         // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
 
@@ -190,9 +179,7 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public void run() {
 
-
                 try {
-
                     driveradapter.notifyDataSetChanged();
                    // driveradapter.refreshAdapter(driverMovieList);
                     String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
@@ -201,10 +188,8 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
                     TextView searchcnt =  getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
 
-                    // driveradapter.setNotifyOnChange(false);
                     mLockListView = false;
                     progressBarHidden();
-
 
                 }catch  (Exception e) {
                     e.printStackTrace();
@@ -218,8 +203,9 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
-        //new LoadMovieTask(getContext(), driverMovieList).execute();
 
+        networkYn = ((MainActivity)getActivity()).Online();
+        if(networkYn==2) ((MainActivity)getActivity()).NotOnline();
         View view=inflater.inflate(R.layout.fragment_view1, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
@@ -227,8 +213,6 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("당구 기초 영상");
-        //TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        //title.setText("클럽별 레슨 영상 - 드라이버");
 
 
         final Button sub1Button = (Button) view.findViewById(R.id.sub1Button);
@@ -257,8 +241,6 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new View1Fragment());
                 fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
 
             }
         });
@@ -277,8 +259,6 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
                 fragmentTransaction.replace(R.id.fragment, new View2Fragment());
                 fragmentTransaction.commit();
 
-                // Online();
-                // if(networkYn==2) NotOnline();
             }
         });
 
@@ -298,8 +278,6 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
                 fragmentTransaction.replace(R.id.fragment, new View3Fragment());
                 fragmentTransaction.commit();
 
-                // Online();
-                // if(networkYn==2) NotOnline();
             }
         });
 
@@ -317,8 +295,6 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new View4Fragment());
                 fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
 
             }
         });
@@ -336,13 +312,10 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new View5Fragment());
                 fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
 
             }
         });
 
-        //progressBar.setVisibility(View.GONE);
 
         return view;
     }
@@ -360,8 +333,6 @@ public class View1Fragment extends Fragment implements AbsListView.OnScrollListe
     public void onDetach() {
         super.onDetach();
         mListener = null;
-
-       // new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).cancel(true);
 
     }
 

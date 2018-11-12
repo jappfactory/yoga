@@ -527,7 +527,7 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-    public void Online() {
+    public int Online() {
         ConnectivityManager manager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mobile = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         NetworkInfo wifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -538,13 +538,11 @@ public class MainActivity extends AppCompatActivity  {
 
             Log.d("연결됨" , "연결이 되었습니다.");
             networkYn =1;
-
-
         } else {
             Log.d("연결 안 됨" , "연결이 다시 한번 확인해주세요");
             networkYn =2;
-
         }
+        return networkYn;
     }
 
 }

@@ -51,11 +51,6 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         // DB에 입력한 값으로 행 추가
 
-        //Toast.makeText (context , "INSERT INTO "+ Table + " VALUES(null, '" + videoId + "' , '" + title + "' , '" + description + "' , '" + publishedAt + "' , '" + thum_pic   , Toast.LENGTH_LONG).show();
-
-
-        //Log.e("temp", "INSERT INTO "+ Table + " VALUES(null, '" + videoId + "' , '" + title + "' , '" + description + "' , '" + publishedAt + "' , '" + thum_pic );
-
         title = title.replace("'","''");
         description = description.replace("'","''");
 
@@ -95,8 +90,6 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String result = "";
 
-
-        //Log.d("videoId : " ,"결과를 가져옵니다");
 
         // DB에 있는 데이터를 쉽게 처리하기 위해 Cursor를 사용하여 테이블에 있는 모든 데이터 출력
         Cursor cursor = db.rawQuery("SELECT * FROM "+ Table_MyVideo + " ", null);

@@ -88,31 +88,6 @@ public class DriverMovieListAdapter extends BaseAdapter {
         v.setTag(driverMovieList.get(i).getMovie_title());
 
 
-        //Log.e("subjectText", ""+driverMovieList.get(i).getMovie_title());
-
-
-/*     Button viewButton = (Button) v.findViewById(R.id.viewButton);
-        viewButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(view.getContext(), MoviePlayActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-
-                intent.putExtra("videoId", ""+  videoId);
-                intent.putExtra("videodesc", ""+  videodesc);
-                intent.putExtra("title",""+ videotitle);
-
-
-                Toast.makeText (context, "클릭" + videoId , Toast.LENGTH_SHORT).show();
-                view.getContext().startActivity(intent);
-
-            }
-
-        });
- */
 
         return v;
     }

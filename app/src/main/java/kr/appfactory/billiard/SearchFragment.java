@@ -39,6 +39,7 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
     private  ProgressBar progressBar;                // 데이터 로딩중을 표시할 프로그레스바
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
     public int loading = 0;
+    private static  int networkYn = 0;
     public int loadingresult = 0;
     Toolbar myToolbar;
     private static final String ARG_PARAM1 = "param1";
@@ -79,8 +80,6 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
 
         }
 
-
-        //progressBar.setVisibility(View.GONE);
     }
 
 
@@ -94,16 +93,6 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
         driverMovieListView.setAdapter(driveradapter);
 
 
-
-
-        //          Toast.makeText (activity, "isEmpty"  , Toast.LENGTH_LONG).show();
-/*
-        String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
-        DecimalFormat decimalFormat = new DecimalFormat("#,###");
-
-            totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",", "")));
-            TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
-            searchcnt.setText(totalResults);*/
 
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -124,7 +113,6 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
             }
         });
 
-        //progressBar.setVisibility(View.GONE);
         driverMovieListView.setOnScrollListener(this);
         // 다음 데이터를 불러온다.
 
@@ -232,14 +220,12 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
                     TextView searchcnt =  getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
 
-                    // progressBar.setVisibility(View.GONE);
                     progressBarHidden();
                     mLockListView = false;
 
                 }catch  (Exception e) {
                     e.printStackTrace();
                 }
-               // driveradapter.setNotifyOnChange(false);
 
 
             }
@@ -251,7 +237,8 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
-        //new LoadMovieTask(getContext(), driverMovieList).execute();
+        networkYn = ((MainActivity)getActivity()).Online();
+        if(networkYn==2) ((MainActivity)getActivity()).NotOnline();
 
         View view=inflater.inflate(R.layout.fragment_search, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);

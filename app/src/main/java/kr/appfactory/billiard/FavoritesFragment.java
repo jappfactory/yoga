@@ -39,6 +39,7 @@ public class FavoritesFragment extends Fragment {
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
     public int loading = 0;
     public int loadingresult = 0;
+    private static  int networkYn = 0;
     Toolbar myToolbar;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -77,9 +78,6 @@ public class FavoritesFragment extends Fragment {
 
         }
 
-        // progressBar.setVisibility(View.GONE);
-
-
     }
 
 
@@ -93,9 +91,6 @@ public class FavoritesFragment extends Fragment {
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
 
-
-
-
         progressBar.setVisibility(View.GONE);
 
         dbHelper = new DBHelper(getActivity());
@@ -104,7 +99,6 @@ public class FavoritesFragment extends Fragment {
         Cursor cursor = dbHelper.getResult_MyVideo();
         int i = 0;
         while (cursor.moveToNext()) {
-
 
             String videoId = cursor.getString(1);
             String subjectText = cursor.getString(2);
@@ -178,8 +172,8 @@ public class FavoritesFragment extends Fragment {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
 
-       // Toast.makeText (activity, "mParam1" + mParam1   , Toast.LENGTH_SHORT).show();
-       // Toast.makeText (activity, "mParam2" + mParam2   , Toast.LENGTH_SHORT).show();
+        networkYn = ((MainActivity)getActivity()).Online();
+        if(networkYn==2) ((MainActivity)getActivity()).NotOnline();
 
         View view=inflater.inflate(R.layout.fragment_favorites, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);

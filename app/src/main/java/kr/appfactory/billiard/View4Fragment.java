@@ -39,6 +39,7 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
     private  ProgressBar progressBar;                // 데이터 로딩중을 표시할 프로그레스바
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
     public int loading = 0;
+    private static  int networkYn = 0;
     public int loadingresult = 0;
     Toolbar myToolbar;
 
@@ -71,9 +72,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
 
         }
 
-        // progressBar.setVisibility(View.GONE);
-
-
     }
 
 
@@ -105,9 +103,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
         });
 
 
-        //progressBar.setVisibility(View.GONE);
-
-        //Log.d("driverMovieList6", ""+driverMovieList);
         driverMovieListView.setOnScrollListener(this);
 
         // 다음 데이터를 불러온다.
@@ -152,10 +147,7 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag && mLockListView == false) {
             // 화면이 바닦에 닿을때 처리
             // 로딩중을 알리는 프로그레스바를 보인다.
-            //progressBar.setVisibility(View.VISIBLE);
             progressBarShow();
-
-
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
 
@@ -171,7 +163,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
         // totalItemCount : 리스트 전체의 총 갯수
         // 리스트의 갯수가 0개 이상이고, 화면에 보이는 맨 하단까지의 아이템 갯수가 총 갯수보다 크거나 같을때.. 즉 리스트의 끝일때. true
         lastItemVisibleFlag = true;
-        // Toast.makeText (getActivity(), "위로" , Toast.LENGTH_LONG).show();
     }
 
     public void getItem(String target){
@@ -179,15 +170,12 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
         loading ++ ;
         loadingresult = loading % 10;
         if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
-        //AdsFull.getInstance(getActivity()).setAdsFull();
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
-        //Log.d("target", ""+target);
 
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
-        // driverMovieListView.setAdapter(driveradapter);
         Log.d("driverMovieList6", ""+driverMovieList);
 
         // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
@@ -212,17 +200,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                     e.printStackTrace();
                 }
 
-
-                // driveradapter.setNotifyOnChange(false);
-
- /*               int fVisible = driverMovieListView.getFirstVisiblePosition();
-                View vFirst = driverMovieListView.getChildAt(0);
-                int pos = 0;
-                if (vFirst != null) pos = vFirst.getTop();
-
-//Restore the position
-                driverMovieListView.setSelectionFromTop(fVisible, pos);*/
-
             }
         },1000);
 
@@ -232,7 +209,8 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
-        //new LoadMovieTask(getContext(), driverMovieList).execute();
+        networkYn = ((MainActivity)getActivity()).Online();
+        if(networkYn==2) ((MainActivity)getActivity()).NotOnline();
 
         View view=inflater.inflate(R.layout.fragment_view4, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
@@ -242,9 +220,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
         actionBar.setTitle("포켓볼 강좌 영상");
-
-        //TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        //title.setText("클럽별 레슨 영상 - 아이언");
 
         final Button sub1Button = (Button) view.findViewById(R.id.sub1Button);
         final Button sub2Button = (Button) view.findViewById(R.id.sub2Button);
@@ -259,7 +234,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public void onClick(View view) {
 
-
                 sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
@@ -272,8 +246,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new View1Fragment());
                 fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
 
             }
         });
@@ -292,8 +264,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                 fragmentTransaction.replace(R.id.fragment, new View2Fragment());
                 fragmentTransaction.commit();
 
-                // Online();
-                // if(networkYn==2) NotOnline();
             }
         });
 
@@ -313,8 +283,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                 fragmentTransaction.replace(R.id.fragment, new View3Fragment());
                 fragmentTransaction.commit();
 
-                // Online();
-                // if(networkYn==2) NotOnline();
             }
         });
 
@@ -332,8 +300,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new View4Fragment());
                 fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
 
             }
         });
@@ -351,13 +317,9 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new View5Fragment());
                 fragmentTransaction.commit();
-                // Online();
-                // if(networkYn==2) NotOnline();
 
             }
         });
-        //progressBar.setVisibility(View.GONE);
-
         return view;
     }
 
@@ -374,9 +336,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
     public void onDetach() {
         super.onDetach();
         mListener = null;
-
-        // new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target).cancel(true);
-
     }
 
     public interface OnFragmentInteractionListener {
