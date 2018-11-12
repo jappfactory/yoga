@@ -45,7 +45,8 @@ public class View2Fragment extends Fragment implements AbsListView.OnScrollListe
 
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=4구당구 강좌&pageToken=";
+    String Keyword = ((MainActivity)getActivity()).getURLEncode("4구당구 강좌");
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q="+Keyword+"&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 

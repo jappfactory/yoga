@@ -21,6 +21,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -46,6 +47,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -351,9 +354,11 @@ public class MainActivity extends AppCompatActivity  {
                 while(ie.hasNext()) {
 
 
+
                     String title = ie.next().toString();
+                    String Keyword = getURLEncode(""+title+" 당구");
                     //itemList2.add(new MenuItema("명품스윙 에이미 조 골프 레슨", "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=포켓볼&pageToken="));
-                    itemList2.add(new MenuItema(""+title+" 프로", "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q="+title + " 당구&pageToken="));
+                    itemList2.add(new MenuItema(""+title+" 프로", "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q="+Keyword+"&pageToken="));
 
                 }
 
@@ -526,6 +531,37 @@ public class MainActivity extends AppCompatActivity  {
 
 
     }
+
+    /**
+     * getURLEncode
+     */
+    public static String getURLEncode(String content){
+
+        try {
+//          return URLEncoder.encode(content, "utf-8");   // UTF-8
+            return URLEncoder.encode(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * getURLDecode
+     */
+    public static String getURLDecode(String content){
+
+        try {
+//          return URLEncoder.encode(content, "utf-8");   // UTF-8
+            return URLDecoder.decode(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
     public int Online() {
         ConnectivityManager manager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);

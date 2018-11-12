@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -44,9 +45,10 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
     Toolbar myToolbar;
     private static final String ARG_PARAM1 = "param1";
     private String mParam1;
-
+    private String Keyword;
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=";
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=";
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -116,7 +118,8 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
         driverMovieListView.setOnScrollListener(this);
         // 다음 데이터를 불러온다.
 
-        target = target + mParam1 +"&pageToken=";
+        Keyword = ((MainActivity)getActivity()).getURLEncode(""+mParam1);
+        target = target + Keyword +"&pageToken=";
 
         getItem(target);
     }
@@ -164,11 +167,11 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
 
 
 
-            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=5&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=";
+            String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=";
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
 
 
-            target = target + mParam1 +"&pageToken="+ aa;
+            target = target + Keyword +"&pageToken="+ aa;
 
 
             // 다음 데이터를 불러온다.
@@ -195,14 +198,9 @@ public class SearchFragment extends Fragment implements AbsListView.OnScrollList
 
         // 리스트에 다음 데이터를 입력할 동안에 이 메소드가 또 호출되지 않도록 mLockListView 를 true로 설정한다.
         mLockListView = true;
-        Log.d("target", ""+target);
-
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
 
-
-       // driverMovieListView.setAdapter(driveradapter);
-        Log.d("driverMovieList6", ""+driverMovieList);
 
         // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
         new Handler().postDelayed(new Runnable() {

@@ -45,7 +45,8 @@ public class View3Fragment extends Fragment implements AbsListView.OnScrollListe
 
 
     Activity activity;
-    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q=당구강좌 3쿠션&pageToken=";
+    String Keyword = ((MainActivity)getActivity()).getURLEncode("4구당구 3쿠션");
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q="+Keyword+"&pageToken=";
 
     private OnFragmentInteractionListener mListener;
 
