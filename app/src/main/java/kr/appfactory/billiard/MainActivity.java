@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity  {
     private static final String TAG = MainActivity.class.getSimpleName();
     final AppCompatActivity activity = this;
 
-    private String  target ="http://www.appfactory.kr/gms/reg/Golf";;
+    private String  target ="http://www.appfactory.kr/gms/reg/Billiard";;
     private  String nextPageToken;
     private static Context context;
     private static  int networkYn = 0;
@@ -787,9 +787,8 @@ class LoadMovieTask extends AsyncTask<Void, Void, String> {
 
 class gms_reg extends AsyncTask<Void, Void, String> {
     private  Context mContext;
-    String target ="http://www.appfactory.kr/gms/reg/Golf/"+FirebaseInstanceId.getInstance().getToken();
-
-    String target2 ="http://www.appfactory.kr/gms/cnt/Golf/"+FirebaseInstanceId.getInstance().getToken();
+    String target ="http://www.appfactory.kr/gms/reg/Billiard/"+FirebaseInstanceId.getInstance().getToken();
+    String target2 ="http://www.appfactory.kr/gms/cnt/Billiard/"+FirebaseInstanceId.getInstance().getToken();
     @Override
     protected String doInBackground(Void... voids) {
         HttpURLConnection httpURLConnection;
@@ -799,6 +798,7 @@ class gms_reg extends AsyncTask<Void, Void, String> {
         String temp;
         URL url;
 
+        Log.d("주소 url 2 ", ""+FirebaseInstanceId.getInstance().getToken() ) ;
         try {
             url = new URL(target2);
             //Log.e("주소 url 2 ", ""+url);
