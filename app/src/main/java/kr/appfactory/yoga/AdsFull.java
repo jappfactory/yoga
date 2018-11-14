@@ -1,4 +1,4 @@
-package kr.appfactory.billiard;
+package kr.appfactory.yoga;
 
 import android.app.Activity;
 import android.content.Context;

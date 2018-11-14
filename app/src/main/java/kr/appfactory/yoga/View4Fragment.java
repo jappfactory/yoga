@@ -1,4 +1,4 @@
-package kr.appfactory.billiard;
+package kr.appfactory.yoga;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,14 +24,13 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChannelFragment extends Fragment implements AbsListView.OnScrollListener {
+public class View4Fragment extends Fragment implements AbsListView.OnScrollListener {
 
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     public  ListView driverMovieListView;
@@ -40,20 +39,15 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
     private  ProgressBar progressBar;                // 데이터 로딩중을 표시할 프로그레스바
     private boolean mLockListView = false;          // 데이터 불러올때 중복안되게 하기위한 변수
     public int loading = 0;
-    public int loadingresult = 0;
     private static  int networkYn = 0;
+    public int loadingresult = 0;
     Toolbar myToolbar;
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     Activity activity;
+    String Keyword = ((MainActivity)getActivity()).getURLEncode("포켓볼");
+    String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q="+Keyword+"&pageToken=";
 
-
-    String target ;
     private OnFragmentInteractionListener mListener;
 
 
@@ -63,13 +57,11 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
 
         activity = (Activity) getActivity();
     }
-    public ChannelFragment() {}
+    public View4Fragment() {}
 
-    public static ChannelFragment newInstance(String param1, String param2  ) {
-        ChannelFragment fragment = new ChannelFragment();
+    public static View4Fragment newInstance() {
+        View4Fragment fragment = new View4Fragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -78,8 +70,6 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
 
@@ -90,7 +80,7 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = (ListView) getView().findViewById(R.id.subChannelListView);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.subView4ListView);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
@@ -115,8 +105,9 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
 
 
         driverMovieListView.setOnScrollListener(this);
+
         // 다음 데이터를 불러온다.
-        getItem(mParam1);
+        getItem(target);
     }
 
     public void progressBarShow(){
@@ -158,10 +149,9 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
             // 화면이 바닦에 닿을때 처리
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBarShow();
-            String nextPageToken= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
-            target = mParam1 + nextPageToken;
+            String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
+            target = target + aa;
 
-            Toast.makeText (getActivity(), "mParam1" + mParam1, Toast.LENGTH_LONG).show();
             // 다음 데이터를 불러온다.
             getItem(target);
         }
@@ -173,14 +163,11 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
         // visibleItemCount : 화면에 보이는 리스트 아이템의 갯수
         // totalItemCount : 리스트 전체의 총 갯수
         // 리스트의 갯수가 0개 이상이고, 화면에 보이는 맨 하단까지의 아이템 갯수가 총 갯수보다 크거나 같을때.. 즉 리스트의 끝일때. true
-
-        String nextPageToken= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
-        if(nextPageToken.isEmpty()) lastItemVisibleFlag = false;
-        else  lastItemVisibleFlag = true;
-
+        lastItemVisibleFlag = true;
     }
 
     public void getItem(String target){
+
         loading ++ ;
         loadingresult = loading % 10;
         if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
@@ -190,10 +177,13 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
 
         new LoadMovieTask(getActivity(), driverMovieList, driverMovieListView, driveradapter, target,"sub").execute();
 
+        Log.d("driverMovieList6", ""+driverMovieList);
+
         // 1초 뒤 프로그레스바를 감추고 데이터를 갱신하고, 중복 로딩 체크하는 Lock을 했던 mLockListView변수를 풀어준다.
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
 
                 try {
                     driveradapter.notifyDataSetChanged();
@@ -201,7 +191,7 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
                     String totalResults= SharedPreference.getSharedPreference(getActivity(), "totalResults");
                     DecimalFormat decimalFormat = new DecimalFormat("#,###");
                     totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
-                    TextView searchcnt =  getView().findViewById(R.id.searchcnt);
+                    TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
 
                     // progressBar.setVisibility(View.GONE);
@@ -211,30 +201,126 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
                     e.printStackTrace();
                 }
 
-
-
             }
         },1000);
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         super.onCreate(savedInstanceState);
-
         networkYn = ((MainActivity)getActivity()).Online();
         if(networkYn==2) ((MainActivity)getActivity()).NotOnline();
 
-        View view=inflater.inflate(R.layout.fragment_channel, container, false);
+        View view=inflater.inflate(R.layout.fragment_view4, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
         myToolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        actionBar.setTitle(mParam2);
+        actionBar.setTitle("포켓볼 강좌 영상");
+
+        final Button sub1Button = (Button) view.findViewById(R.id.sub1Button);
+        final Button sub2Button = (Button) view.findViewById(R.id.sub2Button);
+        final Button sub3Button = (Button) view.findViewById(R.id.sub3Button);
+        final Button sub4Button = (Button) view.findViewById(R.id.sub4Button);
+        final Button sub5Button = (Button) view.findViewById(R.id.sub5Button);
 
 
+        sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+
+        sub1Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new View1Fragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+
+        sub2Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new View2Fragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+
+
+
+        sub3Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new View3Fragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+
+
+        sub4Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new View4Fragment());
+                fragmentTransaction.commit();
+
+            }
+        });
+
+        sub5Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragment, new View5Fragment());
+                fragmentTransaction.commit();
+
+            }
+        });
         return view;
     }
 
@@ -251,8 +337,6 @@ public class ChannelFragment extends Fragment implements AbsListView.OnScrollLis
     public void onDetach() {
         super.onDetach();
         mListener = null;
-
-
     }
 
     public interface OnFragmentInteractionListener {

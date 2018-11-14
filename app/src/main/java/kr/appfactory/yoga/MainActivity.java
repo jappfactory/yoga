@@ -1,4 +1,4 @@
-package kr.appfactory.billiard;
+package kr.appfactory.yoga;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,7 +21,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;

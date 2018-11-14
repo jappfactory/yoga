@@ -1,4 +1,4 @@
-package kr.appfactory.billiard;
+package kr.appfactory.yoga;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.database.Cursor;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -127,7 +126,7 @@ public class MoviePlayActivity extends YouTubeBaseActivity implements YouTubePla
                 String EXTRA_TEXT ="https://www.youtube.com/watch?v="+videoId;
                  EXTRA_TEXT +="\n\n" +
                          "언제나 즐거운 당구강좌영상 설치\n" +
-                         "https://play.google.com/store/apps/details?id=kr.appfactory.billiard";
+                         "https://play.google.com/store/apps/details?id=kr.appfactory.yoga";
 
                 //Toast.makeText(getApplicationContext(), "Go Back", Toast.LENGTH_LONG).show();
                 Intent msg = new Intent (Intent.ACTION_SEND);

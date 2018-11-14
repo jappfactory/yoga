@@ -1,4 +1,4 @@
-package kr.appfactory.billiard;
+package kr.appfactory.yoga;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class View4Fragment extends Fragment implements AbsListView.OnScrollListener {
+public class View5Fragment extends Fragment implements AbsListView.OnScrollListener {
 
     private boolean lastItemVisibleFlag = false;    // 리스트 스크롤이 마지막 셀(맨 바닥)로 이동했는지 체크할 변수
     public  ListView driverMovieListView;
@@ -45,8 +45,10 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
 
 
     Activity activity;
-    String Keyword = ((MainActivity)getActivity()).getURLEncode("포켓볼");
+
+    String Keyword = ((MainActivity)getActivity()).getURLEncode("당구묘기");
     String target = "https://www.googleapis.com/youtube/v3/search?part=snippet&order=relevance&videoSyndicated=true&maxResults=10&key=AIzaSyBn4fOG4zKOYVbYtcMtGj8gGsVVpTYb68g&safeSearch=strict&type=video&q="+Keyword+"&pageToken=";
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -57,10 +59,10 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
 
         activity = (Activity) getActivity();
     }
-    public View4Fragment() {}
+    public View5Fragment() {}
 
-    public static View4Fragment newInstance() {
-        View4Fragment fragment = new View4Fragment();
+    public static View5Fragment newInstance() {
+        View5Fragment fragment = new View5Fragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -80,11 +82,10 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
     public void onActivityCreated(@Nullable Bundle b) {
         super.onActivityCreated(b);
 
-        driverMovieListView  = (ListView) getView().findViewById(R.id.subView4ListView);
+        driverMovieListView  = (ListView) getView().findViewById(R.id.subView5ListView);
         driverMovieList = new ArrayList<DriverMovie>();
         driveradapter = new DriverMovieListAdapter(activity, driverMovieList, this);
         driverMovieListView.setAdapter(driveradapter);
-
 
         driverMovieListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -104,8 +105,8 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
         });
 
 
-        driverMovieListView.setOnScrollListener(this);
 
+        driverMovieListView.setOnScrollListener(this);
         // 다음 데이터를 불러온다.
         getItem(target);
     }
@@ -149,9 +150,9 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
             // 화면이 바닦에 닿을때 처리
             // 로딩중을 알리는 프로그레스바를 보인다.
             progressBarShow();
+
             String aa= SharedPreference.getSharedPreference(getActivity(), "nextPageToken");
             target = target + aa;
-
             // 다음 데이터를 불러온다.
             getItem(target);
         }
@@ -167,7 +168,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
     }
 
     public void getItem(String target){
-
         loading ++ ;
         loadingresult = loading % 10;
         if (loadingresult == 0 ) AdsFull.getInstance(getActivity()).setAdsFull();
@@ -184,7 +184,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
             @Override
             public void run() {
 
-
                 try {
                     driveradapter.notifyDataSetChanged();
 
@@ -193,19 +192,17 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                     totalResults = decimalFormat.format(Double.parseDouble(totalResults.toString().replaceAll(",","")));
                     TextView searchcnt = (TextView) getView().findViewById(R.id.searchcnt);
                     searchcnt.setText(totalResults);
-
-                    // progressBar.setVisibility(View.GONE);
                     progressBarHidden();
                     mLockListView = false;
                 }catch  (Exception e) {
                     e.printStackTrace();
                 }
 
+
             }
         },1000);
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -213,14 +210,14 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
         networkYn = ((MainActivity)getActivity()).Online();
         if(networkYn==2) ((MainActivity)getActivity()).NotOnline();
 
-        View view=inflater.inflate(R.layout.fragment_view4, container, false);
+        View view=inflater.inflate(R.layout.fragment_view5, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
         myToolbar = (Toolbar) getActivity().findViewById(R.id.main_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(myToolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         TextView title = (TextView) getActivity().findViewById(R.id.toolbar_title);
-        actionBar.setTitle("포켓볼 강좌 영상");
+        actionBar.setTitle("당구묘기 영상");
 
         final Button sub1Button = (Button) view.findViewById(R.id.sub1Button);
         final Button sub2Button = (Button) view.findViewById(R.id.sub2Button);
@@ -229,18 +226,17 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
         final Button sub5Button = (Button) view.findViewById(R.id.sub5Button);
 
 
-        sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
+        sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlueDark));
 
         sub1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
                 sub1Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-
 
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -258,7 +254,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                 sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -277,13 +272,11 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                 sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragment, new View3Fragment());
                 fragmentTransaction.commit();
-
             }
         });
 
@@ -295,7 +288,6 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
                 sub2Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub3Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 sub4Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
-                sub5Button.setBackgroundColor(getResources().getColor(R.color.colorBlue));
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -304,6 +296,7 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
 
             }
         });
+
 
         sub5Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -321,6 +314,7 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
 
             }
         });
+
         return view;
     }
 
@@ -337,6 +331,7 @@ public class View4Fragment extends Fragment implements AbsListView.OnScrollListe
     public void onDetach() {
         super.onDetach();
         mListener = null;
+
     }
 
     public interface OnFragmentInteractionListener {
